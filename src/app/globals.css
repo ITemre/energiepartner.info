@@ -1,0 +1,443 @@
+@import "tailwindcss";
+
+/* Lenis' eigenes Stylesheet. Es fehlte, und das war kein Schönheitsfehler:
+   Die Datei enthält `html.lenis, html.lenis body { height: auto }` und
+   existiert genau deshalb – ein `height: 100%` auf dem Dokument bringt Lenis
+   dazu, gegen die falsche Grenze zu rechnen. Sichtbar wurde das ganz unten
+   auf der Seite: Man scrollte bis zum Anschlag und kam trotzdem nicht am
+   Footer an, Impressum und Datenschutz waren nicht erreichbar.
+   Sie bringt außerdem `overscroll-behavior: contain` für alle
+   `[data-lenis-prevent]`-Bereiche mit – im Anfrage-Dialog gebraucht. */
+@import "lenis/dist/lenis.css";
+
+/* =========================================================
+   energiepartner · Design-Tokens
+   Single Source of Truth – keine Roh-Hex außerhalb dieses Blocks.
+   „Blau baut, Orange bewegt."
+   ========================================================= */
+@theme {
+  /* Vertrauen · Blau */
+  --color-ep-navy: #0e3552; /* Vertrauensblau  */
+  --color-ep-navy-deep: #0a2337; /* tiefster Grund */
+  --color-ep-blue: #1c6fb0; /* Signalblau     */
+
+  /* Energie · Orange → Sonnengelb
+     ZWEI Orangetöne, und die Trennung ist keine Feinheit, sondern eine
+     Kontrastregel: `orange` ist eine FLÄCHEN- und Dunkelgrund-Farbe,
+     `orange-deep` die einzige, die als TEXT auf Papier zulässig ist.
+     #F26A21 auf #FBF6EE ergibt 3,1:1 – für 15-px-Labels zu wenig.
+     #C24E12 kommt auf 5,4:1 und wirkt bei kleinen Graden sogar satter,
+     weil die Fläche pro Buchstabe zu klein ist, um Helligkeit zu tragen. */
+  --color-ep-orange: #f26a21; /* Fläche · Text auf Navy */
+  --color-ep-orange-deep: #c24e12; /* Text auf Papier        */
+  --color-ep-sun: #fbb23f; /* Sonnengelb · nur auf Navy */
+
+  /* Neutral & Signal */
+  --color-ep-ink: #14232e; /* Tinte          */
+  --color-ep-sand: #efe6d8; /* Sand – nur als Einlage, nie als Band */
+  --color-ep-paper: #fbf6ee; /* Papier         */
+  --color-ep-whatsapp: #25d366; /* nur WhatsApp   */
+
+  /* Haarlinien. Vorher stand an jeder Fundstelle ein eigener Alphawert
+     (/10, /12, /15, /25 …) – acht Nuancen für dieselbe Aufgabe. Zwei
+     Werte, hell und dunkel, sonst nichts. */
+  --color-ep-line: rgba(20, 35, 46, 0.16);
+  --color-ep-line-dark: rgba(255, 255, 255, 0.16);
+
+  /* Typografie */
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-dm-mono);
+
+  /* Radius (CI: 14px Bausteine) */
+  --radius-ep: 14px;
+}
+
+:root {
+  /* Höhe der fixen Kopfleiste – Single Source für pt in 100svh-Sektionen. */
+  --nav-h: 60px;
+
+  /* DIE KANTE. Ein Wert für die ganze Seite.
+     Vorher liefen drei Container-Systeme nebeneinander (voll breit mit
+     Padding, `max-w-[1600px]` im Hero, `max-w-[1240px]` in vier Sektionen).
+     Ergebnis auf 1920 px: fünf verschiedene linke Kanten – 96, 320, 373,
+     388, 397 – die alle „der Rand" sein wollten. Man nimmt das nicht als
+     Fehler wahr, sondern als Unruhe; der Blick sucht bei jedem
+     Sektionswechsel neu den Anfang.
+     Als clamp statt Breakpoint-Treppe: Die Kante wandert stufenlos mit
+     dem Fenster, es gibt also auch beim Skalieren keinen Sprung. */
+  --edge: clamp(1.5rem, 4.5vw, 7rem);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nav-h: 76px;
+  }
+}
+
+/* KEIN `scroll-behavior: smooth` auf <html>.
+   Es stand hier und hat gegen Lenis gearbeitet: Zwei Systeme, die beide den
+   Scroll weich machen wollen, ergeben keinen doppelt weichen Scroll, sondern
+   zwei Rechnungen über dieselbe Position. Das Springen zu Sprungmarken
+   übernimmt Lenis selbst (`anchors: true` in SmoothScroll.tsx).
+   Bei `prefers-reduced-motion` startet Lenis gar nicht erst – dort ist harter
+   Sprung ohnehin das Gewünschte. */
+
+/* =========================================================
+   Fläche & Kante
+   ---------------------------------------------------------
+   Der Bildschirm ist die Fläche, nicht ein gedachter Satzspiegel in der
+   Mitte davon. Zeilenlänge wird deshalb NICHT hier begrenzt, sondern am
+   Textelement selbst (`max-w-[..ch]`). Beides zu vermischen ist der Grund,
+   warum Layouts entweder zu eng oder unlesbar werden: Der eine Wert regelt
+   die Fläche, der andere die Lesbarkeit.
+   ========================================================= */
+/* In `@layer components`, nicht ungelayert: Ungelayertes CSS gewinnt in der
+   Kaskade gegen Tailwinds `@layer utilities`. Ohne die Layer würde
+   `width: 100%` hier jedes `w-*` am selben Element schlagen – ein Fehler,
+   der nicht als Konflikt auffällt, sondern als „die Breite wird ignoriert". */
+@layer components {
+  .ep-container {
+    width: 100%;
+    padding-inline: var(--edge);
+  }
+
+  /* ---------------------------------------------------------
+     DAS DATENBLATT-RASTER
+
+     Zwei Spuren statt einer freien Fläche:
+       Spur A (links, schmal)  – Bezeichnung: Kennung, Overline, Ziffer
+       Spur B (rechts, breit)  – Wert: die eigentliche Aussage
+
+     Das ist die Form, in der die Branche ihre Informationen ohnehin
+     notiert – Typenschild, Datenblatt, Wirtschaftlichkeitsrechnung: links
+     steht, worum es geht, rechts steht, was es ist. Es kodiert also etwas
+     Wahres über den Inhalt, statt ihn nur zu dekorieren.
+
+     Der eigentliche Grund ist aber ein anderer: Es gibt damit genau ZWEI
+     erlaubte Kanten auf der Seite statt fünf zufälliger. Jede Sektion
+     hängt an derselben Achse.
+
+     Unter lg fällt die Spur weg – auf 390 px ist für eine zweite Spalte
+     kein Platz, dort steht die Kennung schlicht über dem Wert. */
+  .ep-axis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .ep-axis {
+      /* 13vw → 15vw: Lange Kennungen wie „Wirtschaftlichkeitsrechnung"
+         sind bei fester Mono-Größe rund 250 px breit und stießen sonst
+         direkt an die Wertspur. Die Spur skaliert mit vw, die Kennung
+         nicht – deshalb dürfen Kennungen zusätzlich umbrechen (siehe
+         `.t-key`/`t-label` an den Fundstellen). */
+      grid-template-columns: minmax(7rem, 15vw) minmax(0, 1fr);
+      column-gap: clamp(2rem, 3.5vw, 4.5rem);
+      row-gap: 0;
+    }
+  }
+
+  /* Inhalt, der auf der Wertspur beginnt, ohne selbst ein Raster zu sein –
+     für Sektionsköpfe und Abschlusszeilen. Damit fluchten auch sie mit der
+     zweiten Kante, statt eine dritte aufzumachen. */
+  .ep-indent {
+    padding-left: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .ep-indent {
+      padding-left: calc(min(15vw, 100%) + clamp(2rem, 3.5vw, 4.5rem));
+    }
+  }
+}
+
+/* =========================================================
+   Typo-Skala · eine Klasse pro Rolle
+   ---------------------------------------------------------
+   Familie, Größe, Gewicht, WEITE, Laufweite und Zeilenabstand hängen
+   voneinander ab und gehören deshalb an EINE Stelle.
+
+   Neu ist die Weite (`font-stretch`). Archivo hat eine echte wdth-Achse,
+   und sie trägt hier die Hierarchie mit: Überschriften laufen schmal
+   (86 %), Fließtext normal (100 %). Der Kontrast, den sonst ein zweiter
+   Schriftschnitt liefern müsste, kommt damit aus derselben Familie – und
+   schmal gesetzte Grotesk ist genau die Sprache technischer Beschriftung.
+   Deutsche Komposita gewinnen doppelt: schmal gesetzt passen sie
+   überhaupt erst in eine Zeile.
+
+   Farbe steht bewusst NICHT hier drin: sie wechselt mit dem Band
+   (navy / papier) und gehört ins Markup.
+
+   ⚠️ ZEILENLÄNGE: `max-w-[..ch]` gehört auf das Textelement SELBST, niemals
+   auf einen Wrapper. `ch` rechnet gegen die Schriftgröße des Elements, an
+   dem es notiert ist – auf einem <div> mit geerbten 16 px sind 44ch rund
+   350 px, unabhängig davon, wie groß die Headline darin gesetzt ist.
+   ========================================================= */
+@layer components {
+  /* Lautstärke einer Sektion. Nicht jede spricht gleich laut – der
+     Signature-Moment trägt mehr Größe als eine Referenzliste. `--t-scale`
+     vererbt sich, die Klasse gehört also auf die Sektion, nicht auf
+     einzelne Elemente. Bewusst NICHT enthalten: `.t-label`. Der Reiz liegt
+     im Abstand zwischen winziger Mono-Zeile und großer Headline –
+     skaliert man beides mit, verschwindet genau dieser Kontrast. */
+  .t-loud {
+    --t-scale: 1.32;
+  }
+
+  /* `overflow-wrap` ist Sicherheitsnetz, kein Stilmittel: Deutsche
+     Komposita können bei diesen Größen breiter werden als ihre Zeile. Ohne
+     die Regel würde so ein Wort in den SplitText-Masken abgeschnitten. */
+  .t-display,
+  .t-h2,
+  .t-h3,
+  .t-quote {
+    overflow-wrap: break-word;
+    font-stretch: 86%;
+  }
+
+  /* Zeilenabstand: 1.02 statt der optisch reizvollen 0.95. Deutsch braucht
+     vertikal mehr Luft als Englisch – Unterlängen UND Umlautpunkte auf
+     Großbuchstaben (Ä, Ö, Ü) ragen über das Kegelmaß hinaus. Die Enge
+     kommt hier aus Weite und Laufweite, nicht aus dem Zeilenabstand. */
+  .t-display {
+    font-size: calc(clamp(2.9rem, 8.4vw, 8.5rem) * var(--t-scale, 1));
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  .t-h2 {
+    font-size: calc(clamp(2.1rem, 5.6vw, 4.75rem) * var(--t-scale, 1));
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+  }
+
+  .t-h3 {
+    font-size: calc(clamp(1.55rem, 2.7vw, 2.4rem) * var(--t-scale, 1));
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
+  }
+
+  /* Kleinste Überschriftenebene – Kartentitel, Bausteinnamen. Hier landen
+     die langen Fachbegriffe, deshalb echte Silbentrennung (html lang="de"). */
+  .t-h4 {
+    font-size: calc(clamp(1.0625rem, 1.5vw, 1.375rem) * var(--t-scale, 1));
+    font-weight: 600;
+    font-stretch: 92%;
+    letter-spacing: -0.008em;
+    line-height: 1.2;
+    hyphens: auto;
+  }
+
+  /* Zitate und herausgehobene Aussagen. Halbfett statt kursiv: gesprochene
+     Sätze sollen wie O-Ton klingen, nicht wie Lyrik. */
+  .t-quote {
+    font-size: calc(clamp(1.6rem, 3.4vw, 2.9rem) * var(--t-scale, 1));
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.14;
+  }
+
+  /* Einleitungen unter den Headlines. Normale Weite – ab hier wird
+     gelesen, nicht abgelesen. */
+  .t-lead {
+    font-size: calc(clamp(1.0625rem, 1.25vw, 1.25rem) * var(--t-scale, 1));
+    font-weight: 400;
+    line-height: 1.62;
+  }
+
+  /* Kennzahlen. Tabellenziffern, damit beim Hochzählen nichts springt. */
+  .t-stat {
+    font-size: calc(clamp(2rem, 3.6vw, 2.9rem) * var(--t-scale, 1));
+    font-weight: 700;
+    font-stretch: 86%;
+    letter-spacing: -0.015em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Wegmarken-Ziffer. Die große 01–05 über einem Schritt, die beim Scrollen
+     zeigt, wo man in einer Abfolge steht.
+
+     ⚠️ Sie fehlte, obwohl `t-num` im Markup stand: `Leistungen.tsx` setzt die
+     Ziffern seit dem Umbau auf diese Klasse, und ohne Definition liefen sie
+     in geerbter Fließtextgröße – die Wegmarke war faktisch nicht vorhanden.
+     Eine Utility-Klasse, die es nicht gibt, fällt in Tailwind nicht auf:
+     Sie erzeugt keinen Fehler, sie tut nur nichts.
+
+     Abgrenzung zu `.t-stat`: Dort steht eine gemessene Größe (Kennzahl,
+     Betrag), hier eine Position in einer Reihenfolge. Deshalb keine
+     Akzentfarbe im Token – die Ziffer ist Orientierung, nicht Aussage, und
+     bekommt ihre gedämpfte Farbe im Markup. */
+  .t-num {
+    font-size: calc(clamp(2rem, 5.5vw, 4rem) * var(--t-scale, 1));
+    font-weight: 700;
+    font-stretch: 86%;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Overlines, Statuszeilen, Mikro-Labels. Hier sitzt der technische Ton
+     der Marke – deshalb Mono.
+
+     15 px statt 12: Versalsatz mit weiter Sperrung liest sich bei gleicher
+     Punktgröße deutlich kleiner als Gemischtsatz, weil jedes Zeichen
+     einzeln erfasst werden muss. 12 px wären faktisch 10.
+
+     ⚠️ FARBE: Diese Klasse gibt keine vor, aber sie ist der Ort für die
+     Regel – Labels sind Kleintext und brauchen nach WCAG 4,5:1. Auf Papier
+     heißt das `text-ep-orange-deep` oder mindestens `text-ep-ink/70`, auf
+     Navy `text-ep-sun` oder `text-white/75`. Alles darunter fällt durch. */
+  .t-label {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  /* Navigation.
+     Vorher lief die Kopfleiste in `.t-label`, also DM Mono, versalisiert und
+     auf 0.14em gesperrt. Das war aus der Zeit, als die ganze Seite in einer
+     einzigen Grotesk gesetzt war und Mono der einzige Kontrast – seit
+     Archivo mit seiner Weiten-Achse die Hierarchie trägt, stimmt die
+     Zuordnung nicht mehr:
+
+     Mono bedeutet auf dieser Seite „abgelesener Wert" – Kennung, Messgröße,
+     Schrittzahl. Eine Navigation ist keines davon, sie ist Wegweisung. Und
+     sie ist der Text, der am schnellsten erfasst werden muss; weit gesperrte
+     Versalien in einer Monospace sind dafür die langsamste Kombination, die
+     man wählen kann. Dazu standen im Kopf drei Schriftbilder gleichzeitig:
+     Rubik in der Wortmarke, DM Mono in den Links, Archivo im Knopf.
+
+     Jetzt dieselbe Familie wie die Überschriften, nur klein, halbfett und
+     leicht schmal. Mono behält damit seine Bedeutung, statt sie zu
+     verwässern. */
+  .t-nav {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-stretch: 88%;
+    letter-spacing: 0.07em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  /* Kennung auf der linken Spur des Datenblatt-Rasters. Gleiche Familie
+     wie `.t-label`, aber ohne Sperrung und ohne Versalien – sie wird als
+     Wert gelesen, nicht als Überschrift. */
+  .t-key {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* =========================================================
+   DIE SKALA · Textur der dunklen Bänder
+   ---------------------------------------------------------
+   Feine Striche, jeder fünfte kräftiger – die Teilung eines Messinstruments,
+   nicht Karopapier. Sie liegt im Hero, im Footer und im Anfrage-Dialog;
+   vorher stand derselbe Doppel-Verlauf an drei Stellen inline im Markup.
+
+   ⚠️ DIE TEILUNG IST RESPONSIV, UND DAS IST KEIN DETAIL.
+   Bei fester Teilung von 24 px liegen auf einem 1920er Display rund 80
+   Linien hinter sehr großer Schrift – das liest sich als Atmosphäre. Auf
+   375 px sind es dieselben Striche hinter 13-px-Text: 15 Linien, die mitten
+   durch jedes Wort laufen. Gleiche Zahl, völlig andere Wirkung. Auf Mobil
+   wird die Teilung deshalb gröber, damit das Verhältnis von Linie zu
+   Schriftgröße annähernd gleich bleibt.
+   ========================================================= */
+.ep-skala {
+  --skala-fein: 24px;
+  --skala-grob: 120px;
+  --skala-fein-alpha: 0.028;
+  --skala-grob-alpha: 0.055;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, var(--skala-grob-alpha)) 0 1px,
+      transparent 1px var(--skala-grob)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, var(--skala-fein-alpha)) 0 1px,
+      transparent 1px var(--skala-fein)
+    );
+}
+
+@media (max-width: 767px) {
+  .ep-skala {
+    --skala-fein: 44px;
+    --skala-grob: 176px;
+    /* Zusätzlich leiser: Auf kleiner Fläche liegt jede Linie näher an
+       jedem Buchstaben, dieselbe Deckkraft wirkt dort kräftiger. */
+    --skala-fein-alpha: 0.018;
+    --skala-grob-alpha: 0.04;
+  }
+}
+
+/* Auslauf nach unten. Die Skala ist Atmosphäre – sie gehört dorthin, wo
+   Luft ist, nicht dorthin, wo Daten stehen. Im Hero sitzt unten das
+   Typenschild mit kleiner Schrift; liefen die Striche dort weiter durch,
+   müsste man jede Zeile gegen sie lesen. Der Verlauf steckt in
+   `mask-image`, nicht in der Farbe: Die Linien bleiben dadurch überall
+   gleich stark, nur ihre Sichtbarkeit nimmt ab. Über die Farbe gelöst
+   müsste man den Verlauf in jede einzelne Linie rechnen. */
+.ep-skala-auslauf {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 42%,
+    transparent 78%
+  );
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 78%);
+}
+
+/* Scroll-Indikator: Sonnen-Punkt wandert in der Kapsel abwärts */
+@keyframes ep-scrollcue {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateY(11px);
+    opacity: 1;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+.ep-scrollcue-dot {
+  animation: ep-scrollcue 1.9s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ep-scrollcue-dot {
+    animation: none;
+  }
+}
+
+::selection {
+  background: var(--color-ep-sun);
+  color: var(--color-ep-ink);
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}

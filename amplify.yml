@@ -1,0 +1,35 @@
+# AWS Amplify Hosting · Build-Spezifikation
+#
+# Die Anwendung braucht einen Server, sie ist keine statische Ausgabe:
+#   - `src/app/api/lead/route.ts`  nimmt Anfragen an und spricht mit Bitrix24
+#   - `src/proxy.ts`               entscheidet pro Anfrage anhand des Hosts,
+#                                  welche der beiden Marken ausgeliefert wird
+#   - `src/lib/google-reviews.ts`  ruft die Places API serverseitig ab
+#
+# In der Amplify-Konsole muss die App deshalb als Next.js SSR laufen
+# („Web compute"), nicht als statisches Hosting. Bei `next export` oder
+# „Static" fielen Lead-Route, Domain-Weiche und Bewertungen ersatzlos weg.
+#
+# ⚠️ KEINE SCHLÜSSEL IN DIESER DATEI. Alle Werte aus `.env.example` gehören
+# in der Amplify-Konsole unter „Environment variables" hinterlegt. Was hier
+# stünde, läge im öffentlichen Repository.
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # `ci` statt `install`: baut exakt gegen package-lock.json und
+        # aktualisiert sie nie stillschweigend. Ein Deploy soll dieselben
+        # Abhängigkeiten bekommen wie der lokale Stand, nicht die neuesten.
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - .next/cache/**/*
+      - node_modules/**/*
