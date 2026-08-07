@@ -540,7 +540,23 @@ export function Hero({
             Sprache des Typenschilds an einer Anlage, dieselbe wie in der
             Beleg-Leiste weiter unten auf der Seite. */}
         <div data-hero-beleg>
-          <ul className="grid grid-cols-2 border-t border-ep-line-dark lg:grid-cols-4">
+          {/* ⚠️ MOBIL ZWEI SPALTEN – UND DIE ANZAHL IST NICHT FEST.
+              Mit Bewertung sind es vier Kacheln, also ein glattes 2×2.
+              Ohne sie drei, und dann stand die letzte allein in der zweiten
+              Zeile, neben einer leeren Hälfte. Das liest sich nicht als
+              Reihe, sondern als abgebrochene Aufzählung – und ausgerechnet
+              die Zusage „24 Std. bis zur Rückmeldung" landete dort.
+
+              Bei ungerader Anzahl nimmt die letzte Kachel deshalb die volle
+              Breite. Kein Loch, keine Sonderregel pro Wert: Es hängt an der
+              Datenlage, nicht an der Reihenfolge im Markup. Ab lg stehen
+              ohnehin alle nebeneinander, dort greift es nicht. */}
+          <ul
+            className={cn(
+              "grid grid-cols-2 border-t border-ep-line-dark lg:grid-cols-4",
+              !bewertungen && "max-lg:[&>*:last-child]:col-span-2",
+            )}
+          >
             {/* Die Bewertung zuerst: Sie ist die einzige Aussage hier, die
                 nicht von uns stammt. Ohne echte Daten fällt sie weg und
                 die Leiste läuft auf drei Werten – kein Loch, weil das
