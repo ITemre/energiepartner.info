@@ -24,6 +24,29 @@ frontend:
         - npm ci
     build:
       commands:
+        # ⚠️ UMGEBUNGSVARIABLEN IN DIE LAUFZEIT DURCHREICHEN.
+        #
+        # Amplify stellt die in der Konsole gepflegten Variablen dem BUILD
+        # zur Verfügung, aber nicht zuverlässig der SSR-Funktion, die später
+        # die Anfragen bedient. Das führt zu einem Fehlerbild, das man leicht
+        # falsch deutet: Alles, was beim Vorrendern gelesen wird
+        # (`PLATZHALTER_INHALTE`), funktioniert – und alles, was erst zur
+        # Anfragezeit gelesen wird, ist undefiniert. Konkret meldete
+        # `/api/lead` 503 „Die Übermittlung ist gerade nicht möglich", weil
+        # `BITRIX24_WEBHOOK_URL` im Lambda nicht ankam.
+        #
+        # Deshalb werden die benötigten Werte hier in eine `.env.production`
+        # geschrieben. Next liest sie beim Build und nimmt sie in die
+        # Server-Ausgabe auf, womit sie zur Laufzeit stehen.
+        #
+        # Die Datei entsteht nur im Build-Container und ist über `.env*` von
+        # Git ausgeschlossen – es landet also kein Geheimnis im Repository.
+        #
+        # Das `|| true` ist Absicht: Findet `grep` keine einzige passende
+        # Variable, liefert es Rückgabewert 1 und würde den Build abbrechen.
+        # Eine fehlende Variable soll aber die Seite nicht verhindern, sie
+        # soll nur die davon abhängige Funktion stillegen.
+        - env | grep -E "^(BITRIX24_|GOOGLE_|PLATZHALTER_INHALTE=)" >> .env.production || true
         - npm run build
   artifacts:
     baseDirectory: .next
