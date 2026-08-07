@@ -52,6 +52,24 @@ export const metadata: Metadata = {
   },
   description:
     "Wärmepumpe, Photovoltaik und Stromtarif aus einer Hand: herstellerunabhängig beraten, anbieterübergreifend verglichen, persönlich betreut in Stuttgart. Beratung kostenlos.",
+
+  /* ═══ VORFÜHR-INSTANZEN GEHÖREN NICHT IN DIE SUCHE ═══
+     Dieselbe Variable, die die vorläufigen Stimmen und Kennzahlen
+     freischaltet, nimmt die Seite aus dem Index. Beides hängt zusammen und
+     darf deshalb nicht getrennt schaltbar sein: Wo erfundene Bewertungen
+     stehen, darf niemand über eine Suche hineinstolpern.
+
+     Das ist der Ersatz für die frühere `NODE_ENV`-Sperre, und es trifft den
+     Punkt besser. Wettbewerbsrechtlich zählt nicht, ob eine Demo existiert –
+     der Kunde darf seinen eigenen Entwurf sehen –, sondern ob Verbraucher
+     als Publikum erreicht werden. Genau das unterbindet `noindex`.
+
+     Auf dem Livesystem ist die Variable nicht gesetzt: keine Platzhalter,
+     kein `noindex`, normale Indexierung. Es gibt nichts umzustellen. */
+  robots:
+    process.env.PLATZHALTER_INHALTE === "an"
+      ? { index: false, follow: false, nocache: true }
+      : undefined,
 };
 
 /**

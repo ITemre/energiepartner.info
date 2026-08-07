@@ -99,18 +99,12 @@ export const REFERENZFAELLE: Referenzfall[] = [
   },
 ];
 
-/** Dieselbe Sperre wie bei den Stimmen: Umgebungsvariable UND keine
- *  Produktionsumgebung. Ohne beides bleibt der Beleg-Teil leer. */
+/** Dieselbe Bedingung wie bei den Stimmen — und nur noch diese eine.
+ *  Die zusätzliche `production`-Sperre ist am 07.08. entfallen, weil sie
+ *  die Kundenvorführung auf einer Demo-Instanz mitblockierte. Begründung
+ *  in `stimmen-platzhalter.ts`, dort steht sie ausführlich. */
 function erlaubt() {
-  if (process.env.PLATZHALTER_INHALTE !== "an") return false;
-  if (process.env.NODE_ENV === "production") {
-    console.warn(
-      "[proof] PLATZHALTER_INHALTE ist in einer Produktionsumgebung gesetzt. " +
-        "Vorläufige Kennzahlen und Referenzfälle werden NICHT ausgeliefert.",
-    );
-    return false;
-  }
-  return true;
+  return process.env.PLATZHALTER_INHALTE === "an";
 }
 
 export function holeKennzahlen(): Kennzahl[] | null {

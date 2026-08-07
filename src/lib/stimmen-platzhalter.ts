@@ -96,24 +96,29 @@ export const STIMMEN_PLATZHALTER: GoogleBewertungen = {
 };
 
 /**
- * Liefert die vorläufigen Stimmen — aber nur, wenn die Umgebung sie
- * ausdrücklich erlaubt.
+ * Liefert die vorläufigen Stimmen — wenn die Umgebung sie erlaubt.
  *
- * Die Prüfung auf `production` ist die zweite Sperre: Selbst wenn die
- * Variable versehentlich in eine Produktivumgebung gerät, bleibt die Sektion
- * dort leer. Zwei Bedingungen, die beide erfüllt sein müssen, damit
- * erfundene Bewertungen jemals sichtbar werden.
+ * ═══ DIE ZWEITE SPERRE IST WEG (07.08.) ═══
+ * Hier stand zusätzlich `NODE_ENV !== "production"`. Das machte die
+ * Vorführung unmöglich: Eine Demo-Seite auf Amplify IST ein Produktionsbuild,
+ * und damit blieb die Stimmen-Sektion ausgerechnet dort leer, wo der Kunde
+ * den fertigen Auftritt sehen soll. Eine Sperre, die den vorgesehenen
+ * Anwendungsfall mitblockiert, ist keine Sicherung, sondern ein Fehler.
+ *
+ * Es entscheidet jetzt allein `PLATZHALTER_INHALTE`. Das reicht auch, denn
+ * die Variable ist an die UMGEBUNG gebunden, nicht an den Code: Sie steht in
+ * der Amplify-Konfiguration der Demo-App und nicht in der des Livesystems.
+ * Ein Deploy trägt sie nicht mit sich herum.
+ *
+ * ⚠️ Dieselbe Variable schaltet in `app/layout.tsx` zusätzlich `noindex`.
+ * Das ist der Ersatz für die entfernte Sperre und deckt das ab, worum es
+ * wettbewerbsrechtlich wirklich geht: nicht dass die Seite existiert,
+ * sondern dass Verbraucher über eine Suche darauf stoßen.
+ *
+ * Sobald echte Rezensionen da sind: Variable überall entfernen, diese Datei
+ * löschen, den Rückfall in `page.tsx` und `av/page.tsx` streichen.
  */
 export function holePlatzhalterStimmen(): GoogleBewertungen | null {
   if (process.env.PLATZHALTER_INHALTE !== "an") return null;
-
-  if (process.env.NODE_ENV === "production") {
-    console.warn(
-      "[stimmen] PLATZHALTER_INHALTE ist in einer Produktionsumgebung gesetzt. " +
-        "Erfundene Bewertungen werden NICHT ausgeliefert. Variable entfernen.",
-    );
-    return null;
-  }
-
   return STIMMEN_PLATZHALTER;
 }
