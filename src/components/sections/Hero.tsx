@@ -124,12 +124,29 @@ const ZUSAGEN = ["vor Ort oder am Telefon", "ohne Verpflichtung"] as const;
  * vollständige Bedingungen trennt und nichts klammert.
  *
  * ⚠️ Die Sektion trägt dieselbe Schwelle noch einmal als
- * `[@media(max-height:700px)_and_(max-width:640px)]:relative`. Tailwind
+ * `[@media(max-height:600px)_and_(max-width:640px)]:relative`. Tailwind
  * kann keine Konstante aus TypeScript lesen – wer einen Wert ändert, muss
  * den anderen mitändern, sonst zoomt ein Hero, der gar nicht mehr steht.
  */
+/* ═══ 701 → 601 (07.08.) ═══
+ * Die Schwelle war gegen die GERÄTEhöhe gerechnet, Media Queries messen
+ * aber das Browser-FENSTER. Auf einem iPhone 16 (852 px Gerät) bleiben nach
+ * Statusleiste, Safari-Tableiste und Home-Indikator rund 700 bis 710 px
+ * übrig – die alte Schwelle lag mit 701 px also genau auf dieser Kante, und
+ * je nach Schriftgröße und iOS-Version fiel ein aktuelles Telefon darunter.
+ * Genau das sollte nie passieren: Ausgeschlossen werden sollten die kleinen
+ * Geräte, nicht die aktuellen.
+ *
+ * 601 px trennt sauber, mit Abstand nach beiden Seiten:
+ *   iPhone SE (667 px Gerät)        → rund 553 px Fenster → ohne Effekt
+ *   iPhone 13 mini (812 px Gerät)   → rund 667 px Fenster → mit Effekt
+ *   iPhone 16 (852 px Gerät)        → rund 707 px Fenster → mit Effekt
+ *
+ * Der Grund für die Sperre bleibt bestehen (siehe unten): Auf einem sehr
+ * flachen Schirm wäre die Beleg-Leiste unter einem sticky Hero dauerhaft
+ * unerreichbar. Nur die Grenze lag falsch. */
 const ABGANG_ERLAUBT =
-  "(prefers-reduced-motion: no-preference) and (min-height: 701px)," +
+  "(prefers-reduced-motion: no-preference) and (min-height: 601px)," +
   "(prefers-reduced-motion: no-preference) and (min-width: 641px)";
 
 /* Die Beleg-Leiste in drei Bausteinen statt in vier gleichlautenden
@@ -307,7 +324,7 @@ export function Hero({
     <section
       ref={scope}
       data-nav-theme="dark"
-      className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden bg-ep-navy-deep [@media(max-height:700px)_and_(max-width:640px)]:relative"
+      className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden bg-ep-navy-deep [@media(max-height:600px)_and_(max-width:640px)]:relative"
     >
       {/* DIE SKALA – die Teilung eines Messinstruments, nicht Karopapier.
           Zwei Ebenen, weil Ankunft (innen) und Abgang (außen) beide auf
