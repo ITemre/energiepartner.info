@@ -14,7 +14,7 @@ import { AvStickyBar } from "@/components/av/AvStickyBar";
  *
  * Läge er stattdessen in einer Sektion, hätte jede weitere ihren eigenen
  * Dialog und ihren eigenen Dateizustand; welcher gerade gilt, hinge davon
- * ab, auf welchen Knopf jemand zufällig geklickt hat.
+ * ab, auf welchen Knopf jemand zufällig geklickt hat. nice
  *
  * ═══ OHNE `AnfrageProvider` ═══
  * Er stand hier, solange die Seite denselben Anfrage-Dialog nutzte wie
