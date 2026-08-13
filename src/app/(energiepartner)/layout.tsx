@@ -4,8 +4,10 @@ import { AnfrageProvider } from "@/components/anfrage/AnfrageProvider";
 
 /**
  * Layout des Auftritts energiepartner.info (Vertrauens-/Info-Seite).
- * Immersiver Header + eigener Footer. angebote-vergleichen.info erhält
- * später ein eigenes Layout (Trust-Bar + eigener Footer) in (angebote)/.
+ *
+ * Kopfleiste neu gebaut (13.08., Kundenwunsch: moderner, wirkt wie eine
+ * richtige Company) – siehe `SiteHeader` für Farbwechsel/Ankunft und
+ * `MenuOverlay` für das mobile Vollbildmenü.
  */
 export default function EnergiepartnerLayout({
   children,

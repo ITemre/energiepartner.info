@@ -15,18 +15,25 @@ type Size = "sm" | "lg";
 /**
  * `solid`  – volles Kanal-Grün. Genau EINMAL pro Bildschirm.
  * `quiet`  – Kontur, Glyph in Grün. Für Dauerpräsenz (Kopfleiste).
+ * `accent` – volle Markenfarbe (Orange), Glyph in Weiß statt Grün. Für die
+ *   Kopfleiste (13.08.): Dort steht der Knopf permanent im Bild, oft
+ *   gleichzeitig mit dem grünen Hero-CTA – zwei solide Grün-Flächen im
+ *   selben Frame wären die Kollision, die `solid` eigentlich vermeiden
+ *   soll. Orange kollidiert nicht mit dem Kanal-Grün und trägt stattdessen
+ *   die Marke in die Leiste.
  *
- * Warum die Trennung: #25D366 ist heller und gesättigter als jede
- * Markenfarbe. Standen Kopfleiste und Hero-CTA gleichzeitig im Bild, war
- * das Grün zweimal das Auffälligste auf der Fläche – und zog den Blick
- * stärker als „Ihr Vorteil." in Sonnengelb. Der Kanal gewann damit gegen
- * die Marke, ausgerechnet im wichtigsten Frame der Seite.
+ * Warum die Trennung zwischen `solid` und `quiet`: #25D366 ist heller und
+ * gesättigter als jede Markenfarbe. Standen Kopfleiste und Hero-CTA
+ * gleichzeitig im Bild, war das Grün zweimal das Auffälligste auf der
+ * Fläche – und zog den Blick stärker als „Ihr Vorteil." in Orange. Der
+ * Kanal gewann damit gegen die Marke, ausgerechnet im wichtigsten Frame
+ * der Seite.
  *
  * Die leise Variante behält den Wiedererkennungswert (der Glyph bleibt
  * grün, und der trägt die Erkennung, nicht die Fläche) und gibt die
  * Aufmerksamkeit an die Stelle zurück, wo sie hingehört.
  */
-type Tone = "solid" | "quiet";
+type Tone = "solid" | "quiet" | "accent";
 
 export function WhatsAppButton({
   size = "sm",
@@ -53,12 +60,15 @@ export function WhatsAppButton({
         "group inline-flex items-center justify-center gap-2 rounded-ep font-semibold",
         "transition-[transform,background-color,border-color] duration-200",
         "hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ep-whatsapp",
-        tone === "solid"
-          ? "bg-ep-whatsapp text-[#04381A] shadow-[0_8px_24px_-8px_rgba(37,211,102,0.45)]"
-          : // Farbneutrale Kontur: funktioniert auf Navy wie auf Papier,
-            // weil sie `currentColor` erbt. Die Elternfläche gibt die
-            // Textfarbe vor, der Glyph bleibt grün.
-            "border border-current/30 hover:border-current/60 hover:bg-current/10",
+        tone === "solid" &&
+          "bg-ep-whatsapp text-[#04381A] shadow-[0_8px_24px_-8px_rgba(37,211,102,0.45)]",
+        tone === "accent" &&
+          "bg-ep-accent-strong text-white shadow-[0_8px_24px_-8px_rgba(242,106,33,0.45)] hover:bg-[#d95c17]",
+        tone === "quiet" &&
+          // Farbneutrale Kontur: funktioniert auf Navy wie auf Papier,
+          // weil sie `currentColor` erbt. Die Elternfläche gibt die
+          // Textfarbe vor, der Glyph bleibt grün.
+          "border border-current/30 hover:border-current/60 hover:bg-current/10",
         size === "lg" ? "px-6 py-4 text-base" : "px-4 py-2.5 text-sm",
         className,
       )}

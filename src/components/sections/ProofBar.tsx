@@ -8,7 +8,8 @@ import { Star } from "lucide-react";
 import { GoogleG } from "@/components/ui/GoogleG";
 import { formatiereNote, type GoogleBewertungen } from "@/lib/google-reviews";
 import type { Kennzahl } from "@/lib/proof";
-import { revealItems } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+import { countUp, revealItems } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -54,6 +55,12 @@ export function ProofBar({
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         revealItems("[data-pb-item]", { distance: 18, start: "top 94%" });
+
+        /* Dieselbe Primitive wie in der Förderung, nur kürzer: Die Leiste
+           ist eine schmale Zeile, keine Argumentationsfläche – hier soll
+           die Bewegung bestätigen, nicht vorführen. Auch die Bewertung
+           zählt mit, sie ist die wichtigste Zahl der Reihe. */
+        return countUp("[data-pb-zahl]", { start: "top 94%", duration: 1.1 });
       });
     },
     { scope },
@@ -67,76 +74,104 @@ export function ProofBar({
     <section
       ref={scope}
       data-nav-theme="dark"
+      data-surface="dark"
       aria-label="Zahlen und Bewertung"
-      className="border-t border-ep-sun/25 bg-ep-navy text-white"
+      className="border-y border-ep-accent/25 bg-ep-navy text-white"
     >
-      <div className="ep-container py-12 sm:py-16">
-        <div className="lg:flex lg:items-stretch lg:gap-12">
-          {/* Die Kennzahlen. Der Wert trägt, das Label erklärt – deshalb
-              Wert groß und Label klein, nicht umgekehrt. Vier Werte in
-              gleicher Größe nebeneinander wären eine Tabelle; hier soll man
-              vier Aussagen lesen. */}
-          {kennzahlen?.length ? (
-            <dl className="grid flex-1 grid-cols-2 gap-x-8 gap-y-8 lg:grid-cols-4">
-              {kennzahlen.map((k, i) => (
-                <div
-                  key={k.label}
-                  data-pb-item
-                  className={[
-                    "border-t border-ep-line-dark pt-5",
-                    // Auf Mobil zwei Spalten, ab lg vier – die senkrechten
-                    // Trenner müssen sich entsprechend mitverschieben.
-                    i % 2 === 1 ? "border-l border-ep-line-dark pl-6 lg:border-l-0 lg:pl-0" : "",
-                    i > 0 ? "lg:border-l lg:border-ep-line-dark lg:pl-8" : "",
-                  ].join(" ")}
-                >
-                  <dt className="sr-only">{k.label}</dt>
-                  <dd>
-                    <span className="t-stat block text-ep-sun">{k.wert}</span>
-                    <span className="mt-2 block max-w-[18ch] text-[15px] leading-snug text-white/70">
-                      {k.label}
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
+      {/* ═══ ⚠️ EINE ZEILE, KEIN BLOCK (12.08.) ═══
+          Vorher war das ein vierspaltiges Raster mit `t-stat`-Werten und
+          `py-16` – rund 200 px hoch und damit optisch eine eigene Sektion.
+          Das ist zu viel Gewicht für eine Beleg-Leiste: Sie soll etwas
+          BESTÄTIGEN, was daneben behauptet wird, nicht selbst eine Aussage
+          aufmachen.
 
-          {/* Die Bewertung. Steht rechts als eigener Block und nicht als
-              fünfte Kennzahl – sie ist die einzige Aussage hier, die nicht
-              von uns stammt, und genau das ist ihr Wert. */}
+          Jetzt eine schmale Zeile. Wert und Label stehen nebeneinander statt
+          übereinander – das halbiert die Höhe und liest sich als Angabe
+          („5 Jahre Erfahrung") statt als Kennzahl mit Bildunterschrift.
+
+          ⚠️ KEIN `<dl>` MEHR. Die alte Fassung hatte je Eintrag ein
+          `<dt class="sr-only">` mit dem Label UND dasselbe Label sichtbar im
+          `<dd>`. Vorlesesoftware las dadurch jede Angabe doppelt. Eine Liste
+          aus Wert-plus-Label-Paaren braucht keine Definitionsliste, sie ist
+          keine Begriffserklärung. */}
+      <div className="ep-container py-5 sm:py-6">
+        {/* ⚠️ ZWEITER ANLAUF (13.08.) – MOBIL EINE SPALTE, KEIN RASTER MEHR.
+            Die vorherige Fassung presste die Angaben mobil in zwei
+            Grid-Spalten zu je ~171 px. Selbst mit `flex-wrap` gegen den
+            Overflow blieb das hässlich: eine Bewertungszelle, die zeilenweise
+            zerbricht, neben einer „Förderung"-Zelle, die es nicht tut –
+            ungleiche Zeilenzahl, ungleiche Höhe, krumme Kanten. Der Fehler
+            war nicht das Wrapping, sondern der Zwang, vier Angaben unter
+            600 px überhaupt nebeneinander zu pressen.
+            Jetzt: EINE Spalte, jede Angabe ihre eigene volle Breite – exakt
+            das Datenblatt-Muster, nur senkrecht statt waagerecht. Haarlinien
+            trennen die Zeilen (`border-b`), nicht mehr die Spalten. Ab `sm`
+            unverändert das vierspaltige Raster mit `border-l` – dort ist
+            genug Breite, um es „bereits perfekt" (Emre) sein zu lassen. */}
+        <ul className="flex flex-col sm:grid sm:grid-cols-4">
+          {/* Die Bewertung zuerst: Sie ist die einzige Angabe hier, die
+              nicht von uns stammt. */}
           {bewertungen && (
-            <div
-              data-pb-item
-              className="mt-12 shrink-0 border-t border-ep-line-dark pt-5 lg:mt-0 lg:w-56 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0"
-            >
-              <div className="flex items-end gap-3">
-                <span className="t-stat text-white">
-                  {formatiereNote(bewertungen.note)}
-                </span>
-                <div className="pb-1">
-                  <span className="flex items-center gap-0.5" aria-hidden="true">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={
-                          i < Math.round(bewertungen.note)
-                            ? "size-3.5 fill-ep-sun text-ep-sun"
-                            : "size-3.5 text-white/25"
-                        }
-                      />
-                    ))}
-                  </span>
-                </div>
-              </div>
-              <p className="mt-2 flex items-center gap-2 text-[15px] text-white/70">
+            <li className="flex items-baseline gap-2.5 border-b border-ep-line-dark py-3 sm:border-b-0 sm:py-0">
+              <span
+                data-pb-zahl
+                className="text-[1.375rem] font-bold leading-none text-white [font-variant-numeric:tabular-nums]"
+              >
+                {formatiereNote(bewertungen.note)}
+              </span>
+              <span className="flex items-center gap-0.5" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className={
+                      i < Math.round(bewertungen.note)
+                        ? "size-3.5 fill-ep-accent text-ep-accent"
+                        : "size-3.5 text-white/25"
+                    }
+                  />
+                ))}
+              </span>
+              <span className="flex items-center gap-1.5 text-[14px] text-white/60">
                 <GoogleG className="size-3.5 shrink-0" />
                 {bewertungen.anzahl}{" "}
-                {bewertungen.anzahl === 1 ? "Bewertung" : "Bewertungen"} bei Google
-              </p>
-            </div>
+                {bewertungen.anzahl === 1 ? "Bewertung" : "Bewertungen"}
+              </span>
+            </li>
           )}
-        </div>
+
+          {kennzahlen?.map((k, i) => (
+            <li
+              key={k.label}
+              data-pb-item
+              className={cn(
+                "flex items-baseline gap-2.5 py-3 sm:py-0",
+                // Haarlinie links ab `sm` – dieselbe Spur wie vorher, nur
+                // nicht mehr auch für Mobil zuständig (siehe `border-b`
+                // unten). „Erfahrung" (i===0) ist unter sm ausgeblendet
+                // (13.08., Kundenwunsch) und bekommt die Leiste deshalb erst
+                // ab sm, wo sie tatsächlich sichtbar ist.
+                "sm:border-l sm:border-ep-line-dark sm:pl-6",
+                !bewertungen && i === 0 && "sm:border-l-0 sm:pl-0",
+                i === 0 && "max-sm:hidden",
+                // Haarlinie unten zwischen den Mobil-Zeilen. „24 Std." (i===2)
+                // ist immer die letzte Zeile – DOM-Reihenfolge ändert sich
+                // nie, unabhängig davon, ob eine Bewertung voransteht. Sie
+                // bekommt deshalb nie eine untere Linie, alle davor immer.
+                i !== 2 && "border-b border-ep-line-dark sm:border-b-0",
+              )}
+            >
+              <span
+                data-pb-zahl
+                className="text-[1.375rem] font-bold leading-none text-ep-accent [font-variant-numeric:tabular-nums]"
+              >
+                {k.wert}
+              </span>
+              <span className="text-[14px] leading-snug text-white/60">
+                {k.label}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

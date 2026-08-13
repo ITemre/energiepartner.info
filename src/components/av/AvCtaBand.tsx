@@ -62,6 +62,7 @@ export function AvCtaBand({
     <section
       ref={scope}
       data-nav-theme={dunkel ? "dark" : "light"}
+      data-surface={dunkel ? "dark" : undefined}
       className={cn(
         "relative overflow-hidden",
         dunkel ? "bg-ep-navy text-white" : "border-y border-ep-line bg-ep-sand/50 text-ep-ink",

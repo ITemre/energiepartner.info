@@ -32,6 +32,7 @@ export function AvFooter() {
   return (
     <footer
       data-nav-theme="dark"
+      data-surface="dark"
       className="relative overflow-hidden bg-ep-navy-deep text-white"
     >
       <div
@@ -77,7 +78,7 @@ export function AvFooter() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-white/75 outline-none transition-colors hover:text-white focus-visible:text-white"
               >
-                <MessageCircle className="size-4 text-ep-sun" aria-hidden="true" />
+                <MessageCircle className="size-4 text-ep-accent" aria-hidden="true" />
                 WhatsApp: {SITE.whatsapp.display}
               </a>
             </li>
@@ -86,7 +87,7 @@ export function AvFooter() {
                 href={SITE.phone.href}
                 className="inline-flex items-center gap-2 text-white/75 outline-none transition-colors hover:text-white focus-visible:text-white"
               >
-                <Phone className="size-4 text-ep-sun" aria-hidden="true" />
+                <Phone className="size-4 text-ep-accent" aria-hidden="true" />
                 {SITE.phone.display}
               </a>
             </li>

@@ -104,7 +104,7 @@ export function AvStickyBar() {
           type="button"
           onClick={oeffneDateiauswahl}
           tabIndex={sichtbar ? 0 : -1}
-          className="inline-flex shrink-0 items-center gap-2 rounded-ep bg-ep-orange px-5 py-3 text-[15px] font-bold text-white outline-none transition-colors hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-sun"
+          className="inline-flex shrink-0 items-center gap-2 rounded-ep bg-ep-accent-strong px-5 py-3 text-[15px] font-bold text-white outline-none transition-colors hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
         >
           <Upload className="size-4 shrink-0" aria-hidden="true" />
           Hochladen

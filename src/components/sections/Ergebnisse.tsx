@@ -76,16 +76,17 @@ export function Ergebnisse() {
     <section
       ref={scope}
       data-nav-theme="dark"
+      data-surface="dark"
       className="bg-ep-navy text-white"
     >
       <div className="ep-container py-28 sm:py-40 lg:py-48">
         <div>
-          <p data-e-eyebrow className="t-label text-ep-sun">
+          <p data-e-eyebrow className="t-label text-ep-accent">
             Das Ergebnis
           </p>
           <h2 data-e-h2 className="t-h2 mt-6 max-w-[18ch]">
             Das bekommen Sie{" "}
-            <span className="text-ep-sun">schwarz auf weiß.</span>
+            <span className="text-ep-accent">schwarz auf weiß.</span>
           </h2>
         </div>
 
@@ -107,8 +108,9 @@ export function Ergebnisse() {
               className="ep-axis border-b border-ep-line-dark py-10 sm:py-14 lg:py-20"
             >
               {/* Spur A – die Bezeichnung. Mono, damit sie als Kennung
-                  gelesen wird und nicht als Überschrift. Sonnengelb ist auf
-                  Navy die einzige Akzentfarbe, die klein noch trägt.
+                  gelesen wird und nicht als Überschrift. `ep-accent` passt
+                  sich über `data-surface="dark"` automatisch auf einen
+                  Navy-tauglichen Tint an.
                   Die Ziffer davor macht aus der Aufzählung eine Tafel mit
                   Positionen – dieselbe Logik wie in Ablauf und Leistungen. */}
               {/* `hyphens-auto` (html lang="de"): „Wirtschaftlichkeitsrechnung"
@@ -119,7 +121,7 @@ export function Ergebnisse() {
                 <span className="t-key block text-white/30">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="t-label mt-2 block text-ep-sun [hyphens:auto]">
+                <span className="t-label mt-2 block text-ep-accent [hyphens:auto]">
                   {key}
                 </span>
               </div>
@@ -142,7 +144,7 @@ export function Ergebnisse() {
         >
           <p className="max-w-[16ch] text-[clamp(2rem,4.6vw,4rem)] font-bold leading-[1.05] tracking-[-0.03em]">
             Der erste Schritt{" "}
-            <span className="text-ep-sun">
+            <span className="text-ep-accent">
               kostet Sie <Marker variante={1}>nichts</Marker>.
             </span>
           </p>

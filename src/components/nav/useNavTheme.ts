@@ -27,10 +27,23 @@ if (typeof window !== "undefined") {
  * eigene Kopfleisten, aber dasselbe Problem – deshalb liegt die Logik hier
  * und nicht in einer der beiden Komponenten.
  */
-export function useNavTheme() {
-  /** Liegt die Leiste gerade auf dunklem Grund? Startwert: ja, beide
-   *  Auftritte beginnen mit einem Navy-Hero. */
-  const [onDark, setOnDark] = useState(true);
+export function useNavTheme({
+  /**
+   * Womit die Leiste startet, bevor der erste ScrollTrigger greift.
+   *
+   * ⚠️ DAS IST KEIN KOSMETIK-PARAMETER. Die Trigger werden erst nach dem
+   * ersten Rendern erzeugt, und `onToggle` feuert nicht rückwirkend für ein
+   * Band, in dem man beim Laden bereits steht. Der Startwert IST also die
+   * Farbe im ersten Bild – bei einem hellen Hero stünde mit der alten
+   * Vorgabe weiße Wortmarke auf Papier, bis jemand scrollt.
+   *
+   * Vorgabe bleibt `true`: angebote-vergleichen.info startet weiterhin auf
+   * Navy. energiepartner.info hat seit dem hellen Hero `false`.
+   */
+  startetDunkel = true,
+}: { startetDunkel?: boolean } = {}) {
+  /** Liegt die Leiste gerade auf dunklem Grund? */
+  const [onDark, setOnDark] = useState(startetDunkel);
   /** Schon gescrollt? Steuert, ob die Leiste eine Fläche bekommt. */
   const [lifted, setLifted] = useState(false);
 

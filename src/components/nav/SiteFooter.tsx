@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MessageCircle, Phone } from "lucide-react";
-import { NAV_ITEMS, SITE, VERMITTLERHINWEIS } from "@/lib/site";
+import { FOERDERHINWEIS, NAV_ITEMS, SITE, VERMITTLERHINWEIS } from "@/lib/site";
 
 const LOGO_HEIGHT = 30;
 const LOGO_WIDTH = Math.round(LOGO_HEIGHT * SITE.logo.ratio);
@@ -11,14 +11,14 @@ const LEGAL = [
   { label: "Datenschutz", href: "/datenschutz" },
 ] as const;
 
-/** Footer-Link mit einlaufendem Sonnen-Punkt (CI-Motiv) */
+/** Footer-Link mit einlaufendem Akzent-Punkt (CI-Motiv) */
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
       className="group inline-flex items-center gap-2 text-white/75 outline-none transition-colors hover:text-white focus-visible:text-white"
     >
-      <span className="size-1.5 scale-0 rounded-full bg-ep-sun opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100" />
+      <span className="size-1.5 scale-0 rounded-full bg-ep-accent-strong opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100" />
       {children}
     </Link>
   );
@@ -46,10 +46,18 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
+    /* ⚠️ KEIN `id="kontakt"` MEHR (10.08.). Die Kennung liegt jetzt an der
+       Kontaktsektion darüber (`sections/Kontakt.tsx`). Zwei Elemente mit
+       derselben `id` sind ungültiges Markup, und der Menüpunkt „Kontakt"
+       soll auf einen Kontaktbereich springen, nicht in die Fußzeile.
+
+       Die Kontaktangaben bleiben hier trotzdem stehen: Sie gehören zu den
+       Pflichtangaben eines Impressumsblocks und werden dort gesucht,
+       unabhängig davon, wo der Menüpunkt hinführt. */
     <footer
-      id="kontakt"
       data-nav-theme="dark"
-      className="relative scroll-mt-[var(--nav-h)] overflow-hidden bg-ep-navy-deep text-white"
+      data-surface="dark"
+      className="relative overflow-hidden bg-ep-navy-deep text-white"
     >
       <div
         aria-hidden="true"
@@ -74,8 +82,20 @@ export function SiteFooter() {
                 herstellerunabhängig = an keine Marke gebunden,
                 anbieterübergreifend = wir vergleichen über die Anbieter
                 hinweg. Das absolute „unabhängig" steht bewusst nirgends. */}
+            {/* ⚠️ „Energieberatung aus Stuttgart" → „Energie-Vermittlung"
+                (13.08.). Das Wort benannte die falsche Rolle: Ilias
+                vermittelt und vergleicht, er ist kein Energieberater
+                (Briefing 2). „Energieberatung" ist zudem der Begriff, den
+                die Aufgabenliste des Briefings ausdrücklich am
+                Google-Profil bemängelt („widerspricht der gesamten
+                Website-Copy") – er stand hier also genau dort, wo er laut
+                eigener Notiz nicht stehen darf.
+
+                Der Rest des Absatzes bleibt unverändert:
+                „herstellerunabhängig" und „anbieterübergreifend" sind die
+                beiden ausdrücklich erlaubten Formulierungen. */}
             <p className="mt-6 max-w-[38ch] text-white/75">
-              Energieberatung aus Stuttgart: Wärmepumpe, Photovoltaik und
+              Energie-Vermittlung aus Stuttgart: Wärmepumpe, Photovoltaik und
               Stromtarif als ein abgestimmtes System. Herstellerunabhängig
               beraten, anbieterübergreifend verglichen.
             </p>
@@ -104,7 +124,7 @@ export function SiteFooter() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-white/75 outline-none transition-colors hover:text-white focus-visible:text-white"
                 >
-                  <MessageCircle className="size-4 text-ep-sun" aria-hidden="true" />
+                  <MessageCircle className="size-4 text-ep-accent" aria-hidden="true" />
                   WhatsApp: {SITE.whatsapp.display}
                 </a>
               </li>
@@ -113,7 +133,7 @@ export function SiteFooter() {
                   href={SITE.phone.href}
                   className="inline-flex items-center gap-2 text-white/75 outline-none transition-colors hover:text-white focus-visible:text-white"
                 >
-                  <Phone className="size-4 text-ep-sun" aria-hidden="true" />
+                  <Phone className="size-4 text-ep-accent" aria-hidden="true" />
                   {SITE.phone.display}
                 </a>
               </li>
@@ -124,9 +144,25 @@ export function SiteFooter() {
         {/* Derselbe Hinweis wie in der Aufgabenteilung, hier als dauerhafte
             Angabe am Seitenende. Zwei Stellen, ein Wortlaut: Er kommt aus
             `VERMITTLERHINWEIS` und kann nicht auseinanderlaufen. */}
-        <p className="max-w-[76ch] border-t border-ep-line-dark pt-7 text-sm leading-relaxed text-white/65">
-          {VERMITTLERHINWEIS}
-        </p>
+        <div className="border-t border-ep-line-dark pt-7">
+          <p className="max-w-[76ch] text-sm leading-relaxed text-white/65">
+            {VERMITTLERHINWEIS}
+          </p>
+          {/* ⚠️ SEIT 12.08. HIER STATT IN DER FÖRDERUNGS-SEKTION.
+              Dort brachen fünf Zeilen Kleingedrucktes die Komposition. Weg
+              darf der Vorbehalt trotzdem nicht: „Bis zu 70 Prozent" und
+              „21.000 € im besten Fall" sind ohne Stichtag und ohne die
+              Deckelung auf 30.000 € eine Zusage, die für die meisten Häuser
+              nicht stimmt. Begründung ausführlich an `FOERDERHINWEIS`.
+
+              Kleiner gesetzt als der Vermittlerhinweis, und das ist die
+              richtige Rangfolge: Der eine legt ein Eigeninteresse offen und
+              gehört gelesen, der andere präzisiert eine Zahl, die zwei
+              Bildschirme weiter oben bereits hergeleitet wird. */}
+          <p className="mt-4 max-w-[92ch] text-[13px] leading-snug text-white/45">
+            {FOERDERHINWEIS}
+          </p>
+        </div>
 
         {/* ===== Bottom-Bar ===== */}
         <div className="mt-7 flex flex-col gap-4 border-t border-ep-line-dark py-7 text-sm text-white/65 sm:flex-row sm:items-center sm:justify-between">

@@ -50,8 +50,14 @@ export const metadata: Metadata = {
     default: "energiepartner · Ihre Energie. Ihr Vorteil.",
     template: "%s · energiepartner",
   },
+  /* ⚠️ „aus einer Hand" → „Ihr Makler für" (13.08.). Die alte Fassung nannte
+     die Rolle an keiner Stelle, und „aus einer Hand" liest sich bei einem
+     Gewerk als „wir bauen das". Ilias vermittelt und vergleicht (Briefing 2)
+     – das gehört in den Suchtreffer, weil er die erste Copy ist, die jemand
+     sieht. „herstellerunabhängig" und „anbieterübergreifend" sind die beiden
+     erlaubten Formulierungen und bleiben unverändert stehen. */
   description:
-    "Wärmepumpe, Photovoltaik und Stromtarif aus einer Hand: herstellerunabhängig beraten, anbieterübergreifend verglichen, persönlich betreut in Stuttgart. Beratung kostenlos.",
+    "Ihr Makler für Wärmepumpe, Photovoltaik und Stromtarif: herstellerunabhängig beraten, anbieterübergreifend verglichen, persönlich betreut in Stuttgart. Beratung kostenlos.",
 
   /* ═══ VORFÜHR-INSTANZEN GEHÖREN NICHT IN DIE SUCHE ═══
      Dieselbe Variable, die die vorläufigen Stimmen und Kennzahlen

@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { Star } from "lucide-react";
+import { Check, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { ScrollCue } from "@/components/ui/ScrollCue";
@@ -14,7 +14,6 @@ import { GoogleG } from "@/components/ui/GoogleG";
 import { Marker } from "@/components/ui/Marker";
 import { formatiereNote, type GoogleBewertungen } from "@/lib/google-reviews";
 import { maskedHeadline } from "@/lib/motion";
-import { useAnfrage } from "@/components/anfrage/AnfrageProvider";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -39,31 +38,53 @@ if (typeof window !== "undefined") {
  * 4. **Kein Bild.** Bei einem Gewerk, das man anfassen kann, ist eine rein
  *    typografische Fläche eine Behauptung ohne Gegenstand.
  *
- * ═══ DER NEUE AUFBAU ═══
+ * ═══ HELL STATT NAVY (10.08.2026) ═══
+ * Der Hero lief auf `navy-deep` mit randlosem Foto und zwei Verläufen. Auf
+ * Wunsch von Emre ist er jetzt hell, nach dem Muster einer
+ * Konversionsseite aus derselben Branche (febesol.de/s/solaranlage/v3).
+ *
+ * Übernommen ist die STRUKTUR, nicht die Gestaltung: Auszeichnungszeile,
+ * große Überschrift, ein Satz, drei abgehakte Punkte, ein Knopfpaar,
+ * Belege darunter. Farben, Schrift, Raster und Bildsprache bleiben die der
+ * Marke.
+ *
+ * ⚠️ WAS DER HELLE GRUND ALLES MITZIEHT, falls jemand zurückbaut:
+ *   · `data-nav-theme="light"` an der Sektion (ungenutzt seit die
+ *     Kopfleiste auf „solide Bar" umgestellt ist, siehe `SiteHeader.tsx` –
+ *     steht trotzdem zur Dokumentation und für mögliche künftige Nutzung)
+ *   · `ep-skala-tinte` – weiße Linien sind auf Papier unsichtbar
+ *   · `ep-accent` für JEDEN Text (löst hier zu `ep-orange-deep` auf –
+ *     die Rolle passt sich über `data-surface` automatisch an, siehe
+ *     Token-Block von `globals.css`)
+ *   · `ep-line` statt `ep-line-dark` an der Beleg-Leiste
+ *   · `ScrollCue` erbt seine Farbe seit 10.08. über `currentColor`
+ *
+ * ═══ DER AUFBAU ═══
  *
  *   ┌─────────────────────────────┬───────────────────┐
  *   │ Eyebrow                     │                   │
- *   │ HEADLINE (groß, markiert)   │   Foto, randlos   │
- *   │ Ein Satz                    │   bis Unterkante  │
+ *   │ HEADLINE (groß, markiert)   │   Foto im Rahmen  │
+ *   │ Ein Satz                    │                   │
+ *   │ ✓ drei Punkte               │                   │
  *   │ ▸ CTA-Paar                  │                   │
- *   │ Mikrozusagen                │                   │
  *   ├─────────────────────────────┴───────────────────┤
  *   │ BELEG-LEISTE über die volle Breite              │
  *   └─────────────────────────────────────────────────┘
  *
- * Eine Blickachse von oben nach unten: sehen, verstehen, handeln, geglaubt
- * bekommen. Der Beleg steht darunter über die ganze Breite und trägt den
- * Block, statt am Rand mitzulaufen.
+ * Eine Blickachse von oben nach unten: sehen, verstehen, zustimmen,
+ * handeln, geglaubt bekommen. Der Beleg steht darunter über die ganze
+ * Breite und trägt den Block, statt am Rand mitzulaufen.
  *
  * ═══ WARUM DAS FOTO ═══
- * Es ist ein Stockfoto einer Wärmepumpe, deshalb der Hinweis an der Kante.
- * Kein Personenfoto: Das Kickoff verlangt ausdrücklich, dass kein
- * One-Man-Show-Eindruck entsteht, Ilias' Porträt hat seinen Auftritt in der
- * Bildstrecke. Und keine KI-Bilder (feste Bild-Regel des Projekts).
+ * Es ist ein Stockfoto einer Wärmepumpe. Kein Personenfoto: Das Kickoff
+ * verlangt ausdrücklich, dass kein One-Man-Show-Eindruck entsteht, Ilias'
+ * Porträt hat seinen Auftritt in der Bildstrecke.
  *
- * Es läuft randlos an die rechte und untere Kante. Ein Bild in einem Rahmen
- * mit Abstand ringsum ist eine Illustration; eines, das den Bildschirm
- * verlässt, ist ein Fenster.
+ * Es steht in einem Rahmen und nicht mehr randlos. Randlos war auf Navy
+ * richtig – ein Foto kann in eine dunkle Fläche hineinlaufen. Auf Papier
+ * geht das nicht: Ein Verlauf nach #FBF6EE macht daraus einen
+ * ausgeblichenen Fleck, ohne Verlauf schneidet ein dunkles Rechteck die
+ * helle Fläche hart durch.
  *
  * ═══ BEWEGUNG ═══
  * Ankunft gestaffelt (Zeilenmasken für die Headline, danach Satz, Handlung,
@@ -74,29 +95,43 @@ if (typeof window !== "undefined") {
  */
 
 /**
- * Die Fragen, die zwischen Lesen und Klicken stehen.
+ * Die drei Punkte über der Handlung.
  *
- * ⚠️ HIER STAND „20 MINUTEN" AN ERSTER STELLE – entfernt (07.08.), weil die
- * Zahl nirgends herkommt. Sie steht nicht im Projekt-Briefing und nicht im
- * Markenhandbuch (`docs/markenhandbuch-quelle/ci.html` kennt weder
- * „Minuten" noch „Stunden"); sie ist im Code entstanden.
+ * ⚠️ HIER STAND EINMAL „20 MINUTEN" – entfernt (07.08.), weil die Zahl
+ * nirgends herkommt: nicht aus dem Projekt-Briefing, nicht aus dem
+ * Markenhandbuch. Sie ist im Code entstanden. Und sie wäre eine Zusage über
+ * einen Termin, den Ilias führt, nicht wir – dauert das Gespräch
+ * fünfundvierzig Minuten, beginnt die Beziehung mit einem gebrochenen
+ * Versprechen. Sobald er eine echte Dauer nennt, gehört sie hier hinein.
  *
- * Sie kollidierte NICHT mit den 3 Minuten von angebote-vergleichen.info –
- * das ist eine andere Domain und eine andere Sache (dort die Übermittlung
- * eines Angebots, hier die Dauer eines Beratungsgesprächs). Das Problem ist
- * ein anderes: Es ist eine Zusage über einen Termin, den Ilias führt, nicht
- * wir. Dauert das Gespräch fünfundvierzig Minuten, beginnt die Beziehung
- * mit einem gebrochenen Versprechen – und zwar in der ersten Zeile, die der
- * Besucher liest.
+ * ═══ WOHER DAS MUSTER KOMMT ═══
+ * Eine Konversionsseite, die dieselbe Zielgruppe bedient, macht es genauso:
+ * Auszeichnungszeile, große Überschrift, drei abgehakte Punkte, ein Knopf.
+ * Der Grund ist nicht Mode. Zwischen einer Überschrift und einem Knopf
+ * fehlt sonst der Schritt, in dem jemand ENTSCHEIDET – ein Fließtextsatz
+ * wird überflogen, drei Zeilen mit Haken werden gelesen.
  *
- * Die beiden verbliebenen Zusagen stimmen ohne Rückfrage: Der Kanal steht
- * im Kickoff, die Unverbindlichkeit ist die Grundlage des Angebots.
+ * ⚠️ HAKEN STATT LEUCHT-PUNKT, UND DAS IST EINE AUSNAHME.
+ * An anderer Stelle steht in dieser Datei, dass ein Häkchen Erledigtes
+ * behauptet und Zusagen deshalb den Markenpunkt tragen. Das galt für die
+ * alten `ZUSAGEN` („vor Ort oder am Telefon"), und es stimmt dort auch:
+ * Das sind Angebote, keine Fakten.
  *
- * SOBALD ILIAS EINE ECHTE DAUER NENNT, gehört sie wieder an die erste
- * Stelle – dort beantwortet sie die Frage, die vor den beiden anderen
- * kommt. Es fehlt nur die Zahl, nicht der Platz.
+ * Diese drei sind Fakten über die Arbeitsweise. „Wir stellen den
+ * Förderantrag" ist keine Absichtserklärung, sondern eine Leistung. Für
+ * Erledigtes ist der Haken das richtige Zeichen.
+ *
+ * ⚠️ ERSTER PUNKT = DIE VERMITTLERROLLE, und die steht hier nicht zufällig
+ * an erster Stelle: Der Kunde hat am 09.08. ausdrücklich darum gebeten, sie
+ * schon zu zeigen, „wenn der Kunde auf die Seite kommt", statt sie unten in
+ * den FAQ zu lassen. Wer sie umformuliert, muss diesen Kern erhalten:
+ * Anschluss zu vielen, und wir suchen daraus das Beste heraus.
  */
-const ZUSAGEN = ["vor Ort oder am Telefon", "ohne Verpflichtung"] as const;
+const PUNKTE = [
+  "Anbieterübergreifend",
+  "Bis zu 70% Förderung",
+  "Kostenlose Beratung",
+] as const;
 
 /**
  * Wann der sticky Hero samt Zoom-Abgang läuft.
@@ -124,7 +159,7 @@ const ZUSAGEN = ["vor Ort oder am Telefon", "ohne Verpflichtung"] as const;
  * vollständige Bedingungen trennt und nichts klammert.
  *
  * ⚠️ Die Sektion trägt dieselbe Schwelle noch einmal als
- * `[@media(max-height:600px)_and_(max-width:640px)]:relative`. Tailwind
+ * `[@media(max-height:780px)]:relative`. Tailwind
  * kann keine Konstante aus TypeScript lesen – wer einen Wert ändert, muss
  * den anderen mitändern, sonst zoomt ein Hero, der gar nicht mehr steht.
  */
@@ -145,9 +180,44 @@ const ZUSAGEN = ["vor Ort oder am Telefon", "ohne Verpflichtung"] as const;
  * Der Grund für die Sperre bleibt bestehen (siehe unten): Auf einem sehr
  * flachen Schirm wäre die Beleg-Leiste unter einem sticky Hero dauerhaft
  * unerreichbar. Nur die Grenze lag falsch. */
+/**
+ * ⚠️ DIE BREITENBEDINGUNG IST WEG (10.08.), und das ist der eigentliche Fix.
+ *
+ * Hier stand ein zweiter Zweig: „oder mindestens 641 px breit". Die
+ * Begründung war, ein breites Fenster habe das Problem nicht, weil dort die
+ * Beleg-Leiste vierspaltig läuft und die Knöpfe nebeneinander stehen.
+ *
+ * Nachgemessen stimmt das nicht. Auf 1280×720 – einer völlig normalen
+ * Fenstergröße – braucht der Hero 767 px. Der Zweig hat sticky dort
+ * erlaubt, und die Beleg-Leiste war weg. Die Breite sagt eben nichts
+ * darüber, ob etwas in die HÖHE passt; sie hat nur zufällig oft
+ * mitkorreliert.
+ *
+ * Jetzt entscheidet allein die Höhe, und zwar dieselbe Zahl für alle
+ * Breiten: Der Hero ist auf 375 px 722 px hoch und auf 1280 px 767 px, die
+ * schmale Fassung ist also nicht die kritische. 781 deckt beide ab.
+ *
+ * Der Grund ist ein gemeldeter Fehler, nicht Vorsicht: Auf einem Telefon
+ * mit wenig Höhe war die Beleg-Leiste weg. Nicht abgeschnitten – WEG. Ein
+ * sticky Element klebt oben fest, während der Rest der Seite darüberzieht;
+ * was darin unter die Bildschirmkante rutscht, ist dauerhaft unerreichbar,
+ * auch durch Scrollen.
+ *
+ * Die alte Schwelle stand auf 601 px und traf damit ausgerechnet die
+ * Geräte, auf denen es klemmt: Ein iPhone SE hat 667 px, also sticky – und
+ * der Hero braucht mit drei Punkten und der Beleg-Leiste rund 780.
+ *
+ * 781 px ist deshalb kein runder Wert, sondern gemessen: die Höhe, ab der
+ * der Hero auf 390 px Breite vollständig hineinpasst. Die Breitenbedingung
+ * steht auf 1024 (dem `lg`-Breakpoint), weil erst dort das zweispaltige
+ * Layout greift und die Knöpfe nebeneinander stehen.
+ *
+ * ⚠️ WER DEN HERO INHALTLICH ERWEITERT, muss diese Zahl neu messen. Eine
+ * vierte Zeile in den Punkten verschiebt sie, und der Fehler zeigt sich
+ * nicht als Layoutbruch, sondern als fehlender Inhalt.
+ */
 const ABGANG_ERLAUBT =
-  "(prefers-reduced-motion: no-preference) and (min-height: 601px)," +
-  "(prefers-reduced-motion: no-preference) and (min-width: 641px)";
+  "(prefers-reduced-motion: no-preference) and (min-height: 781px)";
 
 /* Die Beleg-Leiste in drei Bausteinen statt in vier gleichlautenden
    Klassenketten. Der Grund ist nicht Tipparbeit, sondern dass die vier
@@ -158,14 +228,14 @@ const ABGANG_ERLAUBT =
    Grund wie bei der Headline: Der Hero hat feste Höhe, und auf einem
    flachen Laptop-Fenster muss auch die Leiste kleiner werden. */
 const beleg =
-  "flex flex-col gap-1 border-b border-ep-line-dark py-3 pr-4 sm:gap-1.5 sm:py-4 sm:pr-5 lg:border-b-0";
-const trenner = "lg:border-l lg:border-ep-line-dark lg:pl-6";
+  "flex flex-col gap-1 border-b border-ep-line py-3 pr-4 sm:gap-1.5 sm:py-4 sm:pr-5 lg:border-b-0";
+const trenner = "lg:border-l lg:border-ep-line lg:pl-6";
 /* Mobil kleiner: Auf 375 px stehen vier Werte im 2×2-Raster, und jede
    Zeile Höhe hier fehlt oben bei der Handlung. Ab sm wächst der Wert
    wieder auf sein volles Maß. */
 const wert =
   "text-[min(clamp(1.25rem,2.2vw,2.125rem),4.4svh)] font-bold leading-none tracking-[-0.02em] sm:text-[min(clamp(1.5rem,2.2vw,2.125rem),4.4svh)]";
-const label = "text-[12px] leading-snug text-white/65 sm:text-[13px]";
+const label = "text-[12px] leading-snug text-ep-ink/65 sm:text-[13px]";
 
 export function Hero({
   bewertungen = null,
@@ -173,7 +243,10 @@ export function Hero({
   bewertungen?: GoogleBewertungen | null;
 }) {
   const scope = useRef<HTMLElement>(null);
-  const { oeffne } = useAnfrage();
+
+  /* Wie viele Kacheln die Beleg-Leiste tatsächlich zeigt. Steuert nur die
+     mobile Rasterregel; siehe Kommentar dort. */
+  const anzahlBelege = 2 + (bewertungen ? 1 : 0);
 
   useGSAP(
     () => {
@@ -183,7 +256,7 @@ export function Hero({
         // Vor dem ersten Paint verstecken (useGSAP läuft als LayoutEffect),
         // damit nichts aufblitzt, bevor die Schrift steht.
         gsap.set(
-          "[data-hero-eyebrow], [data-hero-sub], [data-hero-cta] > *, [data-hero-zusagen], [data-hero-beleg] > *",
+          "[data-hero-eyebrow], [data-hero-sub], [data-hero-cta] > *, [data-hero-punkte] > *, [data-hero-beleg] > *",
           { autoAlpha: 0 },
         );
 
@@ -235,7 +308,7 @@ export function Hero({
                 0.9,
               )
               .fromTo(
-                "[data-hero-zusagen]",
+                "[data-hero-punkte] > *",
                 { y: 14, autoAlpha: 0 },
                 { y: 0, autoAlpha: 1, duration: 0.7 },
                 1.15,
@@ -323,13 +396,17 @@ export function Hero({
        Effekt. */
     <section
       ref={scope}
-      data-nav-theme="dark"
-      className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden bg-ep-navy-deep [@media(max-height:600px)_and_(max-width:640px)]:relative"
+      data-nav-theme="light"
+      className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden bg-ep-paper [@media(max-height:780px)]:relative"
     >
       {/* DIE SKALA – die Teilung eines Messinstruments, nicht Karopapier.
           Zwei Ebenen, weil Ankunft (innen) und Abgang (außen) beide auf
           `scale` gehen und sich sonst gegenseitig überschreiben würden.
-          Bewusst übergroß, damit beim Herauszoomen keine Kante frei wird. */}
+          Bewusst übergroß, damit beim Herauszoomen keine Kante frei wird.
+
+          `ep-skala-tinte`, seit der Hero auf Papier läuft: Die Grundfassung
+          zeichnet weiße Linien, und die sind auf #FBF6EE nicht vorhanden,
+          sondern unsichtbar. */}
       <div
         data-hero-grid
         aria-hidden="true"
@@ -337,73 +414,115 @@ export function Hero({
       >
         <div
           data-hero-grid-in
-          className="ep-skala ep-skala-auslauf absolute inset-0 will-change-[transform,opacity]"
+          className="ep-skala ep-skala-tinte ep-skala-auslauf absolute inset-0 will-change-[transform,opacity]"
         />
       </div>
 
-      {/* ══════════════ DAS FOTO ══════════════
-          Randlos an die rechte und untere Kante, ab lg. Es liegt UNTER dem
-          Inhalt (z-0 gegen z-10) und hört auf halber Breite auf – der
-          Verlauf nach links löst es ins Navy auf, damit die Headline nie
-          gegen Bildrauschen gelesen werden muss.
+      {/* ═══ DER WARME SCHEIN ═══
+          Auf Navy trug die Fläche sich selbst. Papier über die volle
+          Bildschirmhöhe ist dagegen einfach nur leer, und ein leerer heller
+          Hero wirkt nicht ruhig, sondern unfertig.
 
-          Unter lg gibt es kein Foto: Auf 390 px müsste es sich die Höhe mit
-          Headline, Satz, zwei Knöpfen und dem Beleg teilen, und dann ist es
-          ein Briefmarkenbild. Lieber keins. */}
+          Ein sehr weicher Verlauf in der Akzentfarbe hinter dem Bild gibt
+          der rechten Hälfte Gewicht, ohne eine Fläche einzuziehen. Bewusst
+          als `radial-gradient` und nicht als getönter Kasten: Eine Kante
+          wäre ein zweites Band, ein Verlauf ist Licht. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 90% at 82% 22%, rgba(242,106,33,0.20) 0%, rgba(242,106,33,0.07) 42%, transparent 68%)",
+        }}
+      />
+
+      {/* ══════════════ DAS FOTO ══════════════
+          ⚠️ GERAHMT STATT RANDLOS, und das ist die eigentliche Folge des
+          hellen Grundes. Vorher lief das Foto randlos in die rechte Kante
+          und wurde von zwei Verläufen ins Navy aufgelöst – ein Verfahren,
+          das nur auf dunklem Grund funktioniert, weil ein Foto dort in die
+          Fläche hineinlaufen kann.
+
+          Auf Papier geht das nicht: Ein Verlauf nach #FBF6EE macht aus dem
+          Bild einen ausgeblichenen Fleck, und randlos ohne Verlauf schneidet
+          ein dunkles Rechteck die helle Fläche hart durch. Also ein
+          Bildkasten mit demselben Radius wie überall sonst – dieselbe
+          Behandlung wie in der Bildstrecke und beim Porträt.
+
+          Unter lg gibt es weiterhin kein Foto: Auf 390 px müsste es sich die
+          Höhe mit Headline, drei Punkten, Knöpfen und dem Beleg teilen, und
+          dann ist es ein Briefmarkenbild. Lieber keins. */}
+      {/* ⚠️ OBEN UND UNTEN VERANKERT, NICHT ZENTRIERT.
+          Der Kasten stand auf `top-1/2 -translate-y-1/2` und war damit auf
+          die ganze Sektionshöhe zentriert – auch auf den Teil, den unten die
+          Beleg-Leiste belegt. Auf einem 1440×900-Fenster lag „24 Std."
+          dadurch auf dem Foto.
+
+          Jetzt spannt er zwischen zwei Kanten: oben unter der Kopfleiste,
+          unten oberhalb der Beleg-Leiste. Er kann die Leiste damit nicht
+          mehr erreichen, unabhängig von der Fensterhöhe – eine Kollision,
+          die konstruktiv ausgeschlossen ist statt wegjustiert. Das
+          Seitenverhältnis ergibt sich aus dieser Höhe, deshalb kein
+          `aspect-*` mehr. */}
       <div
         data-hero-foto
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[52%] will-change-[transform,opacity] lg:block"
+        className="pointer-events-none absolute bottom-[24svh] right-[var(--edge)] top-[calc(var(--nav-h)+2.5rem)] hidden w-[42%] max-w-[680px] items-center will-change-[transform,opacity] lg:flex"
       >
-        <Image
-          src="/galerie/g3-waermepumpe-v2.webp"
-          alt=""
-          fill
-          priority
-          sizes="52vw"
-          className="object-cover object-left"
-        />
-        {/* Zwei Verläufe, nicht einer: Der waagerechte löst die linke Kante
-            ins Navy auf (sonst schnitte das Foto die Fläche hart durch),
-            der senkrechte nimmt der Unterkante die Härte, wo die
-            Beleg-Leiste ansetzt. Beide über `background`, nicht als Filter –
-            ein animierter `blur` würde pro Frame einen vollen Gauß-Durchgang
-            kosten. */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, #0A2337 0%, rgba(10,35,55,0.92) 22%, rgba(10,35,55,0.35) 58%, rgba(10,35,55,0.15) 100%)",
-          }}
-        />
-        {/* Der senkrechte Verlauf ist NICHT Kosmetik, sondern Lesbarkeit:
-            Die Beleg-Leiste läuft über die volle Breite und damit über das
-            Foto. Ohne diesen Fuß stünden „24 Std." und „300+" auf Laub und
-            Ziegelmauer – und Weiß auf einem unruhigen Foto ist an keiner
-            Stelle mehr sicher lesbar. Er setzt deshalb früh an und geht bis
-            ganz auf Navy durch. */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-[52%]"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(10,35,55,0) 0%, rgba(10,35,55,0.55) 34%, rgba(10,35,55,0.94) 66%, #0A2337 88%)",
-          }}
-        />
+        {/* ⚠️ QUERFORMAT, UND DAS IST INHALTLICH, NICHT GESTALTERISCH.
+            Der Rahmen war hochkant (`h-full` zwischen zwei Kanten). Bei
+            einem 4:3-Foto hätte `object-cover` darin rund ein Drittel der
+            BREITE weggeschnitten – und links steht die Wärmepumpe, rechts
+            die Wallbox mit dem Auto. Übrig geblieben wäre die Hausmitte,
+            also genau das, was das Bild NICHT zeigen soll.
+
+            Deshalb gibt jetzt die Breite das Maß vor und `aspect-[4/3]`
+            die Höhe. Die beiden Kanten oben und unten bleiben als GRENZE
+            stehen (der Kasten zentriert sich mit `items-center` darin),
+            damit er weiterhin nicht in die Beleg-Leiste laufen kann. */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-ep bg-white shadow-[0_40px_80px_-40px_rgba(20,35,46,0.35)]">
+          <Image
+            src="/hero-paket.webp"
+            alt=""
+            fill
+            priority
+            sizes="42vw"
+            className="object-cover"
+          />
+        </div>
       </div>
 
       <div
         data-hero-content
-        className="ep-container relative z-10 flex flex-1 flex-col justify-between pb-5 pt-[calc(var(--nav-h)+1rem)] text-white will-change-[transform,opacity] sm:pb-10 sm:pt-[calc(var(--nav-h)+3rem)]"
+        className="ep-container relative z-10 flex flex-1 flex-col justify-between pb-[clamp(0.5rem,1.2svh,1.25rem)] pt-[calc(var(--nav-h)+clamp(0.25rem,1svh,1rem))] text-ep-ink will-change-[transform,opacity] sm:pb-[clamp(0.75rem,1.5svh,2.5rem)] sm:pt-[calc(var(--nav-h)+clamp(0.5rem,1.8svh,3rem))]"
       >
         {/* ══════════════ ZONE 1 · Aussage und Handlung ══════════════
             Vertikal zentriert in der Restfläche, links am Anschlag. Die
             Spalte endet bei 7 von 12 – rechts davon liegt das Foto, und
             zwischen beiden bleibt eine Gasse, damit die Headline nie auf
             dem Bild steht. */}
-        <div className="flex flex-1 flex-col justify-center py-6 lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-10 lg:py-10">
+        <div className="flex flex-1 flex-col justify-center py-[clamp(0.5rem,1.5svh,1.5rem)] lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-10 lg:py-10">
           <div className="lg:col-span-7">
-            <p data-hero-eyebrow className="t-label text-ep-sun">
-              Stuttgart · herstellerunabhängig
+            {/* `ep-accent`, adaptive Rolle: löst hier zu `orange-deep`
+                (5,4:1) auf – die Farbregel steht im Token-Block von
+                `globals.css`. */}
+            {/* ⚠️ HIER STAND „Ihr UNABHÄNGIGER Energie-Vermittler" (13.08.
+                entfernt) – ein seit 21.07. verbindlich untersagter Claim.
+                Projekt-Briefing Abschnitt 2: „Kein absolutes ,100 %
+                unabhängig` […] — er profitiert von erfolgreicher
+                Vermittlung." Erlaubt sind ausschließlich
+                „herstellerunabhängig" (nicht an eine Marke gebunden) und
+                „anbieterübergreifend".
+
+                Es war zusätzlich ein Widerspruch im eigenen Haus: Der
+                Footer legt zwei Bildschirme weiter offen, dass wir vom
+                ausführenden Unternehmen vergütet werden. Genau das ist die
+                Definition von nicht unabhängig – und eine Seite, die oben
+                das Gegenteil ihrer eigenen Fußnote behauptet, verliert
+                nicht nur den Claim, sondern die Fußnote gleich mit
+                (§ 5 Abs. 1 UWG). */}
+            <p data-hero-eyebrow className="t-label text-ep-accent">
+              Ihr Energie-Vermittler aus Stuttgart
             </p>
 
             {/* Feste Umbrüche statt Zufall: Die zweite Zeile trägt den
@@ -423,14 +542,14 @@ export function Hero({
                 Bildschirm, ohne dass irgendwo ein fester Wert steht. */}
             <h1
               data-hero-h1
-              className="mt-4 font-bold leading-[1.02] tracking-[-0.03em] text-white sm:mt-6"
+              className="mt-4 font-bold leading-[1.02] tracking-[-0.03em] text-ep-ink sm:mt-[clamp(0.5rem,1.5svh,1.5rem)]"
               style={{
                 fontSize: "min(clamp(2.5rem, 6.4vw, 6.5rem), 11svh)",
                 fontStretch: "86%",
               }}
             >
               <span className="block">Ihre Energie.</span>
-              <span className="block text-ep-sun">
+              <span className="block text-ep-accent">
                 <Marker delay={1.05}>Ihr Vorteil.</Marker>
               </span>
             </h1>
@@ -438,96 +557,117 @@ export function Hero({
             {/* Ein Satz, nicht drei. Der Vorgänger erklärte hier das ganze
                 Geschäftsmodell; im Hero entscheidet niemand aufgrund eines
                 Absatzes, sondern aufgrund einer Zeile. Der Rest der Seite
-                hat Platz genug. */}
-            {/* Der zweite Satz steht mobil nicht: „Die Beratung kostet Sie
-                nichts" sagt dort bereits der grüne Knopf darunter
-                („Kostenlos beraten lassen") und die Zusagen sagen es ein
-                drittes Mal. Auf 375 px kostet die Wiederholung eine ganze
-                Zeile – und die entscheidet, ob die Beleg-Leiste noch ins
-                Bild passt. Ab sm ist Platz, dort rundet der Satz die
-                Einordnung ab. */}
+                hat Platz genug.
+
+                ⚠️ „Die Beratung kostet Sie nichts" ist aus diesem Satz
+                heraus und steht jetzt im dritten Punkt darunter. Es stand
+                vorher zusätzlich im Knopf und in den Zusagen, also dreimal
+                im selben Bild. */}
             <p
               data-hero-sub
-              className="mt-4 max-w-[38ch] text-[clamp(1rem,1.15vw,1.1875rem)] leading-relaxed text-white/80 sm:mt-6"
+              className="mt-4 max-w-[38ch] text-[clamp(1rem,1.15vw,1.1875rem)] leading-relaxed text-ep-ink/75 sm:mt-[clamp(0.5rem,1.5svh,1.5rem)]"
             >
-              Wärmepumpe, Photovoltaik und Stromtarif als ein abgestimmtes
-              System geplant.
-              <span className="hidden sm:inline">
-                {" "}
-                Die Beratung kostet Sie nichts.
-              </span>
+             Wir sind Ihr Makler für Wärmepumpen, PV-Anlagen uvm. Wir finden die beste Lösung für Ihr Zuhause und kümmern uns um den gesamten Prozess.
             </p>
+
+            {/* ═══ DIE DREI PUNKTE ═══
+                Sie stehen ÜBER der Handlung, nicht darunter, und das ist der
+                ganze Zweck: Zwischen einer Überschrift und einem Knopf fehlt
+                sonst der Schritt, in dem jemand zustimmt. Wer die drei
+                Zeilen gelesen hat, klickt aus einem Grund und nicht aus
+                Neugier.
+
+                Der Haken sitzt in einem eigenen Kreis statt frei im Text.
+                Freistehende Haken in Textgröße verschwinden neben der
+                Zeile; mit Fläche darunter liest sich die Reihe als Liste
+                abgehakter Punkte, und genau das soll sie. */}
+            <ul
+              data-hero-punkte
+              className="mt-[clamp(0.75rem,2svh,1.5rem)] flex flex-col gap-[clamp(0.375rem,1svh,0.75rem)] sm:mt-[clamp(0.75rem,1.8svh,2rem)] sm:gap-[clamp(0.375rem,1svh,0.875rem)]"
+            >
+              {PUNKTE.map((punkt) => (
+                <li key={punkt} className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-ep-accent/12 text-ep-accent"
+                  >
+                    <Check className="size-3.5" strokeWidth={3} />
+                  </span>
+                  <span className="max-w-[46ch] text-[15px] font-medium leading-snug text-ep-ink/85 sm:text-base">
+                    {punkt}
+                  </span>
+                </li>
+              ))}
+            </ul>
 
             {/* DIE HANDLUNG steht direkt unter der Aussage, nicht am
                 rechten Rand. Wer zustimmt, findet den Knopf dort, wo er
                 aufgehört hat zu lesen. */}
             <div
               data-hero-cta
-              className="mt-7 flex flex-col items-start gap-3.5 sm:mt-8 sm:flex-row sm:items-center"
+              className="mt-[clamp(0.875rem,2.2svh,1.75rem)] flex sm:mt-[clamp(0.75rem,1.8svh,2rem)]"
             >
               <WhatsAppButton
                 size="lg"
-                label="Kostenlos beraten lassen"
+                label="Kontakt"
                 className="w-full justify-center sm:w-auto"
               />
-              {/* Der zweite Weg. WhatsApp erreicht nur, wer WhatsApp nutzt
-                  UND bereit ist, sofort seine Nummer herauszugeben. Für
-                  alle anderen gab es vorher nur `tel:` – also die höchste
-                  Hürde überhaupt. Dieser Knopf öffnet das Formular.
-
-                  ⚠️ MOBIL EIN LINK, ab sm ein Knopf. Zwei gestapelte Knöpfe
-                  kosten auf 375 px rund 126 px Höhe – der Unterschied
-                  zwischen „Beleg-Leiste sichtbar" und „Beleg-Leiste
-                  unerreichbar" (der Hero ist sticky, siehe unten).
-                  Es ist außerdem die ehrlichere Hierarchie: WhatsApp ist
-                  laut Kickoff der Hauptkanal, zwei gleich große Knöpfe
-                  behaupten das Gegenteil. Die Trefferfläche bleibt über
-                  `py-3` bei 44 px. */}
-              <button
-                type="button"
-                onClick={() => oeffne("Hero · Sekundär-CTA")}
-                className="inline-flex items-center justify-center gap-2 rounded-ep py-3 text-base font-semibold text-white underline underline-offset-4 outline-none transition-colors hover:text-white/80 focus-visible:ring-2 focus-visible:ring-ep-sun sm:w-auto sm:border sm:border-white/30 sm:px-6 sm:py-4 sm:no-underline sm:hover:border-white/60 sm:hover:bg-white/10 sm:hover:text-white"
-              >
-                Anfrage senden
-              </button>
             </div>
 
-            {/* Die Mikrozusagen. „Kostenlos" beantwortet nur eine der drei
-                Fragen, die vom Klicken abhalten – die anderen sind: wie
-                lange dauert das, und wie komme ich wieder raus. Die
-                Dauer-Antwort fehlt derzeit, weil es dafür keine belegte
-                Zahl gibt (siehe `ZUSAGEN`).
+            {/* Mobil/Tablet: die Bewertung groß und zentriert direkt unter
+                dem Knopf, NICHT unten in der Beleg-Leiste (13.08.,
+                Kundenwunsch). Sie ist der letzte Vertrauens-Schub
+                unmittelbar nach der Handlung – ganz unten hinter dem Foto
+                sähe sie kaum noch jemand. Ab lg steht sie weiterhin unten in
+                Zone 2, dort passt die Breite bereits. */}
+            {bewertungen && (
+              <div className="mt-6 flex flex-col items-center gap-1.5 text-center lg:hidden">
+                <span className="flex items-baseline gap-2.5">
+                  <span className="text-2xl font-bold leading-none text-ep-ink [font-variant-numeric:tabular-nums]">
+                    {formatiereNote(bewertungen.note)}
+                  </span>
+                  <span className="flex items-center gap-0.5" aria-hidden="true">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={
+                          i < Math.round(bewertungen.note)
+                            ? "size-4 fill-ep-accent text-ep-accent"
+                            : "size-4 text-ep-line"
+                        }
+                      />
+                    ))}
+                  </span>
+                </span>
+                <span className="flex items-center gap-1.5 text-sm text-ep-ink/65">
+                  <GoogleG className="size-4 shrink-0" />
+                  {bewertungen.anzahl}{" "}
+                  {bewertungen.anzahl === 1 ? "Bewertung" : "Bewertungen"}
+                </span>
+              </div>
+            )}
 
-                MOBIL UNTEREINANDER. In einer Zeile brachen sie auf
-                375 px an beliebiger Stelle um, und die senkrechten Trenner
-                landeten dann am Zeilenanfang – eine Reihe, die nicht als
-                Reihe lesbar ist, ist keine. Untereinander mit Punkt davor
-                liest sich jede Zusage einzeln, und genau darum geht es:
-                drei Antworten, nicht ein Satzband.
-
-                Der Punkt ist der Leucht-Punkt der Wortmarke, kein Häkchen –
-                ein Häkchen behauptet Erledigtes, hier stehen Zusagen. */}
-            <ul
-              data-hero-zusagen
-              className="mt-4 flex flex-col gap-2 text-[13px] text-white/65 sm:mt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2 sm:text-sm"
-            >
-              {ZUSAGEN.map((zusage, i) => (
-                <li key={zusage} className="flex items-center gap-2.5 sm:gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="size-1 shrink-0 rounded-full bg-ep-sun sm:hidden"
-                  />
-                  {i > 0 && (
-                    <span
-                      aria-hidden="true"
-                      className="hidden h-3.5 w-px bg-white/25 sm:block"
-                    />
-                  )}
-                  {zusage}
-                </li>
-              ))}
-            </ul>
+            {/* HIER STANDEN DIE MIKROZUSAGEN („vor Ort oder am Telefon",
+                „ohne Verpflichtung"). Sie sind in den dritten Punkt über der
+                Handlung gewandert. Zwei Listen im selben Bild, eine über und
+                eine unter dem Knopf, waren eine zu viel – und die untere war
+                die leisere, obwohl beide dasselbe sagten. */}
           </div>
+        </div>
+
+        {/* ══════════ WISCH-HINWEIS · nur unter lg ══════════
+            Ab `lg` steht der Hinweis rechts in der Beleg-Leiste (Zone 2).
+            Diese Leiste ist mobil ausgeblendet, und damit fehlte der Hinweis
+            ausgerechnet dort, wo gewischt statt gescrollt wird.
+
+            ⚠️ `mt-auto` statt einer festen Position: Zone 1 darüber trägt
+            `flex-1`, der Hinweis wird also von unten gegen die Kante
+            gedrückt und kann keiner anderen Zeile in die Quere kommen. Ein
+            `absolute bottom-…` läge dagegen über dem Inhalt, sobald der
+            Hero auf einem flachen Gerät eng wird – genau der Fehler, der
+            weiter oben schon einmal die Beleg-Leiste gekostet hat. */}
+        <div className="mt-auto flex justify-center pt-2 lg:hidden">
+          <ScrollCue variante="saeule" />
         </div>
 
         {/* ══════════════ ZONE 2 · DIE BELEG-LEISTE ══════════════
@@ -538,33 +678,39 @@ export function Hero({
 
             Vier Werte in gleicher Größe, durch Haarlinien getrennt – die
             Sprache des Typenschilds an einer Anlage, dieselbe wie in der
-            Beleg-Leiste weiter unten auf der Seite. */}
-        <div data-hero-beleg>
-          {/* ⚠️ MOBIL ZWEI SPALTEN – UND DIE ANZAHL IST NICHT FEST.
-              Mit Bewertung sind es vier Kacheln, also ein glattes 2×2.
-              Ohne sie drei, und dann stand die letzte allein in der zweiten
-              Zeile, neben einer leeren Hälfte. Das liest sich nicht als
-              Reihe, sondern als abgebrochene Aufzählung – und ausgerechnet
-              die Zusage „24 Std. bis zur Rückmeldung" landete dort.
+            Beleg-Leiste weiter unten auf der Seite.
 
-              Bei ungerader Anzahl nimmt die letzte Kachel deshalb die volle
-              Breite. Kein Loch, keine Sonderregel pro Wert: Es hängt an der
-              Datenlage, nicht an der Reihenfolge im Markup. Ab lg stehen
-              ohnehin alle nebeneinander, dort greift es nicht. */}
+            ⚠️ AB LG, NICHT MOBIL (13.08., Kundenwunsch). Mobil wirkte die
+            volle Zeile zu dicht, und die Bewertung sitzt dort seit demselben
+            Tag direkt unter dem Knopf in Zone 1 statt hier unten hinter dem
+            Foto. Förderung und Rückmeldung fallen mobil ganz weg – beide
+            Zahlen kommen ohnehin gleich noch einmal, in der
+            Förderung-Sektion und in der ProofBar. Ab lg, wo laut Emre
+            bereits alles passt, bleibt die Zeile unverändert. */}
+        <div data-hero-beleg className="hidden lg:block">
           <ul
             className={cn(
-              "grid grid-cols-2 border-t border-ep-line-dark lg:grid-cols-4",
-              !bewertungen && "max-lg:[&>*:last-child]:col-span-2",
+              "grid border-t border-ep-line",
+              anzahlBelege === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2",
             )}
           >
-            {/* Die Bewertung zuerst: Sie ist die einzige Aussage hier, die
-                nicht von uns stammt. Ohne echte Daten fällt sie weg und
-                die Leiste läuft auf drei Werten – kein Loch, weil das
-                Raster mitzählt. */}
+            {/* Die Förderung ist das stärkste Argument dieses Geschäfts und
+                stand bisher erst sieben Bildschirme weiter unten. Wer im
+                Hero abspringt, hat sie nie gesehen. */}
+            <li className={beleg}>
+              <span className={cn(wert, "text-ep-accent")}>bis 70 %</span>
+              <span className={label}>Förderung, Antrag über uns</span>
+            </li>
+
+            <li className={cn(beleg, trenner)}>
+              <span className={cn(wert, "text-ep-ink")}>24 Std.</span>
+              <span className={label}>bis zur Rückmeldung</span>
+            </li>
+
             {bewertungen && (
-              <li className={beleg}>
+              <li className={cn(beleg, trenner)}>
                 <span className="flex items-baseline gap-2.5">
-                  <span className={cn(wert, "text-white [font-variant-numeric:tabular-nums]")}>
+                  <span className={cn(wert, "text-ep-ink [font-variant-numeric:tabular-nums]")}>
                     {formatiereNote(bewertungen.note)}
                   </span>
                   <span className="flex items-center gap-0.5" aria-hidden="true">
@@ -573,8 +719,8 @@ export function Hero({
                         key={i}
                         className={
                           i < Math.round(bewertungen.note)
-                            ? "size-[0.9rem] fill-ep-sun text-ep-sun"
-                            : "size-[0.9rem] text-white/25"
+                            ? "size-[0.9rem] fill-ep-accent text-ep-accent"
+                            : "size-[0.9rem] text-ep-line"
                         }
                       />
                     ))}
@@ -587,24 +733,6 @@ export function Hero({
                 </span>
               </li>
             )}
-
-            {/* Die Förderung ist das stärkste Argument dieses Geschäfts und
-                stand bisher erst sieben Bildschirme weiter unten. Wer im
-                Hero abspringt, hat sie nie gesehen. */}
-            <li className={cn(beleg, trenner)}>
-              <span className={cn(wert, "text-ep-sun")}>bis 70 %</span>
-              <span className={label}>Förderung, Antrag über uns</span>
-            </li>
-
-            <li className={cn(beleg, trenner)}>
-              <span className={cn(wert, "text-white")}>300+</span>
-              <span className={label}>geprüfte Angebote</span>
-            </li>
-
-            <li className={cn(beleg, trenner)}>
-              <span className={cn(wert, "text-white")}>24 Std.</span>
-              <span className={label}>bis zur Rückmeldung</span>
-            </li>
           </ul>
 
           {/* KEIN Symbolbild-Hinweis hier, anders als in der Bildstrecke.

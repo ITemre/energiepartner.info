@@ -60,6 +60,7 @@ export function AvTransparenz() {
     <section
       ref={scope}
       data-nav-theme="dark"
+      data-surface="dark"
       className="relative overflow-hidden bg-ep-navy-deep text-white"
     >
       <div
@@ -70,12 +71,12 @@ export function AvTransparenz() {
       <div className="ep-container relative py-24 sm:py-32">
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
-            <p data-t-eyebrow className="t-label text-ep-sun">
+            <p data-t-eyebrow className="t-label text-ep-accent">
               Volle Transparenz
             </p>
             <h2 data-t-h2 className="t-h2 mt-6 max-w-[14ch]">
               So arbeiten wir,{" "}
-              <span className="text-ep-sun">ganz transparent.</span>
+              <span className="text-ep-accent">ganz transparent.</span>
             </h2>
           </div>
 
@@ -102,7 +103,7 @@ export function AvTransparenz() {
                   key={zusage}
                   className="flex items-baseline gap-5 border-b border-ep-line-dark py-4"
                 >
-                  <span className="t-key shrink-0 text-ep-sun">
+                  <span className="t-key shrink-0 text-ep-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-lg font-semibold">{zusage}</span>

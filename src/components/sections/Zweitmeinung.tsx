@@ -65,7 +65,7 @@ export function Zweitmeinung() {
       <div className="ep-container py-24 sm:py-32">
         <div className="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12">
           <div className="lg:col-span-6">
-            <p data-zm-eyebrow className="t-label text-ep-orange-deep">
+            <p data-zm-eyebrow className="t-label text-ep-accent">
               Sie haben schon ein Angebot?
             </p>
             <h2 data-zm-h2 className="t-h2 mt-6 max-w-[15ch] text-ep-ink">
@@ -89,7 +89,7 @@ export function Zweitmeinung() {
               {BEISPIELE.map((beispiel) => (
                 <li
                   key={beispiel}
-                  className="border-l-2 border-ep-orange-deep pl-4 text-lg font-medium text-ep-ink"
+                  className="border-l-2 border-ep-accent pl-4 text-lg font-medium text-ep-ink"
                 >
                   „{beispiel}&ldquo;
                 </li>
@@ -103,7 +103,7 @@ export function Zweitmeinung() {
             <a
               data-zm-block
               href={AV_URL}
-              className="group mt-10 inline-flex items-center gap-3 rounded-ep bg-ep-navy px-6 py-4 text-base font-semibold text-white outline-none transition-colors hover:bg-ep-navy-deep focus-visible:ring-2 focus-visible:ring-ep-orange focus-visible:ring-offset-2"
+              className="group mt-10 inline-flex items-center gap-3 rounded-ep bg-ep-navy px-6 py-4 text-base font-semibold text-white outline-none transition-colors hover:bg-ep-navy-deep focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-2"
             >
               Angebot kostenlos prüfen lassen
               <ArrowRight

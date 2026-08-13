@@ -64,6 +64,7 @@ export function AvAbschluss() {
       ref={scope}
       id="kontakt"
       data-nav-theme="dark"
+      data-surface="dark"
       className="relative scroll-mt-[var(--nav-h)] overflow-hidden bg-ep-navy text-white"
     >
       <div
@@ -74,7 +75,7 @@ export function AvAbschluss() {
       <div className="ep-container relative py-24 sm:py-32">
         <h2 data-abs-h2 className="t-h2 max-w-[20ch]">
           Bestehendes Angebot prüfen.{" "}
-          <span className="text-ep-sun">
+          <span className="text-ep-accent">
             Schwachstellen erkennen. Bessere Lösung erhalten.
           </span>
         </h2>
@@ -98,7 +99,7 @@ export function AvAbschluss() {
           <button
             type="button"
             onClick={() => oeffne("AV-Abschluss · Formular")}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-ep border border-white/30 px-6 py-4 text-base font-semibold text-white outline-none transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-ep-sun sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-ep border border-white/30 px-6 py-4 text-base font-semibold text-white outline-none transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-ep-accent-strong sm:w-auto"
           >
             Angebot über das Formular schicken
           </button>
@@ -109,7 +110,7 @@ export function AvAbschluss() {
           data-abs-block
           className="mt-20 border-t border-ep-line-dark pt-12 sm:mt-28"
         >
-          <p className="t-label text-ep-sun">Das muss Ihr Angebot enthalten</p>
+          <p className="t-label text-ep-accent">Das muss Ihr Angebot enthalten</p>
           <p className="mt-6 max-w-[58ch] leading-relaxed text-white/75">
             Damit wir seriös prüfen können, brauchen wir diese Mindestangaben.
             So wissen Sie von Anfang an, was gebraucht wird, kein Hin und Her.
@@ -133,7 +134,7 @@ export function AvAbschluss() {
                   i > 0 ? "lg:border-l lg:border-ep-line-dark lg:pl-6" : "",
                 ].join(" ")}
               >
-                <span className="t-key shrink-0 text-ep-sun">
+                <span className="t-key shrink-0 text-ep-accent">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="text-[15px] leading-snug text-white/85">

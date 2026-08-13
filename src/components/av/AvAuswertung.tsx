@@ -83,7 +83,7 @@ export function AvAuswertung() {
     <section ref={scope} data-nav-theme="light" className="bg-ep-paper">
       <div className="ep-container py-24 sm:py-32">
         <div>
-          <p data-au-eyebrow className="t-label text-ep-orange-deep">
+          <p data-au-eyebrow className="t-label text-ep-accent">
             So sieht Ihre Auswertung aus
           </p>
           <h2 data-au-h2 className="t-h2 mt-6 max-w-[16ch] text-ep-ink">
@@ -112,7 +112,7 @@ export function AvAuswertung() {
                 i % 2 === 1 ? "sm:border-l sm:border-ep-line sm:pl-8" : "",
               ].join(" ")}
             >
-              <p className="t-label text-ep-orange-deep">
+              <p className="t-label text-ep-accent">
                 {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="t-h4 mt-3 text-ep-ink">{key}</h3>
@@ -125,7 +125,7 @@ export function AvAuswertung() {
 
         {/* ============ Der direkte Vergleich ============ */}
         <div data-au-block className="mt-20 sm:mt-28">
-          <p className="t-label text-ep-orange-deep">
+          <p className="t-label text-ep-accent">
             Auf Wunsch: direkter Vergleich
           </p>
 

@@ -32,7 +32,7 @@ export default function RechtlichesLayout({
           <Link
             href="/"
             aria-label="Zur Startseite"
-            className="block rounded outline-none focus-visible:ring-2 focus-visible:ring-ep-orange"
+            className="block rounded outline-none focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
           >
             <Image
               src={SITE.logo.positiv}

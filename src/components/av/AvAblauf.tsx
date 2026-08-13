@@ -91,16 +91,17 @@ export function AvAblauf() {
       ref={scope}
       id="ablauf"
       data-nav-theme="dark"
+      data-surface="dark"
       className="scroll-mt-[var(--nav-h)] bg-ep-navy text-white"
     >
       <div className="ep-container py-24 sm:py-32">
         <div>
-          <p data-ab-eyebrow className="t-label text-ep-sun">
+          <p data-ab-eyebrow className="t-label text-ep-accent">
             So läuft es ab
           </p>
           <h2 data-ab-h2 className="t-h2 mt-6 max-w-[17ch]">
             Fünf Schritte.{" "}
-            <span className="text-ep-sun">Einer davon ist Ihrer.</span>
+            <span className="text-ep-accent">Einer davon ist Ihrer.</span>
           </h2>
         </div>
 
@@ -123,7 +124,7 @@ export function AvAblauf() {
                   <h3 className="text-[clamp(1.5rem,2.6vw,2.25rem)] font-bold leading-tight tracking-[-0.025em]">
                     {schritt.titel}
                   </h3>
-                  <p className="t-key mt-2 text-ep-sun">{schritt.dauer}</p>
+                  <p className="t-key mt-2 text-ep-accent">{schritt.dauer}</p>
                 </div>
 
                 <p className="mt-5 max-w-[52ch] leading-relaxed text-white/75 lg:col-span-5 lg:col-start-8 lg:mt-0">

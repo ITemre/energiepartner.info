@@ -2,226 +2,214 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Phone } from "lucide-react";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { NAV_ITEMS, SITE } from "@/lib/site";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { GlowDot } from "@/components/ui/GlowDot";
 
-/** Ursprung des Kreis-Reveals = Position des Menübuttons (oben rechts) */
-const ORIGIN = "calc(100% - 44px) 44px";
+const EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-export function MenuOverlay({ onClose }: { onClose: () => void }) {
-  const reduce = useReducedMotion();
-  const scope = useRef<HTMLDivElement>(null);
+const LISTE: Variants = {
+  zu: {},
+  offen: { transition: { delayChildren: 0.22, staggerChildren: 0.06 } },
+};
 
-  // Esc + Fokus-Falle, solange das Overlay lebt.
-  // (Scroll-Lock inkl. Scrollbar-Kompensation liegt im SiteHeader.)
+const EINTRAG: Variants = {
+  zu: { opacity: 0, y: 18 },
+  offen: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EXPO } },
+};
+
+/**
+ * Vollbild-Hauptmenü für Mobile/Tablet.
+ *
+ * ⚠️ KEIN natives `<dialog>` mehr (13.08., zweiter Anlauf). Ein `<dialog>`
+ * rendert im Top-Layer des Browsers – ÜBER JEDEM z-index, auch über der
+ * eigenen Kopfleiste. Der Hamburger dort wurde beim Öffnen unsichtbar, und
+ * das Menü brachte einen zweiten, anders platzierten Schließen-Knopf mit;
+ * sichtbar wurde das als „Button springt". Jetzt liegt dieses Overlay unter
+ * der Kopfleiste (`z-50` gegen `z-[60]`, siehe `SiteHeader`) – der Knopf in
+ * der Leiste bleibt durchgehend derselbe Knoten, nur `MenuOverlay` legt
+ * sich darunter.
+ *
+ * Fokusfalle/Escape/Scroll-Sperre sind darum von Hand gebaut statt vom
+ * Dialog geschenkt (siehe Effekt unten) – dasselbe Ergebnis, ohne den
+ * Top-Layer.
+ *
+ * ⚠️ HELL, NICHT NAVY (Kundenwunsch 13.08.): dieselbe Fläche wie der Hero,
+ * mit demselben warmen Schein und derselben Skala – kein zweites Motiv für
+ * denselben Auftritt.
+ *
+ * ⚠️ CLIP-PATH STATT FADE: Der Kreis wächst aus der oberen rechten Ecke –
+ * genau dort, wo der Hamburger sitzt. Die Öffnung liest sich dadurch als
+ * Folge des Klicks, nicht als unabhängig eingeblendete Fläche.
+ */
+export function MenuOverlay({
+  offen,
+  onSchliessen,
+}: {
+  offen: boolean;
+  onSchliessen: () => void;
+}) {
+  const panel = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Fokus in das Overlay legen
-    const firstLink = scope.current?.querySelector<HTMLElement>("[data-nav-focusable]");
-    firstLink?.focus();
+    if (!offen) return;
 
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        onClose();
+    const zuvorFokussiert = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    const fokussierbar = () =>
+      Array.from(
+        panel.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [],
+      );
+
+    const frame = requestAnimationFrame(() => fokussierbar()[0]?.focus());
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onSchliessen();
         return;
       }
-      if (e.key !== "Tab") return;
-      // Fokus zwischen allen markierten Elementen (inkl. Header-Toggle) halten
-      const focusables = Array.from(
-        document.querySelectorAll<HTMLElement>("[data-nav-focusable]"),
-      ).filter((el) => el.offsetParent !== null);
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-      if (e.shiftKey && active === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && active === last) {
-        e.preventDefault();
-        first.focus();
+      if (event.key !== "Tab") return;
+
+      const items = fokussierbar();
+      if (items.length === 0) return;
+      const erster = items[0];
+      const letzter = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === erster) {
+        event.preventDefault();
+        letzter.focus();
+      } else if (!event.shiftKey && document.activeElement === letzter) {
+        event.preventDefault();
+        erster.focus();
       }
     }
 
     document.addEventListener("keydown", onKeyDown);
+
     return () => {
+      cancelAnimationFrame(frame);
+      document.body.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
+      zuvorFokussiert?.focus();
     };
-  }, [onClose]);
-
-  // GSAP: ambienter, endlos driftender Sonnen-Orb (nur wenn Motion erlaubt)
-  useGSAP(
-    () => {
-      if (reduce) return;
-      gsap.to("[data-orb]", {
-        xPercent: 12,
-        yPercent: -10,
-        duration: 9,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
-    },
-    { scope, dependencies: [reduce] },
-  );
-
-  // Auf und Zu sind exakte Spiegel: gleicher Kreis-Sog, gleiche Dauer,
-  // gleiche Kurve – nur die Richtung dreht sich.
-  const EASE = [0.4, 0, 0.2, 1] as const;
-
-  const panel: Variants = {
-    closed: {
-      clipPath: reduce ? "inset(0%)" : `circle(0% at ${ORIGIN})`,
-      opacity: reduce ? 0 : 1,
-      transition: { duration: 0.45, ease: EASE },
-    },
-    open: {
-      clipPath: reduce ? "inset(0%)" : `circle(150% at ${ORIGIN})`,
-      opacity: 1,
-      transition: { duration: 0.45, ease: EASE },
-    },
-  };
-
-  const list: Variants = {
-    closed: {},
-    open: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
-  };
-
-  const item: Variants = {
-    closed: {
-      opacity: 0,
-      y: reduce ? 0 : 34,
-      transition: { duration: 0.2, ease: EASE },
-    },
-    open: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE } },
-  };
-
-  const fade: Variants = {
-    closed: {
-      opacity: 0,
-      y: reduce ? 0 : 20,
-      transition: { duration: 0.2, ease: EASE },
-    },
-    open: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EASE, delay: 0.18 } },
-  };
+  }, [offen, onSchliessen]);
 
   return (
-    <motion.div
-      ref={scope}
-      id="nav-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Hauptnavigation"
-      variants={panel}
-      initial="closed"
-      animate="open"
-      exit="closed"
-      className="fixed inset-0 z-40 overflow-hidden bg-ep-navy-deep text-white"
-    >
-      {/* Grund: radialer Navy-Verlauf wie CI-Cover */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(120% 130% at 82% 8%, #1C6FB0 0%, #0E3552 48%, #0A2337 100%)",
-        }}
-      />
-      {/* feine vertikale Rasterlinien */}
-      <div
-        className="absolute inset-0 -z-10 opacity-40"
-        style={{
-          background:
-            "repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 96px)",
-        }}
-      />
-      {/* driftender Sonnen-Orb */}
-      <div
-        data-orb
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 -z-10 size-[420px] rounded-full blur-[2px]"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 50%, #FBB23F 0%, #F26A21 55%, rgba(242,106,33,0) 72%)",
-        }}
-      />
+    <AnimatePresence>
+      {offen && (
+        <motion.div
+          key="menu"
+          ref={panel}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Hauptmenü"
+          initial={{ clipPath: "circle(0% at 100% 0%)" }}
+          animate={{ clipPath: "circle(150% at 100% 0%)" }}
+          exit={{ clipPath: "circle(0% at 100% 0%)" }}
+          transition={{ duration: 0.65, ease: EXPO }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-ep-paper text-ep-ink lg:hidden"
+        >
+          {/* Derselbe warme Schein wie im Hero – siehe Kommentar dort
+              („DER WARME SCHEIN"). Eine helle Fläche über die volle
+              Bildschirmhöhe ist sonst einfach nur leer. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(120% 70% at 100% 0%, rgba(242,106,33,0.16) 0%, rgba(242,106,33,0.05) 45%, transparent 70%)",
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="ep-skala ep-skala-tinte ep-skala-auslauf pointer-events-none absolute inset-0"
+          />
 
-      <div className="ep-container flex h-full flex-col justify-center pb-10 pt-28">
-        {/* Einspaltig, mittig – seit das Porträt raus ist (siehe unten). */}
-        <nav aria-label="Hauptnavigation">
-          <motion.p
-            variants={fade}
-            className="t-label mb-6 text-ep-sun"
-          >
-            Menü · Ihr Energiepartner
-          </motion.p>
+          <div className="relative flex min-h-dvh flex-col">
+            {/* Platzhalter in der Höhe der Kopfleiste, die über diesem
+                Overlay liegt – der Inhalt beginnt erst darunter. */}
+            <div aria-hidden="true" className="h-[var(--nav-h)] shrink-0" />
 
-          <motion.ul variants={list} className="flex flex-col gap-1">
-            {NAV_ITEMS.map((navItem, i) => (
-              <motion.li key={navItem.href} variants={item}>
-                <Link
-                  href={navItem.href}
-                  onClick={onClose}
-                  data-nav-focusable
-                  className="group flex items-baseline gap-4 rounded-ep py-2 outline-none focus-visible:ring-2 focus-visible:ring-ep-sun sm:gap-6"
-                >
-                  <span className="t-label text-white/80 transition-colors group-hover:text-ep-sun">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="t-h2 relative text-white/90 transition-colors duration-300 group-hover:text-white">
-                    {navItem.label}
-                    {/* Derselbe Leucht-Punkt wie in der Desktop-Leiste –
-                        dort unter dem Wort, hier daneben. Ein flacher Kreis
-                        stand hier vorher; die Marke leuchtet aber, und das
-                        soll auf beiden Geräten dasselbe Zeichen sein. */}
-                    <span className="ml-3 inline-block -translate-y-[0.15em] scale-0 align-middle opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-                      <GlowDot className="size-2" />
-                    </span>
-                  </span>
-                  <ArrowUpRight
-                    className="size-6 -translate-x-2 self-center text-ep-sun opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </motion.li>
-            ))}
-          </motion.ul>
+            {/* ⚠️ KEIN `exit` HIER, UND DAS IST DER FIX FÜR EINEN ECHTEN BUG
+                (13.08.): „Menü auf, zu, wieder auf – Links weg."
 
-          {/* Kontakt-Aktionen */}
-          <motion.div variants={fade} className="mt-10 flex flex-wrap items-center gap-4">
-            <WhatsAppButton size="lg" data-nav-focusable />
-            <a
-              href={SITE.phone.href}
-              data-nav-focusable
-              className="inline-flex items-center gap-2 rounded-ep border border-white/25 px-5 py-4 text-base font-semibold text-white outline-none transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-ep-sun"
+                Ursache war die Kombination aus Exit-Propagierung und
+                Wiederbelebung: `AnimatePresence` reicht das Exit an alle
+                Nachfahren weiter, die Einträge liefen also auf `opacity: 0`.
+                Öffnet man wieder, BEVOR das Exit durch ist, montiert
+                `AnimatePresence` nicht neu – es belebt dasselbe Element mit
+                demselben `key` wieder. Dabei ändert sich `animate="offen"`
+                nicht, die Prop stand ja durchgehend auf „offen". Ohne
+                Prop-Wechsel startet Framer Motion die Animation nicht neu,
+                und die Einträge blieben auf dem Wert stehen, den das
+                abgebrochene Exit hinterlassen hatte: unsichtbar.
+
+                Das Exit war ohnehin überflüssig – der zulaufende
+                Clip-Path-Kreis des Eltern-Elements verdeckt die Einträge
+                bereits. Ohne eigenes Exit stehen sie beim Wiederbeleben
+                weiterhin auf `opacity: 1` und sind sofort da; bei einem
+                echten Neuaufbau greift `initial="zu"` wie gehabt. */}
+            <motion.nav
+              aria-label="Hauptnavigation"
+              variants={LISTE}
+              initial="zu"
+              animate="offen"
+              className="ep-container py-8"
             >
-              <Phone className="size-5" aria-hidden="true" />
-              {SITE.phone.display}
-            </a>
-          </motion.div>
-        </nav>
+              <ul className="flex flex-col">
+                {NAV_ITEMS.map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    variants={EINTRAG}
+                    className={cn("border-b border-ep-line", i === 0 && "border-t")}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={onSchliessen}
+                      className="group flex items-center gap-5 py-4 outline-none sm:py-5"
+                    >
+                      <span className="t-key text-ep-ink/40">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="t-h2 flex-1 transition-[color,transform] duration-300 group-hover:translate-x-2 group-hover:text-ep-accent group-focus-visible:translate-x-2 group-focus-visible:text-ep-accent">
+                        {item.label}
+                      </span>
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.nav>
 
-        {/* ⚠️ HIER STAND EIN PORTRÄT IN DER RECHTEN SPALTE – entfernt
-            (07.08.), aus zwei Gründen.
-
-            Erstens war es kaputt: Die Datei `/Foto_Ilias.jpg` liegt nicht
-            in `public/`. Das Overlay zeigte am Desktop eine leere Fläche
-            mit Bildunterschrift.
-
-            Zweitens hätte es auch mit Datei nicht hierher gedurft. Das
-            Kickoff verlangt, dass Ilias' Porträt GENAU EINMAL erscheint,
-            damit kein One-Man-Show-Eindruck entsteht – und diesen einen
-            Auftritt hat es am Ende der Bildstrecke
-            (`Galerie.tsx`, `g6-ilias-frei.webp`). Ein zweites Mal im Menü,
-            also auf jeder Seite jederzeit abrufbar, ist genau das
-            Gegenteil.
-
-            Das Menü läuft dadurch einspaltig. Das ist kein Verlust: Eine
-            Navigation ist eine Liste von Wegen, kein Schaufenster. */}
-      </div>
-    </motion.div>
+            {/* Ebenfalls ohne `exit`, aus demselben Grund wie an der
+                Navigation darüber. */}
+            <motion.div
+              variants={EINTRAG}
+              initial="zu"
+              animate="offen"
+              transition={{ duration: 0.5, ease: EXPO, delay: 0.5 }}
+              className="ep-container mt-auto shrink-0 border-t border-ep-line py-6"
+            >
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <WhatsAppButton
+                  size="lg"
+                  className="w-full justify-center sm:w-auto"
+                  onClick={onSchliessen}
+                />
+                <a
+                  href={SITE.phone.href}
+                  className="inline-flex items-center justify-center gap-2 text-ep-ink/70 outline-none transition-colors hover:text-ep-ink focus-visible:text-ep-ink"
+                >
+                  <Phone className="size-4 text-ep-accent" aria-hidden="true" />
+                  {SITE.phone.display}
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

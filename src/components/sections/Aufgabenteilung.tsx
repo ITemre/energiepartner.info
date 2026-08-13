@@ -80,7 +80,7 @@ export function Aufgabenteilung() {
     <section ref={scope} data-nav-theme="light" className="bg-ep-paper">
       <div className="ep-container py-20 sm:py-28">
         <div>
-          <p data-a-eyebrow className="t-label text-ep-orange-deep">
+          <p data-a-eyebrow className="t-label text-ep-accent">
             Aufgabenteilung
           </p>
           <h2 data-a-h2 className="t-h2 mt-6 max-w-[20ch] text-ep-ink">
@@ -115,7 +115,7 @@ export function Aufgabenteilung() {
                   data-a-yours
                   className="flex items-baseline gap-5 border-t border-ep-line py-7 last:border-b last:border-ep-line sm:gap-7"
                 >
-                  <span className="t-label shrink-0 text-ep-orange-deep">
+                  <span className="t-label shrink-0 text-ep-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {/* `text-balance` statt fester Umbrüche: „Uns Ihr Haus

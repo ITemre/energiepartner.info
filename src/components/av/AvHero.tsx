@@ -88,7 +88,7 @@ function Vertrauenszeile({ className }: { className?: string }) {
         <li key={zeile} className="flex items-center gap-2.5 sm:gap-5">
           <span
             aria-hidden="true"
-            className="size-1 shrink-0 rounded-full bg-ep-sun sm:hidden"
+            className="size-1 shrink-0 rounded-full bg-ep-accent-strong sm:hidden"
           />
           {i > 0 && (
             <span
@@ -157,7 +157,7 @@ const GOOGLE_SIEGEL = {
  */
 const KREIS_TOENE = [
   "bg-white/25",
-  "bg-ep-sun/30",
+  "bg-ep-accent-strong/30",
   "bg-ep-blue/50",
   "bg-white/15",
 ] as const;
@@ -253,7 +253,7 @@ function GoogleSiegel({
            Höhe und keine Breite, unter der Ablagefläche auf dem Desktop
            genau umgekehrt. Zwei Zeilen in einer 530 px breiten Spalte
            lassen rechts daneben ein Loch. */
-        "group inline-flex flex-col items-start gap-3 border-l-2 border-ep-sun pl-5 outline-none focus-visible:ring-2 focus-visible:ring-ep-sun focus-visible:ring-offset-4 focus-visible:ring-offset-ep-navy-deep lg:flex-row lg:items-center lg:gap-5",
+        "group inline-flex flex-col items-start gap-3 border-l-2 border-ep-accent pl-5 outline-none focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-4 focus-visible:ring-offset-ep-navy-deep lg:flex-row lg:items-center lg:gap-5",
         className,
       )}
     >
@@ -269,7 +269,7 @@ function GoogleSiegel({
             key={i}
             className={cn(
               "size-[1.0625rem]",
-              i < volleSterne ? "fill-ep-sun text-ep-sun" : "text-white/25",
+              i < volleSterne ? "fill-ep-accent text-ep-accent" : "text-white/25",
             )}
           />
         ))}
@@ -410,6 +410,7 @@ export function AvHero({
          Beispielrechnung einen gemeinsamen Grund-Wrapper bekamen. */
       data-av-hero
       data-nav-theme="dark"
+      data-surface="dark"
       className="relative overflow-hidden bg-ep-navy-deep"
     >
       <div
@@ -452,7 +453,7 @@ export function AvHero({
               dazukamen. */}
           <p data-h-vorzeile className="t-label max-w-[32ch] text-white/70">
             Unterschrieben und hinterher{" "}
-            <span className="text-ep-sun">Mehr</span>kosten? Schluss damit!
+            <span className="text-ep-accent">Mehr</span>kosten? Schluss damit!
           </p>
 
           {/* Weiches Trennzeichen im Kompositum: „Wärmepumpenangebot" ist
@@ -473,7 +474,7 @@ export function AvHero({
             }}
           >
             Ist Ihr Wärmepumpen&shy;angebot{" "}
-            <span className="text-ep-sun">
+            <span className="text-ep-accent">
               <Marker delay={1}>vollständig</Marker>
             </span>
             ?

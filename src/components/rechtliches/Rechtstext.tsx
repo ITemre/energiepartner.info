@@ -59,7 +59,7 @@ export function Abschnitt({
  */
 export function Fehlt({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-baseline gap-2 rounded-[4px] bg-ep-orange/15 px-2 py-0.5 font-semibold text-ep-orange-deep">
+    <span className="inline-flex items-baseline gap-2 rounded-[4px] bg-ep-accent-strong/15 px-2 py-0.5 font-semibold text-ep-accent">
       <span aria-hidden="true">▲</span>
       {children}
     </span>

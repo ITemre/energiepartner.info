@@ -111,7 +111,7 @@ export function Situationen() {
           96 px anfingen. Der Blick musste bei jedem Wechsel neu suchen. */}
       <div className="ep-container py-20 sm:py-28">
         <div>
-          <p data-s-eyebrow className="t-label text-ep-orange-deep">
+          <p data-s-eyebrow className="t-label text-ep-accent">
             Wo stehen Sie gerade?
           </p>
           <h2 data-s-h2 className="t-h2 mt-6 max-w-[22ch] text-ep-ink lg:max-w-none">
@@ -170,7 +170,7 @@ export function Situationen() {
 
                 {/* Die Antwort steht eingerückt und kleiner: sie ist die
                     Reaktion auf den Satz, nicht gleichrangig mit ihm. */}
-                {/* Der Sonnenstrich sitzt immer an der Kante, an der auch
+                {/* Der Akzentstrich sitzt immer an der Kante, an der auch
                     der Block hängt – rechts ausgerichtete Blöcke bekommen ihn
                     rechts. Ein linker Strich an einem rechtsbündigen Absatz
                     liest sich sonst wie ein Fehler. */}
@@ -179,8 +179,8 @@ export function Situationen() {
                   className={cn(
                     "mt-5 max-w-[46ch] text-base leading-relaxed text-ep-ink/75 sm:text-lg",
                     i % 2 === 1
-                      ? "border-r-2 border-ep-sun pr-5 lg:ml-auto"
-                      : "border-l-2 border-ep-sun pl-5",
+                      ? "border-r-2 border-ep-accent pr-5 lg:ml-auto"
+                      : "border-l-2 border-ep-accent pl-5",
                   )}
                 >
                   {answer}

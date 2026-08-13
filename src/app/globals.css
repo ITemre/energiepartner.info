@@ -21,16 +21,27 @@
   --color-ep-navy-deep: #0a2337; /* tiefster Grund */
   --color-ep-blue: #1c6fb0; /* Signalblau     */
 
-  /* Energie · Orange → Sonnengelb
-     ZWEI Orangetöne, und die Trennung ist keine Feinheit, sondern eine
-     Kontrastregel: `orange` ist eine FLÄCHEN- und Dunkelgrund-Farbe,
-     `orange-deep` die einzige, die als TEXT auf Papier zulässig ist.
-     #F26A21 auf #FBF6EE ergibt 3,1:1 – für 15-px-Labels zu wenig.
-     #C24E12 kommt auf 5,4:1 und wirkt bei kleinen Graden sogar satter,
-     weil die Fläche pro Buchstabe zu klein ist, um Helligkeit zu tragen. */
-  --color-ep-orange: #f26a21; /* Fläche · Text auf Navy */
-  --color-ep-orange-deep: #c24e12; /* Text auf Papier        */
-  --color-ep-sun: #fbb23f; /* Sonnengelb · nur auf Navy */
+  /* Energie · Orange – EINE Akzentfarbe, keine zweite Hue daneben (kein
+     Gold/Sonnengelb mehr außer im Logo, das eigene Werte führt und diese
+     Tokens nicht referenziert). Die Rohtöne hier sind Basis, nicht für
+     direkte Nutzung im Markup – dafür die Rollen-Token weiter unten. */
+  --color-ep-orange: #f26a21; /* Fläche · Basis */
+  --color-ep-orange-deep: #c24e12; /* Text auf Papier · 5,4:1 */
+
+  /* Rollen, keine Palette. Genau ZWEI, und die Trennung ist keine
+     Feinheit, sondern eine Kontrastregel:
+     `ep-accent` – Text, Icons, Ränder: alles, was 4,5:1 halten muss.
+       Auf Papier (Default) = orange-deep. Auf dunkler Fläche wird die
+       Variable in `[data-surface="dark"]` weiter unten auf einen
+       helleren Tint DERSELBEN Orange-Familie umdefiniert – nicht auf
+       eine zweite Farbe. So bleibt ein Farbwechsel eine Änderung an
+       zwei, drei Stellen hier statt an jeder Fundstelle im Markup.
+     `ep-accent-strong` – Flächen: CTA-Buttons, Badges, Fokusringe,
+       große Icon-Füllungen, native `accent-color` (Checkboxen). Bleibt
+       immer das Basis-Orange, unabhängig von der Fläche darunter – für
+       Flächen/UI-Elemente reicht 3:1, das hält Orange überall. */
+  --color-ep-accent: var(--color-ep-orange-deep);
+  --color-ep-accent-strong: var(--color-ep-orange);
 
   /* Neutral & Signal */
   --color-ep-ink: #14232e; /* Tinte          */
@@ -50,6 +61,21 @@
 
   /* Radius (CI: 14px Bausteine) */
   --radius-ep: 14px;
+}
+
+/* Dunkle Fläche: `ep-accent` wird zum helleren Tint DERSELBEN
+   Orange-Familie (Farbton ~21°, nicht Golds ~38°) statt einer zweiten
+   Farbe – hält damit weiterhin 4,5:1 auf Navy (~4,86:1). `color-mix`
+   statt fertigem Hex: bleibt automatisch an `--color-ep-orange`
+   gekoppelt, falls der Grundton je wechselt.
+   Bewusst NICHT im `@theme`-Block – der registriert Utilities, hier
+   wird nur die Variable für Nachfahren überschrieben.
+   Trigger ist ein explizites `data-surface="dark"`-Attribut auf dem
+   Fläche-Root, nicht die `bg-ep-navy`-Klasse selbst: Manche dunklen
+   Flächen malen ihren Hintergrund über Inline-Gradients, eine
+   klassenbasierte Regel würde dort lautlos nicht greifen. */
+[data-surface="dark"] {
+  --color-ep-accent: color-mix(in srgb, var(--color-ep-orange) 85%, white 15%);
 }
 
 :root {
@@ -289,9 +315,10 @@
      einzeln erfasst werden muss. 12 px wären faktisch 10.
 
      ⚠️ FARBE: Diese Klasse gibt keine vor, aber sie ist der Ort für die
-     Regel – Labels sind Kleintext und brauchen nach WCAG 4,5:1. Auf Papier
-     heißt das `text-ep-orange-deep` oder mindestens `text-ep-ink/70`, auf
-     Navy `text-ep-sun` oder `text-white/75`. Alles darunter fällt durch. */
+     Regel – Labels sind Kleintext und brauchen nach WCAG 4,5:1. Das heißt
+     `text-ep-accent` (passt sich über `data-surface` automatisch an) oder
+     mindestens `text-ep-ink/70` auf Papier bzw. `text-white/75` auf Navy.
+     Alles darunter fällt durch. */
   .t-label {
     font-family: var(--font-mono);
     font-size: 0.9375rem;
@@ -327,6 +354,30 @@
     text-transform: uppercase;
   }
 
+  /* Feldbeschriftung in Formularen.
+
+     ⚠️ BEWUSST NICHT `.t-label`, und das ist derselbe Gedanke wie bei
+     `.t-nav`: Mono bedeutet auf dieser Seite „abgelesener Wert" – Kennung,
+     Messgröße, Schrittzahl. Eine Feldbeschriftung ist nichts davon, sie ist
+     eine Aufforderung.
+
+     Sichtbar wurde der Unterschied erst in der Kontaktsektion (13.08.):
+     Dort stehen Eyebrow, drei Datenblatt-Kennungen UND sieben
+     Feldbeschriftungen untereinander. In `.t-label` gesetzt war über die
+     halbe Sektion versalisierte, weit gesperrte Monospace – im
+     Anfrage-Dialog fällt dasselbe nicht auf, weil dort nie mehr als drei
+     Felder gleichzeitig im Bild stehen.
+
+     Klein, halbfett, leicht schmal: dieselbe Familie wie die Überschriften,
+     nur als Beschriftung. Mono behält damit seine Bedeutung. */
+  .t-feld {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-stretch: 94%;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
+  }
+
   /* Kennung auf der linken Spur des Datenblatt-Rasters. Gleiche Familie
      wie `.t-label`, aber ohne Sperrung und ohne Versalien – sie wird als
      Wert gelesen, nicht als Überschrift. */
@@ -360,17 +411,37 @@
   --skala-grob: 120px;
   --skala-fein-alpha: 0.028;
   --skala-grob-alpha: 0.055;
+  /* Die Strichfarbe als RGB-Tripel, nicht als fertige Farbe: Nur so lässt
+     sich derselbe Wert mit zwei verschiedenen Alphas verwenden, ohne den
+     Verlauf zweimal zu schreiben. */
+  --skala-strich: 255, 255, 255;
   background-image:
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, var(--skala-grob-alpha)) 0 1px,
+      rgba(var(--skala-strich), var(--skala-grob-alpha)) 0 1px,
       transparent 1px var(--skala-grob)
     ),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, var(--skala-fein-alpha)) 0 1px,
+      rgba(var(--skala-strich), var(--skala-fein-alpha)) 0 1px,
       transparent 1px var(--skala-fein)
     );
+}
+
+/* Dieselbe Teilung auf hellen Flächen. Weiße Linien auf Papier sind
+   unsichtbar, also wechselt die Strichfarbe auf Tinte.
+
+   ⚠️ DIE ALPHAS SIND NICHT DIESELBEN, und das ist kein Feinschliff:
+   Menschliche Helligkeitswahrnehmung ist nicht linear. Ein weißer Strich
+   mit 2,8 % auf #0A2337 hebt sich deutlich stärker ab als ein
+   tintenfarbener mit 2,8 % auf #FBF6EE – dunkle Linien auf hellem Grund
+   brauchen rund die doppelte Deckkraft, um gleich laut zu wirken. Wer die
+   Werte angleicht, bekommt entweder eine unsichtbare oder eine
+   Karopapier-Fläche. */
+.ep-skala-tinte {
+  --skala-strich: 20, 35, 46;
+  --skala-fein-alpha: 0.05;
+  --skala-grob-alpha: 0.09;
 }
 
 @media (max-width: 767px) {
@@ -381,6 +452,15 @@
        jedem Buchstaben, dieselbe Deckkraft wirkt dort kräftiger. */
     --skala-fein-alpha: 0.018;
     --skala-grob-alpha: 0.04;
+  }
+
+  /* ⚠️ MUSS NACH `.ep-skala` STEHEN. Beide Regeln haben dieselbe
+     Spezifität, es entscheidet also die Reihenfolge – andersherum
+     überschriebe die Grundregel die Tinten-Alphas wieder auf die
+     Navy-Werte, und die Skala wäre auf dem Handy auf Papier weg. */
+  .ep-skala-tinte {
+    --skala-fein-alpha: 0.032;
+    --skala-grob-alpha: 0.065;
   }
 }
 
@@ -434,7 +514,7 @@
 }
 
 ::selection {
-  background: var(--color-ep-sun);
+  background: var(--color-ep-accent-strong);
   color: var(--color-ep-ink);
 }
 

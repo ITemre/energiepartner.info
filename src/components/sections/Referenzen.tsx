@@ -70,7 +70,7 @@ export function Referenzen({ faelle }: { faelle: Referenzfall[] | null }) {
     >
       <div className="ep-container py-28 sm:py-40 lg:py-48">
         <div>
-          <p data-ref-eyebrow className="t-label text-ep-orange-deep">
+          <p data-ref-eyebrow className="t-label text-ep-accent">
             Aus der Praxis
           </p>
           <h2 data-ref-h2 className="t-h2 mt-6 max-w-[17ch] text-ep-ink">
@@ -88,7 +88,7 @@ export function Referenzen({ faelle }: { faelle: Referenzfall[] | null }) {
                 {/* Kopf: Ort und Gebäude als Kennung. Sie machen den Fall
                     vorstellbar, ohne jemanden zu nennen. */}
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                  <span className="t-label text-ep-orange-deep">
+                  <span className="t-label text-ep-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="text-[clamp(1.5rem,2.8vw,2.25rem)] font-bold leading-tight tracking-[-0.025em] text-ep-ink">
@@ -106,12 +106,12 @@ export function Referenzen({ faelle }: { faelle: Referenzfall[] | null }) {
                     </p>
 
                     {/* DER BEFUND ist das Herzstück. Er steht deshalb
-                        ausgezeichnet an der Sonnenkante und nicht als
+                        ausgezeichnet an der Akzentkante und nicht als
                         dritter Absatz im Fließtext: Was wir gefunden haben,
                         ist der Unterschied zwischen uns und einem Betrieb,
                         der nur einbaut. */}
-                    <div className="mt-8 border-l-2 border-ep-orange-deep pl-6">
-                      <p className="t-key text-ep-orange-deep">Befund</p>
+                    <div className="mt-8 border-l-2 border-ep-accent pl-6">
+                      <p className="t-key text-ep-accent">Befund</p>
                       <p className="mt-3 max-w-[50ch] text-[clamp(1.125rem,1.6vw,1.375rem)] font-medium leading-snug text-ep-ink">
                         {fall.befund}
                       </p>

@@ -1,61 +1,95 @@
 import { Hero } from "@/components/sections/Hero";
 import { ProofBar } from "@/components/sections/ProofBar";
-import { Situationen } from "@/components/sections/Situationen";
 import { Foerderung } from "@/components/sections/Foerderung";
-import { Referenzen } from "@/components/sections/Referenzen";
 import { FAQ } from "@/components/sections/FAQ";
-import { Gesamtsystem } from "@/components/sections/Gesamtsystem";
 import { Leistungen } from "@/components/sections/Leistungen";
-import { Galerie } from "@/components/sections/Galerie";
-import { Aufgabenteilung } from "@/components/sections/Aufgabenteilung";
 import { Ablauf } from "@/components/sections/Ablauf";
-import { Zweitmeinung } from "@/components/sections/Zweitmeinung";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { Ergebnisse } from "@/components/sections/Ergebnisse";
+import { Kontakt } from "@/components/sections/Kontakt";
 import { holeGoogleBewertungen } from "@/lib/google-reviews";
 import { holePlatzhalterStimmen } from "@/lib/stimmen-platzhalter";
-import { holeKennzahlen, holeReferenzfaelle } from "@/lib/proof";
+import { holeKennzahlen } from "@/lib/proof";
 
 /**
  * energiepartner.info = Unternehmensauftritt & Vertrauensaufbau, als Onepager.
  *
- * REIHENFOLGE (Stand 07.08., Emre)
+ * REIHENFOLGE (Stand 10.08., Emre)
  *
- *   Hero · Förderung · Testimonials · Gesamtsystem · Leistungen
- *   · Situationen · Galerie · ProofBar · Aufgabenteilung · Ablauf
- *   · Referenzen · FAQ · Zweitmeinung · Ergebnisse
+ *   Hero · Förderung · Testimonials · Leistungen · ProofBar · Ablauf
+ *   · FAQ · Kontakt
  *
- * Drei Umstellungen führten hierher, alle mit demselben Gedanken: Was den
- * Besucher zum Bleiben bringt, steht vorn – nicht das, was die Reihenfolge
- * einer Argumentation nahelegt.
+ * Acht Sektionen. Es waren vierzehn, und die sechs fehlenden sind der
+ * eigentliche Punkt dieser Datei.
  *
- * FÖRDERUNG ↔ PROOFBAR. „Bis zu 70 Prozent zahlt nicht Ihr Haushalt." ist
- * die Antwort auf den einzigen Einwand, der schon im Kopf steht, bevor die
- * Seite überhaupt argumentiert hat – die Sektion lag an sechster Stelle.
- * Die Belegzeile verträgt die spätere Position dagegen gut: Sie beantwortet
- * keine Frage, sie deckt Behauptungen, und Behauptungen müssen erst einmal
- * aufgestellt sein.
+ * ═══ WAS DIE SEITE LEISTEN MUSS ═══
+ * Sie ist die VERTRAUENSSEITE. Anfragen erzeugt angebote-vergleichen.info,
+ * hier soll jemand den Eindruck bekommen, dass er es mit einem seriösen
+ * Vermittler zu tun hat. Daraus folgt der Maßstab für jede Sektion: Zahlt
+ * sie auf Vertrauen ein, oder beschreibt sie nur noch einmal, was wir tun?
  *
- * TESTIMONIALS NACH VORN. Die Stimmen standen an elfter Stelle und
- * erreichten damit nur die, die ohnehin schon überzeugt waren. Sie sind die
- * einzige Aussage der Seite, die nicht von uns stammt – das ist zu wertvoll
- * für Position elf. Jetzt stehen sie hinter der Förderung und vor „Ihr
- * Eigenheim".
+ * ⚠️ BEIDE AUFTRITTE SIND GETRENNT UND SOLLEN ES BLEIBEN (Emre, 10.08.).
+ * Von hier führt bewusst KEIN Verweis auf `/av`. Wer die Prüfstrecke sucht,
+ * kommt per QR aus einem Brief oder aus einer Anzeige, nicht über diese
+ * Seite. Deshalb ist `Zweitmeinung` raus und kommt nicht als Fuß- oder
+ * Menüpunkt zurück.
  *
- * SITUATIONEN HINTER DIE LEISTUNGEN. „Wo stehen Sie gerade?" war der
- * Einstieg und ist jetzt die Zuordnung: erst was es gibt, dann welche der
- * vier Lagen die eigene ist. Der Signature-Moment („Vier Bausteine. Ein
- * System.") steht damit direkt hinter der Förderung – er beantwortet dort
- * die Frage, die eine Zahl immer aufwirft: wofür genau eigentlich.
+ * ═══ WAS RAUSGEFLOGEN IST (10.08., Kundenwunsch „kürzen") ═══
  *
- * BANDRHYTHMUS – nur zwei Flächen, Navy und Papier. Vorher liefen drei
- * Helligkeiten (Papier, Sand, Weiß) gegeneinander, die sich zu ähnlich waren,
- * um als Wechsel gelesen zu werden, und zu verschieden, um als eine Fläche
- * durchzugehen. Navy sind Hero, Leistungen und ProofBar; alles andere ist
- * Papier.
+ * GESAMTSYSTEM („Vier Bausteine. Ein System."). Emre ausdrücklich: zu viel,
+ * stoppt den Scrollfluss. Sie war der Signature-Moment und gestalterisch
+ * die stärkste Sektion der Seite – aber sie erklärt ein Produktkonzept, und
+ * ein Produktkonzept ist kein Vertrauensargument. Vier gepinnte Bausteine
+ * kosten mehr Scroll als jede andere Sektion außer der Galerie.
  *
- * Die Angebotsprüf-Story (ZahlSequenz, Ablauf-Chat) gehört auf
- * angebote-vergleichen.info und liegt dafür im Original-Repo.
+ * SITUATIONEN („Wo stehen Sie gerade?"). Sagt dasselbe wie die Stichpunkte
+ * unter den Leistungen, nur ausführlicher: „Wir prüfen, ob eine Wärmepumpe
+ * in Ihr Haus passt" steht dort als „Ehrliche Prüfung, ob Ihr Haus geeignet
+ * ist". Zwei Sektionen für eine Aussage.
+ *
+ * ERGEBNISSE („Das bekommen Sie schwarz auf weiß."). Die vier Punkte waren
+ * fast wörtlich die Liste aus der Aufgabenteilung: Bestandsaufnahme,
+ * Wirtschaftlichkeitsrechnung, Förderung. Dieselbe Aussage, zwei Bänder
+ * weiter unten und ohne neuen Gedanken.
+ *
+ * REFERENZEN („Aus der Praxis"). Die Fälle sind erfunden (siehe
+ * `lib/proof.ts`), Ilias hatte zum Zeitpunkt der Kürzung keinen einzigen
+ * abgeschlossenen Kunden. Die Sektion rendert live ohnehin `null`. Sie hat
+ * damit nur die Vorführung länger gemacht und dabei den falschen Eindruck
+ * erweckt, es gäbe schon Fälle.
+ *
+ * AUFGABENTEILUNG („Sie entscheiden. Wir machen den Rest."). Dieselbe
+ * Aussage wie der Ablauf, nur ohne Zeitachse. Acht Aufzählungspunkte, die
+ * beschreiben was wir tun – das ist die Textsorte, von der die Seite zu
+ * viel hatte.
+ *
+ * ZWEITMEINUNG („Dann sehen wir es uns an, bevor Sie unterschreiben.").
+ * War die Tür zu `/av`. Die Auftritte bleiben getrennt, siehe oben.
+ *
+ * GALERIE (12.08.). Zuletzt nur noch der Porträt-Auftritt von Ilias über
+ * eine halbe Bildschirmbreite; die Bildstrecke davor war schon vorher
+ * aufgelöst und liegt als Hintergrund hinter den Leistungskarten. Emre hat
+ * die Sektion komplett gestrichen.
+ *
+ * ⚠️ Damit steht auf der Seite kein Foto und kein Name von Ilias mehr –
+ * auf einer VERTRAUENSSEITE ist das die auffälligste Lücke von allen. Die
+ * Kontaktsektion nennt ihn noch als Ansprechpartner, aber ohne Gesicht.
+ * `Galerie.tsx` liegt unverändert bereit, falls das zurückkommen soll.
+ *
+ * ⚠️ Alle sechs Dateien liegen weiter unter `components/sections/` und sind
+ * nur ausgehängt, nicht gelöscht – dieselbe Konvention wie auf `/av`. Wenn
+ * echte Referenzfälle vorliegen, ist `Referenzen` die erste, die
+ * zurückkommt.
+ *
+ * ═══ BANDRHYTHMUS ═══
+ * Zwei Flächen, Navy und Papier. Navy sind Hero, Leistungen, ProofBar,
+ * Ablauf und FAQ; alles andere ist Papier.
+ *
+ * ⚠️ OFFEN: ProofBar, Ablauf und FAQ stehen jetzt als drei dunkle Bänder
+ * hintereinander, das letzte Drittel der Seite ist damit durchgehend Navy.
+ * Die Nuancen wechseln (navy · navy-deep · navy) und beide Nähte tragen
+ * eine Sonnenlinie, aber sauber ist das nicht. Der nächste Schnitt gehört
+ * an die ProofBar: Ihre Kennzahlen sind Platzhalter, und die Bewertung
+ * zeigt zwei Bänder weiter oben schon die Stimmen-Sektion.
  */
 export default async function Home() {
   /* Serverseitig, damit der Places-Schlüssel den Server nie verlässt. Der
@@ -67,12 +101,15 @@ export default async function Home() {
      leer, zeigen Hero und Stimmen keine Bewertungsaussage. */
   const bewertungen = (await holeGoogleBewertungen()) ?? holePlatzhalterStimmen();
 
-  /* Kennzahlen und Referenzfälle sind derzeit vorläufig und hängen an
-     derselben Sperre wie die Stimmen (`PLATZHALTER_INHALTE`, siehe
-     `lib/proof.ts`). Ohne sie liefern beide `null`, und die zugehörigen
-     Sektionen entfallen ersatzlos statt leer dazustehen. */
+  /* Die Kennzahlen sind vorläufig und hängen an derselben Sperre wie die
+     Stimmen (`PLATZHALTER_INHALTE`, siehe `lib/proof.ts`). Ohne sie liefert
+     die Funktion `null`, und die Belegzeile entfällt ersatzlos statt leer
+     dazustehen.
+
+     `holeReferenzfaelle` wird hier nicht mehr aufgerufen: Die Sektion ist
+     ausgehängt (siehe Kopfkommentar). Die Funktion bleibt in `proof.ts`
+     stehen, weil sie beim Wiedereinhängen unverändert gebraucht wird. */
   const kennzahlen = holeKennzahlen();
-  const referenzfaelle = holeReferenzfaelle();
 
   return (
     <main className="flex-1">
@@ -103,17 +140,16 @@ export default async function Home() {
             hat. Eine Antwort darauf gehört an die Stelle, an der der Einwand
             entsteht, nicht ans Ende der Argumentation.
 
-            Die Sonnenkante an der Oberkante der Sektion (`border-t-2
-            border-ep-sun`) übernimmt hier zusätzlich die Aufgabe, die vorher
-            die ProofBar hatte: Sie ist die sichtbare Kante, gegen die der
-            Zoom des sticky Heros überhaupt erst wahrnehmbar wird. */}
+            Die Akzentkante an der Oberkante der Sektion (`border-t-2
+            border-ep-accent`) übernimmt hier zusätzlich die Aufgabe, die
+            vorher die ProofBar hatte: Sie ist die sichtbare Kante, gegen die
+            der Zoom des sticky Heros überhaupt erst wahrnehmbar wird. */}
         <Foerderung />
 
         {/* ============ STIMMEN – Google-Rezensionen ============
-            Steht seit 07.08. vorn, direkt hinter der Förderung und vor „Ihr
-            Eigenheim". Die einzige Sektion der Seite, deren Aussage nicht von
-            uns stammt – und sie stand bisher an elfter Stelle, wo sie nur
-            noch die erreicht, die ohnehin schon überzeugt waren.
+            Die einzige Sektion, deren Aussage nicht von uns stammt. Steht
+            deshalb vorn und nicht am Ende, wo sie nur noch die erreicht,
+            die ohnehin überzeugt waren.
 
             Sie verträgt die Position auch formal: Die mittige Komposition
             ohne Kennspur hebt sie aus der Datenblatt-Achse heraus, deshalb
@@ -121,27 +157,14 @@ export default async function Home() {
             Abschnitt (siehe Kommentar in `Testimonials.tsx`). */}
         <Testimonials bewertungen={bewertungen} />
 
-        {/* ============ SIGNATURE – vier Zeilen, zweimal gelesen ============ */}
-        <Gesamtsystem />
-
-        {/* ====== LEISTUNGEN – Wärmepumpe, Photovoltaik, Stromtarif ====== */}
+        {/* ====== LEISTUNGEN – Wärmepumpe, Photovoltaik, Stromtarif ======
+            Trägt seit der Kürzung allein, wofür vorher drei Sektionen
+            standen: was es gibt, für wen es passt, was dabei herauskommt.
+            Die Stichpunkte je Bereich („Ehrliche Prüfung, ob Ihr Haus
+            geeignet ist", „Ertrag und Wirtschaftlichkeit vorab gerechnet")
+            sagen das bereits. */}
         <Leistungen />
 
-        {/* ====== AUSGANGSLAGE – „Wo stehen Sie gerade?" ======
-            Steht hinter den Leistungen, nicht davor (Emre, 07.08.). Der
-            Besucher weiß jetzt, was es gibt – die Sektion holt ihn genau an
-            der Stelle ab, an der die Frage „und was davon gilt für mich?"
-            aufkommt, und beantwortet sie mit vier Sätzen, in denen er sich
-            wiedererkennt.
-
-            ⚠️ Sie ist damit nicht mehr der Einstieg. Wer ihre Copy anfasst,
-            muss sie nicht mehr als erste Begegnung mit dem Haus lesen,
-            sondern als Zuordnung: Vier Lagen, und für jede steht schon
-            oben, was wir dafür bauen. */}
-        <Situationen />
-
-        {/* ============ GALERIE – die Anlagen, dann der Mensch ============ */}
-        <Galerie />
 
         {/* ====== BELEG – Zahlen und Bewertung ======
             Steht nach der Bildstrecke, wo vorher die Förderung lag: Der
@@ -153,33 +176,29 @@ export default async function Home() {
             hintereinanderstünden (Galerie, Aufgabenteilung, Ablauf). */}
         <ProofBar kennzahlen={kennzahlen} bewertungen={bewertungen} />
 
-        {/* ============ VORTEIL – Entlastung: 3 Aufgaben gegen 8 ============ */}
-        <Aufgabenteilung />
-
         {/* ====== NACH DER UNTERSCHRIFT – der Weg bis zur Abnahme ======
-            Steht direkt hinter der Aufgabenteilung, weil die dort mit „wir
-            machen den Rest" endet: erst die Behauptung, dann der Beleg.
-            Vorher hörte die Seite beim Ergebnis der kostenlosen Beratung auf
-            – also genau an der Stelle, an der der Besucher zum ersten Mal
-            etwas zu verlieren hat. */}
+            Die einzige Sektion, die nicht beschreibt was wir können, sondern
+            was passiert, nachdem der Besucher etwas zu verlieren hat. Genau
+            deshalb hat sie die Aufgabenteilung überlebt und die nicht: Beide
+            sagten „wir machen das", diese sagt zusätzlich wann und in
+            welcher Reihenfolge. */}
         <Ablauf />
-
-        {/* ====== AUS DER PRAXIS – die einzige Sektion, die nicht über uns spricht ======
-            Ausgangslage, Befund, Ergebnis in Zahlen. Steht nach dem Ablauf:
-            erst wie wir arbeiten, dann was dabei herauskam. */}
-        <Referenzen faelle={referenzfaelle} />
 
         {/* ====== EINWÄNDE – was zwischen Lesen und Anrufen steht ====== */}
         <FAQ />
 
-        {/* ====== BRÜCKE – Sie haben schon ein Angebot? ======
-            Kurzes Band, kein zweiter Longread: Die Prüf-Story gehört auf
-            angebote-vergleichen.info, hier steht nur die Tür dorthin.
-            Hinter der FAQ, weil dort ohnehin danach gefragt wird. */}
-        <Zweitmeinung />
+        {/* ====== KONTAKT – der einzige Handlungsort neben dem Hero ======
+            Neu am 10.08. `#kontakt` zeigte vorher auf den Footer, wo
+            WhatsApp und Telefon als zwei kleine Fußzeilen-Links standen.
+            Gleichzeitig lagen Knöpfe über die Seite verstreut, unter
+            anderem mitten in der Förderung.
 
-        {/* ============ ERGEBNIS – was schwarz auf weiß vorliegt ============ */}
-        <Ergebnisse />
+            Beides ist zusammen aufgelöst: keine Knöpfe im
+            Argumentationsteil, dafür ein richtiger Kontaktbereich am Ende.
+            Das ist die Form, die eine Vertrauensseite hat – eine
+            Landingpage verteilt Handlungsaufforderungen, ein
+            Unternehmensauftritt hat einen Ort dafür. */}
+        <Kontakt />
       </div>
     </main>
   );

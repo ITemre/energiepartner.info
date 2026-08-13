@@ -254,6 +254,7 @@ export function AnfrageDialog({
          mit – ohne Zurücksetzen sitzt der Vollbild-Dialog in einem Kasten in
          der Mitte. `overflow-hidden` ist Absicht: Gescrollt wird ausschließlich
          in der Feldzone, damit Kopf und Fuß nie weglaufen. */
+      data-surface="dark"
       className="m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden bg-ep-navy-deep p-0 text-white backdrop:bg-ep-navy-deep/90"
     >
       {/* Dieselbe Skala wie Hero und Footer – der Dialog ist Teil derselben
@@ -278,7 +279,7 @@ export function AnfrageDialog({
           <button
             type="button"
             onClick={() => dialog.current?.close()}
-            className="-mr-2 inline-flex items-center gap-2 rounded-ep px-2 py-2 text-white/80 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-sun"
+            className="-mr-2 inline-flex items-center gap-2 rounded-ep px-2 py-2 text-white/80 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
           >
             <span className="t-key hidden sm:inline">Schließen</span>
             <X className="size-6" aria-hidden="true" />
@@ -312,7 +313,7 @@ export function AnfrageDialog({
                       key={kurz}
                       className={cn(
                         "h-0.5 w-8 transition-colors duration-500 sm:w-10",
-                        i <= schritt ? "bg-ep-orange" : "bg-white/25",
+                        i <= schritt ? "bg-ep-accent-strong" : "bg-white/25",
                       )}
                     />
                   ))}
@@ -345,7 +346,7 @@ export function AnfrageDialog({
           >
             {fertig ? (
               <div>
-                <span className="grid size-12 place-items-center rounded-full bg-ep-orange text-white">
+                <span className="grid size-12 place-items-center rounded-full bg-ep-accent-strong text-white">
                   <Check className="size-6" strokeWidth={2.5} aria-hidden="true" />
                 </span>
                 {/* Bestätigungen sagen, was als Nächstes passiert – sonst
@@ -390,7 +391,7 @@ export function AnfrageDialog({
                                 <span className="text-sm text-white/70">{hint}</span>
                               </span>
                               <ArrowRight
-                                className="size-5 shrink-0 text-ep-orange transition-transform duration-300 group-hover:translate-x-1.5"
+                                className="size-5 shrink-0 text-ep-accent-strong transition-transform duration-300 group-hover:translate-x-1.5"
                                 aria-hidden="true"
                               />
                             </button>
@@ -463,9 +464,9 @@ export function AnfrageDialog({
                                 onClick={() => setzeFeld("gebaeude", value)}
                                 aria-pressed={aktiv}
                                 className={cn(
-                                  "rounded-ep border px-5 py-3 text-base font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-sun",
+                                  "rounded-ep border px-5 py-3 text-base font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-accent-strong",
                                   aktiv
-                                    ? "border-ep-orange bg-ep-orange text-white"
+                                    ? "border-ep-accent-strong bg-ep-accent-strong text-white"
                                     : "border-white/35 text-white hover:border-white/60 hover:bg-white/10",
                                 )}
                               >
@@ -559,7 +560,7 @@ export function AnfrageDialog({
                           checked={lead.einwilligung}
                           onChange={(e) => setzeFeld("einwilligung", e.target.checked)}
                           aria-invalid={!!fehler.einwilligung}
-                          className="mt-0.5 size-5 shrink-0 accent-ep-orange"
+                          className="mt-0.5 size-5 shrink-0 accent-ep-accent-strong"
                         />
                         <span>
                           Wir dürfen Ihre Angaben verwenden, um Sie zu dieser Anfrage zu
@@ -576,7 +577,7 @@ export function AnfrageDialog({
                     </div>
 
                     {stoerung && (
-                      <div role="alert" className="border-l-2 border-ep-orange bg-white/10 px-4 py-3">
+                      <div role="alert" className="border-l-2 border-ep-accent-strong bg-white/10 px-4 py-3">
                         {/* Fehler entschuldigen sich nicht und bleiben nicht
                             vage – sie sagen, was jetzt geht. */}
                         <p className="font-semibold text-white">{stoerung}</p>
@@ -659,7 +660,7 @@ export function AnfrageDialog({
 /** Beschriftung: Mono, versalisiert, Sonnengelb – dieselbe Kennung wie in
  *  der Ergebnis-Tafel. Vorher stand hier 14-px-Mono auf 60 % Weiß; klein,
  *  grau und ohne Auszeichnung war das der schwächste Text im Dialog. */
-const etikett = "t-label text-ep-sun";
+const etikett = "t-label text-ep-accent";
 
 /** Gefülltes Feld mit Unterkante statt reiner Haarlinie.
  *  Die nackte Linie war zu leise: Auf einer dunklen Fläche mit 30 % Weiß
@@ -667,10 +668,10 @@ const etikett = "t-label text-ep-sun";
  *  Füllung macht die Trefferfläche sichtbar, die kräftige Unterkante behält
  *  die Formensprache der Seite. */
 const eingabe =
-  "mt-2 w-full rounded-t-[6px] border-b-2 border-white/35 bg-white/[0.07] px-4 py-2.5 text-base text-white outline-none transition-colors placeholder:text-white/40 hover:border-white/55 hover:bg-white/10 focus:border-ep-orange focus:bg-white/10 sm:py-3 sm:text-xl";
+  "mt-2 w-full rounded-t-[6px] border-b-2 border-white/35 bg-white/[0.07] px-4 py-2.5 text-base text-white outline-none transition-colors placeholder:text-white/40 hover:border-white/55 hover:bg-white/10 focus:border-ep-accent-strong focus:bg-white/10 sm:py-3 sm:text-xl";
 
 const knopf =
-  "inline-flex items-center gap-2.5 rounded-ep bg-ep-orange px-6 py-3.5 text-base font-semibold text-white outline-none transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-sun focus-visible:ring-offset-2 focus-visible:ring-offset-ep-navy-deep disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center gap-2.5 rounded-ep bg-ep-accent-strong px-6 py-3.5 text-base font-semibold text-white outline-none transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-2 focus-visible:ring-offset-ep-navy-deep disabled:cursor-not-allowed disabled:opacity-60";
 
 function Feld({
   id,
@@ -702,7 +703,7 @@ function Feld({
 
 function Meldung({ children }: { children: React.ReactNode }) {
   return (
-    <p role="alert" className="mt-2 text-sm font-medium text-ep-sun">
+    <p role="alert" className="mt-2 text-sm font-medium text-ep-accent">
       {children}
     </p>
   );
@@ -745,8 +746,8 @@ function DateiFeld({
     return (
       <div>
         <p className={etikett}>Ihr Angebot</p>
-        <div className="mt-3 flex items-center gap-3 rounded-ep border border-ep-orange/60 bg-white/[0.07] px-4 py-3.5">
-          <Paperclip className="size-5 shrink-0 text-ep-orange" aria-hidden="true" />
+        <div className="mt-3 flex items-center gap-3 rounded-ep border border-ep-accent-strong/60 bg-white/[0.07] px-4 py-3.5">
+          <Paperclip className="size-5 shrink-0 text-ep-accent-strong" aria-hidden="true" />
           <span className="min-w-0 flex-1">
             {/* `truncate` plus `min-w-0`: Ohne die Mindestbreite wächst das
                 Flex-Kind über seinen Container hinaus, statt zu kürzen –
@@ -758,7 +759,7 @@ function DateiFeld({
           <button
             type="button"
             onClick={() => onWaehle(null)}
-            className="shrink-0 rounded p-1 text-white/70 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-sun"
+            className="shrink-0 rounded p-1 text-white/70 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
           >
             <X className="size-5" aria-hidden="true" />
             <span className="sr-only">Datei entfernen</span>
@@ -787,8 +788,8 @@ function DateiFeld({
              würden nur den Knopf im Input umfärben, nicht die Fläche. */
           className="peer absolute inset-0 z-10 w-full cursor-pointer opacity-0"
         />
-        <div className="pointer-events-none flex items-center gap-3 rounded-ep border border-dashed border-white/40 bg-white/[0.04] px-4 py-5 transition-colors peer-hover:border-white/70 peer-hover:bg-white/[0.08] peer-focus-visible:ring-2 peer-focus-visible:ring-ep-sun">
-          <Paperclip className="size-5 shrink-0 text-ep-sun" aria-hidden="true" />
+        <div className="pointer-events-none flex items-center gap-3 rounded-ep border border-dashed border-white/40 bg-white/[0.04] px-4 py-5 transition-colors peer-hover:border-white/70 peer-hover:bg-white/[0.08] peer-focus-visible:ring-2 peer-focus-visible:ring-ep-accent-strong">
+          <Paperclip className="size-5 shrink-0 text-ep-accent" aria-hidden="true" />
           <span className="text-white/85">Datei auswählen oder fotografieren</span>
         </div>
       </div>

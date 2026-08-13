@@ -205,10 +205,15 @@ export function AvZahl() {
            genau einen Wert). Die Wärme kommt deshalb über Licht und
            Akzentfarbe, nicht über einen Flächentausch – was ohnehin näher
            an der CI-Regel „flaches Navy, kein Verlauf als Grundfläche"
-           liegt. */
+           liegt.
+
+           Die Auflösung hellt sich auf `#F48042` auf – einen helleren Tint
+           DERSELBEN Orange-Familie (identisch zu `[data-surface="dark"]`
+           in globals.css) statt eines zweiten Farbtons: Der Bogen "wärmt
+           sich auf", bleibt aber innerhalb einer Hue. */
         tl.to("[data-z-befund]", { autoAlpha: 0, y: -16, duration: 8 }, 66);
         tl.fromTo("[data-z-waerme]", { opacity: 0 }, { opacity: 1, duration: 20 }, 62);
-        tl.to("[data-z-block]", { color: "#FBB23F", duration: 12 }, 68);
+        tl.to("[data-z-block]", { color: "#F48042", duration: 12 }, 68);
         tl.to("[data-z-aufloesung]", { autoAlpha: 1, duration: 2 }, 72);
         zeige("[data-z-satz]", 72, 8);
         zeige("[data-z-nachsatz]", 80, 6);
@@ -223,6 +228,7 @@ export function AvZahl() {
       ref={scope}
       id="beispiel"
       data-nav-theme="dark"
+      data-surface="dark"
       /* Die Höhe IST die Spieldauer: 320 svh geben der Sequenz rund drei
          Bildschirme Scrollstrecke. Bei `prefers-reduced-motion` fällt die
          Bühne auf normalen Fluss zurück und zeigt alles untereinander. */
@@ -263,7 +269,7 @@ export function AvZahl() {
           className="pointer-events-none absolute inset-0 opacity-0"
           style={{
             background:
-              "radial-gradient(130% 90% at 50% 118%, rgba(251,178,63,0.30) 0%, rgba(242,106,33,0.10) 48%, rgba(242,106,33,0) 76%)",
+              "radial-gradient(130% 90% at 50% 118%, rgba(244,128,66,0.30) 0%, rgba(242,106,33,0.10) 48%, rgba(242,106,33,0) 76%)",
           }}
         />
 
@@ -307,7 +313,7 @@ export function AvZahl() {
                 </span>
                 <span
                   data-z-label-echt
-                  className="t-label absolute inset-x-0 text-ep-sun opacity-0"
+                  className="t-label absolute inset-x-0 text-ep-accent opacity-0"
                 >
                   Positionen fehlten
                 </span>
@@ -371,14 +377,14 @@ export function AvZahl() {
                     <li
                       key={position.label}
                       data-z-luecke={i}
-                      className="border-l-2 border-ep-orange pl-3 text-left"
+                      className="border-l-2 border-ep-accent-strong pl-3 text-left"
                     >
                       <span className="flex items-baseline justify-between gap-4">
-                      <span className="text-[13px] leading-snug text-ep-orange sm:text-sm">
+                      <span className="text-[13px] leading-snug text-ep-accent sm:text-sm">
                         {position.label}
                         <span className="text-white/60"> nicht enthalten</span>
                       </span>
-                      <span className="t-key shrink-0 text-ep-orange">
+                      <span className="t-key shrink-0 text-ep-accent">
                         + {fmt(position.betrag)} €
                       </span>
                       </span>
@@ -398,7 +404,7 @@ export function AvZahl() {
               <div data-z-aufloesung className="self-start [grid-area:1/1]">
                 <p data-z-satz className="t-h3 text-white">
                   Das Angebot war nicht zu teuer.{" "}
-                  <span className="text-ep-sun">Es war unvollständig.</span>
+                  <span className="text-ep-accent">Es war unvollständig.</span>
                 </p>
                 {/* Der Betrag steht HIER und nicht als Hauptzahl – als
                     Einordnung eines Befunds, nicht als Drohung. Und der
@@ -452,7 +458,7 @@ export function AvZahl() {
           className="pointer-events-none absolute inset-x-0 bottom-5 flex flex-col items-center gap-2.5 motion-reduce:hidden"
         >
           <span className="flex h-9 w-[23px] items-start justify-center rounded-full border border-white/25 p-[5px]">
-            <span className="ep-scrollcue-dot size-1.5 rounded-full bg-ep-sun" />
+            <span className="ep-scrollcue-dot size-1.5 rounded-full bg-ep-accent-strong" />
           </span>
         </div>
       </div>

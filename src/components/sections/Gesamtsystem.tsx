@@ -231,15 +231,16 @@ export function Gesamtsystem() {
       <div className="relative">
         {/* ================= Kopf – scrollt normal ================= */}
         <div data-g-head className="ep-container pb-4 pt-20 sm:pb-8 sm:pt-28">
-          <p data-g-reveal className="t-label text-ep-orange-deep">
+          <p data-g-reveal className="t-label text-ep-accent">
             Ihr Eigenheim
           </p>
-          {/* `text-ep-orange` bleibt hier zulässig: Bei dieser Größe gilt
-              die Schwelle für Großtext (3:1), und #F26A21 auf Papier liegt
-              mit 3,06:1 darüber. Bei den Labels darunter tut es das nicht –
-              deshalb dort `orange-deep`. */}
+          {/* `text-ep-accent-strong` bleibt hier zulässig: Bei dieser Größe
+              gilt die Schwelle für Großtext (3:1), und die Basis-Akzentfarbe
+              (#F26A21) auf Papier liegt mit 3,06:1 darüber. Bei den Labels
+              darunter tut sie das nicht – deshalb dort die adaptive Rolle
+              `ep-accent`. */}
           <h2 data-g-h2 className="t-h2 mt-6 max-w-[16ch]">
-            Vier Bausteine. <span className="text-ep-orange">Ein System.</span>
+            Vier Bausteine. <span className="text-ep-accent-strong">Ein System.</span>
           </h2>
           <p data-g-reveal className="t-lead mt-6 max-w-[46ch] text-ep-ink/75">
             Einzeln gekauft verschenken sie Potenzial. Zusammen geplant spielen sie
@@ -311,7 +312,7 @@ export function Gesamtsystem() {
             </p>
             <p
               data-g-state-b
-              className="t-label col-start-1 row-start-1 text-ep-orange-deep"
+              className="t-label col-start-1 row-start-1 text-ep-accent"
             >
               Zusammen geplant · eine abgestimmte Anlage
             </p>

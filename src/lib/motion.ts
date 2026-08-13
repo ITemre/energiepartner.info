@@ -215,3 +215,93 @@ export function revealItems(
     );
   });
 }
+
+/**
+ * Typ 3 – eine Zahl zählt hoch, sobald sie ins Bild kommt.
+ *
+ * ═══ WARUM ÜBERHAUPT ═══
+ * Die Seite argumentiert an ihren wichtigsten Stellen mit Zahlen (Förderung,
+ * Beleg-Leiste). Eine Zahl, die fertig dasteht, wird gelesen; eine, die
+ * hochläuft, wird BEOBACHTET – und das ist bei einem Betrag, der die
+ * Kaufentscheidung trägt, genau die Sekunde Aufmerksamkeit, um die es geht.
+ *
+ * ⚠️ EINMALIG, NICHT AM SCROLL GESCRUBBT (`once: true`). Das ist dieselbe
+ * Entscheidung wie beim `Marker` und aus demselben Grund: Etwas, das beim
+ * Zurückscrollen wieder verschwindet, ist ein Effekt; etwas, das einmal
+ * passiert und dann steht, ist eine Aussage. Eine Zahl, die beim Hoch- und
+ * Runterscrollen mitzählt, wirkt zudem wie ein kaputtes Messgerät.
+ *
+ * ═══ KEINE ÄNDERUNG AM MARKUP NÖTIG ═══
+ * Der Endwert wird aus dem gerenderten Text GELESEN, nicht als Prop
+ * übergeben. Das hat einen handfesten Grund: Der Text im Markup bleibt damit
+ * die einzige Quelle. Eine zweite Angabe (`data-count="21000"`) neben dem
+ * sichtbaren „21.000 €" wäre ein Wert, der beim nächsten Textwechsel
+ * lautlos falsch wird – und niemand prüft eine Zahl, die man nicht sieht.
+ *
+ * Erkannt wird die erste Zahlengruppe, der Rest der Zeichenkette bleibt
+ * unangetastet:
+ *   „21.000 €"  → zählt 21000, zeigt „21.000 €"
+ *   „+ 20 %"    → zählt 20,    zeigt „+ 20 %"
+ *   „5,0"       → zählt 5,     zeigt „5,0" (eine Nachkommastelle)
+ *   „24 Std."   → zählt 24,    zeigt „24 Std."
+ *
+ * ⚠️ DAS ELEMENT BRAUCHT `tabular-nums`. Mit proportionalen Ziffern ändert
+ * sich die Breite bei jedem Zwischenwert, und die Zahl zappelt, statt zu
+ * laufen. Auf der ganzen Seite steht dafür `[font-variant-numeric:tabular-nums]`
+ * an den Kennzahlen – wer eine neue anlegt, muss es mitnehmen.
+ *
+ * @returns Cleanup – im matchMedia-Callback zurückgeben.
+ */
+export function countUp(
+  selector: string,
+  options: { start?: string; duration?: number } = {},
+): () => void {
+  const { start = "top 88%", duration = 1.6 } = options;
+  const tweens: gsap.core.Tween[] = [];
+
+  gsap.utils.toArray<HTMLElement>(selector).forEach((el) => {
+    const vorlage = el.textContent ?? "";
+    const treffer = vorlage.match(/\d[\d.,]*/);
+    if (!treffer) return;
+
+    const roh = treffer[0];
+    // Deutsche Schreibweise: Punkt trennt Tausender, Komma die Dezimalen.
+    const ziel = Number(roh.replace(/\./g, "").replace(",", "."));
+    if (!Number.isFinite(ziel)) return;
+
+    const nachkomma = (roh.split(",")[1] ?? "").length;
+    const formatiere = new Intl.NumberFormat("de-DE", {
+      minimumFractionDigits: nachkomma,
+      maximumFractionDigits: nachkomma,
+    });
+
+    const zaehler = { wert: 0 };
+
+    tweens.push(
+      gsap.to(zaehler, {
+        wert: ziel,
+        duration,
+        ease: EASE_SOFT,
+        scrollTrigger: { trigger: el, start, once: true },
+        onUpdate: () => {
+          el.textContent = vorlage.replace(roh, formatiere.format(zaehler.wert));
+        },
+        /* Am Ende die Ausgangszeichenkette zurückschreiben statt den
+           formatierten Endwert stehen zu lassen: `Intl` und die Vorlage
+           können in Kleinigkeiten auseinanderliegen (schmales Leerzeichen,
+           fehlende Nachkommastelle), und die letzte Fassung ist die, die
+           dauerhaft dasteht. Sie muss exakt das sein, was im Markup steht. */
+        onComplete: () => {
+          el.textContent = vorlage;
+        },
+      }),
+    );
+  });
+
+  return () => {
+    tweens.forEach((tween) => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+    });
+  };
+}

@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { cn } from "@/lib/utils";
 import { maskedHeadline, revealItems } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -13,8 +13,8 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * „Unser Service. Ihr Durchblick." – die drei Leistungen des Hauses:
- * Wärmepumpe, Photovoltaik, Stromtarif.
+ * „Unser Service. Ihr Durchblick." – die Leistungen des Hauses:
+ * Wärmepumpe, Photovoltaik, Stromtarif, Wallbox.
  *
  * COPY-QUELLE: Der gelbe Satz auf jeder Karte ist die von Ilias WÖRTLICH
  * freigegebene Leistungscopy (Projekt-Briefing Abschnitt 4). Er darf nur
@@ -37,9 +37,9 @@ if (typeof window !== "undefined") {
  * Eine Überschrift, die eigene Ausführung behauptet, war der Punkt, den das
  * Kickoff am 23.07. ausdrücklich geklärt hat.
  *
- * FORM: ein Stapel aus drei bildschirmhohen Karten. Jede liegt `sticky` und
- * bleibt stehen, während die nächste darüberschiebt – am Ende liegen alle
- * drei aufeinander wie abgearbeitete Blätter.
+ * FORM: ein Stapel bildschirmhoher Karten. Jede liegt `sticky` und bleibt
+ * stehen, während die nächste darüberschiebt – am Ende liegen alle
+ * aufeinander wie abgearbeitete Blätter.
  *
  * Bewusst OHNE Pin. Ein Pin hält den Scroll an und spielt eine Sequenz ab;
  * das unterbricht den Lesefluss und man merkt, dass einem die Kontrolle
@@ -50,9 +50,10 @@ if (typeof window !== "undefined") {
  *
  * Alle Karten schließen oben bündig ab – kein Versatz, keine sichtbaren
  * Kanten. Die vorige verschwindet vollständig unter der nächsten. Dass ein
- * Wechsel stattfindet, zeigt allein der wechselnde Ton (navy-deep / navy):
- * ohne ihn schöbe sich dieselbe Farbe über sich selbst und man sähe nichts
- * als einen Textwechsel.
+ * Wechsel stattfindet, zeigt seit 11.08. das FOTO hinter der Karte; vorher
+ * war es ein wechselnder Grundton (navy-deep / navy). Beides zusammen wäre
+ * doppelt gemoppelt, und der Verlauf über dem Bild müsste dann je Karte die
+ * Farbe wechseln.
  *
  * Kein Aufklappen: Ein Klick, der nur Text sichtbar macht, ist eine Hürde
  * ohne Gegenwert. „In Sekunden erfassbar" ist deshalb durch KÜRZEN gelöst –
@@ -61,6 +62,8 @@ if (typeof window !== "undefined") {
 const STEPS = [
   {
     title: "Wärmepumpen",
+    bild: "/galerie/g3-waermepumpe-v2.webp",
+    bildAlt: "Wärmepumpen-Außengerät neben einem Wohnhaus",
     /* freigegeben (Briefing 4) */
     result:
       "Wir empfehlen die passende Lösung für Ihr Zuhause und begleiten Sie durch Förderantrag und Installation, mit maximaler Förderung.",
@@ -72,6 +75,8 @@ const STEPS = [
   },
   {
     title: "Photovoltaik-Anlagen",
+    bild: "/galerie/g1-photovoltaik-v2.webp",
+    bildAlt: "Photovoltaikmodule auf einem Ziegeldach",
     /* freigegeben (Briefing 4) */
     result:
       "Wir finden den besten regionalen Installateur für Sie, zum fairsten Preis.",
@@ -83,6 +88,8 @@ const STEPS = [
   },
   {
     title: "Stromtarif-Vergleich",
+    bild: "/galerie/g2-speicher-v2.webp",
+    bildAlt: "Wechselrichter und Batteriespeicher an einer Wand",
     /* freigegeben (Briefing 4) */
     result:
       "Wir wechseln für Sie zum günstigsten Anbieter, schnell, einfach und ohne Aufwand für Sie.",
@@ -90,6 +97,29 @@ const STEPS = [
       "Tarife anbieterübergreifend verglichen",
       "Kündigung und Wechsel übernehmen wir",
       "Jährlich neu geprüft, damit es günstig bleibt",
+    ],
+  },
+  /* ⚠️ VIERTE KARTE, NOCH NICHT FREIGEGEBEN.
+     Ilias hat E-Mobilität im Gespräch erwähnt (Emre, 10.08.), aber ohne
+     Wortlaut – anders als die drei darüber, die wörtlich aus Briefing 4
+     stammen. Die Formulierungen hier sind deshalb von uns und folgen nur
+     dem Muster der anderen drei: eine Ergebniszeile, drei Stichpunkte,
+     jeder davon eine Leistung und keine Eigenschaft.
+
+     VOR DEM LIVEGANG von Ilias bestätigen lassen, insbesondere ob er
+     Wallboxen tatsächlich vermittelt und ob der THG-Punkt stimmt. Eine
+     Leistung zu behaupten, die es nicht gibt, ist derselbe Fehler wie eine
+     erfundene Bewertung, nur unauffälliger. */
+  {
+    title: "Wallbox & E-Mobilität",
+    bild: "/galerie/g7-wallbox.webp",
+    bildAlt: "Wallbox an einer Hauswand, daneben ein ladendes Auto",
+    result:
+      "Wir bringen Ihre Wallbox mit Photovoltaik und Speicher zusammen, damit Ihr Auto möglichst mit eigenem Strom lädt.",
+    points: [
+      "Wallbox passend zu Anschluss und Fahrzeug",
+      "Laden vorrangig aus der eigenen Anlage",
+      "Anmeldung beim Netzbetreiber übernehmen wir",
     ],
   },
 ] as const;
@@ -123,6 +153,7 @@ export function Leistungen() {
       ref={scope}
       id="leistungen"
       data-nav-theme="dark"
+      data-surface="dark"
       className="relative scroll-mt-[var(--nav-h)] bg-ep-navy-deep text-white"
     >
       {/* Der Stapel beginnt sofort mit der Sektion – die Überschrift steckt
@@ -134,24 +165,73 @@ export function Leistungen() {
       <div className="relative">
         {STEPS.map((step, i) => (
           <div key={step.title} className="sticky top-0 h-svh">
-            <div
-              className={cn(
-                "flex h-full flex-col justify-center overflow-hidden",
-                // Alle Karten schließen oben bündig ab und decken die vorige
-                // vollständig. Erkennbar bleibt der Wechsel allein über den
-                // Ton – ohne ihn schöbe sich Navy auf Navy und man sähe
-                // nichts als einen Textwechsel.
-                i % 2 === 0 ? "bg-ep-navy-deep" : "bg-ep-navy",
-              )}
-            >
-              <div className="ep-container">
+            <div className="relative flex h-full flex-col justify-center overflow-hidden bg-ep-navy-deep">
+              {/* ═══ DAS BILD DER KARTE (11.08.) ═══
+                  Die Fotos kommen aus der aufgelösten Bildstrecke. Dort
+                  standen sie als eigene Sektion unter der Überschrift „In
+                  Bildern" und bewiesen nichts: erzeugte Symbolbilder, die
+                  aussahen wie ein Referenzteil. Hinter der jeweils
+                  passenden Leistungskarte sind sie das, was ein Bild an
+                  dieser Stelle sein soll – Zuordnung statt Beleg. Man sieht
+                  sofort, wovon die Karte spricht.
+
+                  ⚠️ DIE ALTERNATION IST DAFÜR ENTFALLEN. Vorher wechselten
+                  die Karten zwischen `navy-deep` und `navy`, weil sich
+                  sonst Navy auf Navy geschoben hätte und man nur einen
+                  Textwechsel gesehen hätte. Diesen Dienst leistet jetzt das
+                  Bild, und zwar deutlicher. Zwei Grundtöne UND wechselnde
+                  Fotos wären zwei Systeme für dieselbe Aufgabe – dazu
+                  müsste der Verlauf unten je Karte die Farbe wechseln,
+                  sonst mischt er sich auf den ungeraden Karten falsch. */}
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+                <Image
+                  src={step.bild}
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+                {/* ⚠️ DER VERLAUF LÄUFT SENKRECHT, NICHT WAAGERECHT.
+                    Ein erster Versuch deckte von links ab – die Logik des
+                    Heros, wo rechts nur Fläche liegt. Hier stimmt sie
+                    nicht: Der Kartentitel steht links, der gelbe
+                    Ergebnissatz und die Stichpunkte stehen RECHTS. Beide
+                    Seiten tragen Text, also gibt es keine freie Hälfte, in
+                    der das Bild durchkommen könnte. Vom Foto war praktisch
+                    nichts zu sehen.
+
+                    Frei ist dagegen oben und unten: Der Inhalt ist
+                    vertikal zentriert und belegt rund die mittlere Hälfte
+                    der Karte. Der Verlauf ist dort am dichtesten und
+                    öffnet sich zu beiden Kanten – man sieht das Dach oben
+                    und den Vorplatz unten, und der Text steht trotzdem auf
+                    einer ruhigen Fläche.
+
+                    Als `background` und nicht als `filter: blur`: Ein
+                    Weichzeichner kostet pro Bild einen vollen
+                    Gauß-Durchgang, und diese Karten liegen sticky
+                    übereinander. */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(10,35,55,0.45) 0%, rgba(10,35,55,0.82) 20%, rgba(10,35,55,0.93) 42%, rgba(10,35,55,0.93) 60%, rgba(10,35,55,0.78) 80%, rgba(10,35,55,0.42) 100%)",
+                  }}
+                />
+              </div>
+
+              <div className="ep-container relative z-10">
                 {/* Die Überschrift läuft mit der ersten Karte ein und
                     verschwindet mit ihr unter der zweiten. */}
                 {i === 0 && (
-                  <h2 data-l-h2 className="t-h2 mb-16 max-w-[16ch] sm:mb-24">
-                    Unser Service.{" "}
-                    <span className="text-ep-sun">Ihr Durchblick.</span>
-                  </h2>
+                  <div className="mb-16 sm:mb-24">
+                    <h2 data-l-h2 className="t-h2 max-w-[16ch]">
+                      Leistungen.{" "}
+                   
+                    </h2>
+     
+        
+                  </div>
                 )}
 
                 <div
@@ -181,7 +261,7 @@ export function Leistungen() {
                         Halbsatzes. Auf 26 Zeichen Zeilenlänge lief der
                         Wärmepumpen-Satz auf sechs sehr kurze Zeilen aus und
                         las sich wie ein Gedicht. */}
-                    <p className="t-h4 max-w-[34ch] text-ep-sun [hyphens:none]">
+                    <p className="t-h4 max-w-[34ch] text-ep-accent [hyphens:none]">
                       {step.result}
                     </p>
 

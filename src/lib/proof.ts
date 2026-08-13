@@ -51,10 +51,20 @@ export type Referenzfall = {
  * schadet mehr als gar keine.
  */
 export const KENNZAHLEN: Kennzahl[] = [
-  { wert: "5 Jahre", label: "Erfahrung in der Energieberatung" },
-  { wert: "300+", label: "geprüfte Angebote" },
-  { wert: "bis 70 %", label: "Förderung für Wärmepumpen" },
-  { wert: "24 Std.", label: "bis zur Rückmeldung" },
+  /* ⚠️ EIN WORT JE LABEL, nicht mehr. Die Langfassungen („Erfahrung in der
+     Energieberatung", „Förderung für Wärmepumpen") standen in einer
+     einzeiligen Leiste als Fließtext neben der Zahl und machten aus vier
+     Angaben vier Sätze. Wert und Label bilden zusammen die Aussage:
+     „5 Jahre Erfahrung", „bis 70 % Förderung". Was darüber hinausgeht,
+     erklärt die Sektion daneben. */
+  { wert: "5 Jahre", label: "Erfahrung" },
+  /* ⚠️ „300+ geprüfte Angebote" ist raus (12.08., Emre). Von allen vier war
+     das die einzige Zahl über die eigene BILANZ – und der Betrieb hat noch
+     keinen abgeschlossenen Kunden. Die verbliebenen drei sind anderer Natur:
+     Berufserfahrung, ein Fördersatz des Bundes und eine Zusage über das
+     eigene Verhalten. Keine davon behauptet eine Erfolgsgeschichte. */
+  { wert: "bis 70 %", label: "Förderung" },
+  { wert: "24 Std.", label: "Rückmeldung" },
 ];
 
 export const REFERENZFAELLE: Referenzfall[] = [

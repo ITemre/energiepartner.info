@@ -93,7 +93,7 @@ export function AvStimmen({
                       key={i}
                       className={
                         i < Math.round(note)
-                          ? "size-4 fill-ep-orange-deep text-ep-orange-deep"
+                          ? "size-4 fill-ep-accent text-ep-accent"
                           : "size-4 text-ep-line"
                       }
                     />
@@ -133,7 +133,7 @@ export function AvStimmen({
                 {Array.from({ length: r.sterne }).map((_, s) => (
                   <Star
                     key={s}
-                    className="size-3.5 fill-ep-orange-deep text-ep-orange-deep"
+                    className="size-3.5 fill-ep-accent text-ep-accent"
                   />
                 ))}
               </span>

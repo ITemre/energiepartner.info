@@ -4,8 +4,15 @@
  * Tonalität: „wir“, durchgehend siezen (CI 05).
  */
 
+/* ⚠️ „Energieberatung" → „Beratung" (13.08.). Der Satz ist das, was der
+   INTERESSENT schickt – wir haben ihm damit die falsche Rolle in den Mund
+   gelegt: Ilias vermittelt und vergleicht, er ist kein Energieberater
+   (Briefing 2). „Beratung" als Tätigkeit bleibt richtig und steht so auch
+   im Impressum („Wir beraten herstellerunabhängig […] und vermitteln die
+   Ausführung"); falsch war allein das Kompositum, weil es einen Berufsstand
+   benennt statt einer Leistung. */
 const WHATSAPP_TEXT =
-  "Hallo, ich interessiere mich für eine kostenlose Energieberatung.";
+  "Hallo, ich interessiere mich für eine kostenlose Beratung.";
 
 /**
  * Eigener Einstiegstext für angebote-vergleichen.info.
@@ -38,6 +45,17 @@ export const SITE = {
     display: "0173 6834665",
     href: "tel:+491736834665",
   },
+  /** Ansprechpartner, der auf der Kontaktseite genannt wird. */
+  ansprechpartner: "Ilias Zayakh",
+  /* ⚠️ PLATZHALTER (13.08.), von Ilias abzunehmen. Emre nannte „9–17 Uhr"
+     nur als Beispiel, keine bestätigte Angabe – deshalb im Markup über
+     `<Fehlt>` (aus `components/rechtliches/Rechtstext`) sichtbar markiert,
+     nicht als stiller Fakt gerendert. Vor Livegang: echte Zeiten eintragen
+     UND den `<Fehlt>`-Wrapper an der Fundstelle entfernen. */
+  oeffnungszeiten: {
+    tage: "Mo. – Fr.",
+    zeit: "9 – 17 Uhr",
+  },
   logo: {
     /** weiße Wortmarke + Sonnen-Punkt – für dunkle Flächen/Fotos */
     negativ: "/energiepartner_Logo-Mappe/SVG/02_horizontal_negativ.svg",
@@ -47,6 +65,30 @@ export const SITE = {
     ratio: 1612.6 / 323,
   },
 } as const;
+
+/**
+ * Vorbehalt zu den Förderzahlen.
+ *
+ * Stand 12.08. im Footer statt in der Förderungs-Sektion: Dort brach der
+ * fünfzeilige Block die Komposition, und eine Vertrauensseite soll nicht
+ * aussehen wie ein Vertragswerk.
+ *
+ * ⚠️ ER MUSS ABER IRGENDWO STEHEN. „Bis zu 70 %" ist nur belegbar, solange
+ * die Herleitung (die vier Bausteine in der Sektion) UND der Bezug sichtbar
+ * sind: welcher Stand, worauf gedeckelt, wovon abhängig. Ohne das ist es
+ * eine Zusage, die für die meisten Häuser nicht stimmt – und
+ * Förderangaben veralten zusätzlich, eine ohne Datum ist in zwölf Monaten
+ * schlicht falsch.
+ *
+ * ⚠️ VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
+ * prüfen. Das ist die einzige Angabe der Seite, die von allein veraltet.
+ */
+export const FOERDERHINWEIS =
+  "Sätze der Bundesförderung für effiziente Gebäude (Einzelmaßnahmen), Stand 2026. " +
+  "Grundförderung und Boni sind zusammen auf 70 % der förderfähigen Kosten begrenzt, " +
+  "diese wiederum auf 30.000 € für die erste Wohneinheit. Ob und in welcher Höhe ein " +
+  "Bonus für Sie gilt, hängt von Gebäude, Nutzung und Haushaltseinkommen ab und wird " +
+  "individuell geprüft.";
 
 /**
  * Transparenter Vermittlerhinweis. Wortlaut aus dem Projekt-Briefing

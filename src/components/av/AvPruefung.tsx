@@ -94,7 +94,7 @@ export function AvPruefung() {
     >
       <div className="ep-container py-24 sm:py-32">
         <div>
-          <p data-pr-eyebrow className="t-label text-ep-orange-deep">
+          <p data-pr-eyebrow className="t-label text-ep-accent">
             Die Prüfung
           </p>
           <h2 data-pr-h2 className="t-h2 mt-6 max-w-[18ch] text-ep-ink">
@@ -113,7 +113,7 @@ export function AvPruefung() {
               {/* Kennungen wie „Leitungen und Anschlüsse" sind länger als
                   die schmale Spur – Silbentrennung verhindert, dass sie in
                   die Wertspur hineinlaufen. */}
-              <span className="t-label self-start text-ep-orange-deep [hyphens:auto]">
+              <span className="t-label self-start text-ep-accent [hyphens:auto]">
                 {key}
               </span>
 

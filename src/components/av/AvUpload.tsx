@@ -333,7 +333,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
       {dateiFehler && (
         <div
           role="alert"
-          className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-[28rem] rounded-ep bg-ep-orange px-5 py-4 text-white shadow-[0_16px_40px_-12px_rgba(0,0,0,0.5)]"
+          className="fixed inset-x-4 bottom-4 z-[60] mx-auto max-w-[28rem] rounded-ep bg-ep-accent-strong px-5 py-4 text-white shadow-[0_16px_40px_-12px_rgba(0,0,0,0.5)]"
         >
           <div className="flex items-start gap-3">
             <p className="flex-1 text-sm font-medium">{dateiFehler}</p>
@@ -356,6 +356,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
         /* Das native Element bringt eigene Maße, Ränder und einen weißen
            Grund mit – ohne Zurücksetzen sitzt der Vollbild-Dialog in einem
            Kasten in der Mitte. */
+        data-surface="dark"
         className="m-0 h-dvh max-h-none w-screen max-w-none overflow-hidden bg-ep-navy-deep p-0 text-white backdrop:bg-ep-navy-deep/95"
       >
         <div
@@ -373,7 +374,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={() => dialog.current?.close()}
-              className="-mr-2 inline-flex items-center gap-2 rounded-ep px-2 py-2 text-white/80 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-sun"
+              className="-mr-2 inline-flex items-center gap-2 rounded-ep px-2 py-2 text-white/80 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
             >
               <span className="t-key hidden sm:inline">Schließen</span>
               <X className="size-6" aria-hidden="true" />
@@ -397,7 +398,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                   data-up-in
                   className="mb-8 flex items-center gap-3 rounded-ep border border-ep-line-dark bg-white/5 px-4 py-3"
                 >
-                  <FileText className="size-5 shrink-0 text-ep-sun" aria-hidden="true" />
+                  <FileText className="size-5 shrink-0 text-ep-accent" aria-hidden="true" />
                   <span className="min-w-0 flex-1 truncate text-sm font-medium">
                     {datei.name}
                   </span>
@@ -421,7 +422,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                     data-up-in
                     className="t-h2 max-w-[14ch] outline-none"
                   >
-                    Wie sollen wir <span className="text-ep-sun">antworten?</span>
+                    Wie sollen wir <span className="text-ep-accent">antworten?</span>
                   </h2>
 
                   <div data-up-in className="mt-10 flex flex-col gap-3">
@@ -448,7 +449,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                     <button
                       type="button"
                       onClick={() => wechsle("formular")}
-                      className="group flex items-center justify-between gap-4 rounded-ep border border-white/30 px-6 py-5 text-left outline-none transition-colors hover:border-white/60 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-ep-sun"
+                      className="group flex items-center justify-between gap-4 rounded-ep border border-white/30 px-6 py-5 text-left outline-none transition-colors hover:border-white/60 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-ep-accent-strong"
                     >
                       <span>
                         <span className="block text-lg font-bold text-white">
@@ -459,7 +460,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                         </span>
                       </span>
                       <ArrowRight
-                        className="size-6 shrink-0 text-ep-sun transition-transform duration-300 group-hover:translate-x-1"
+                        className="size-6 shrink-0 text-ep-accent transition-transform duration-300 group-hover:translate-x-1"
                         aria-hidden="true"
                       />
                     </button>
@@ -487,7 +488,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                     className="t-h2 max-w-[15ch] outline-none"
                   >
                     Unter welcher Nummer{" "}
-                    <span className="text-ep-sun">erreichen wir Sie?</span>
+                    <span className="text-ep-accent">erreichen wir Sie?</span>
                   </h2>
 
                   <div className="mt-10">
@@ -518,7 +519,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                           checked={lead.einwilligung}
                           onChange={(e) => setzeFeld("einwilligung", e.target.checked)}
                           aria-invalid={!!fehler.einwilligung}
-                          className="mt-0.5 size-5 shrink-0 accent-ep-orange"
+                          className="mt-0.5 size-5 shrink-0 accent-ep-accent-strong"
                         />
                         <span>
                           Wir dürfen Ihr Angebot und Ihre Nummer speichern, um es zu
@@ -566,7 +567,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                     tabIndex={-1}
                     className="t-h2 max-w-[16ch] outline-none"
                   >
-                    Wohin dürfen wir <span className="text-ep-sun">antworten?</span>
+                    Wohin dürfen wir <span className="text-ep-accent">antworten?</span>
                   </h2>
 
                   <div className="mt-10 flex flex-col gap-5">
@@ -627,7 +628,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                           checked={lead.einwilligung}
                           onChange={(e) => setzeFeld("einwilligung", e.target.checked)}
                           aria-invalid={!!fehler.einwilligung}
-                          className="mt-0.5 size-5 shrink-0 accent-ep-orange"
+                          className="mt-0.5 size-5 shrink-0 accent-ep-accent-strong"
                         />
                         <span>
                           Wir dürfen Ihre Angaben und Ihr Angebot verwenden, um Sie
@@ -665,7 +666,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
               {/* ══════ Schluss ══════ */}
               {schritt === "fertig" && (
                 <div>
-                  <span className="grid size-14 place-items-center rounded-full bg-ep-orange text-white">
+                  <span className="grid size-14 place-items-center rounded-full bg-ep-accent-strong text-white">
                     <Check className="size-7" strokeWidth={2.5} aria-hidden="true" />
                   </span>
                   <h2
@@ -675,7 +676,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                     className="t-h2 mt-8 max-w-[16ch] outline-none"
                   >
                     Ihr Angebot ist{" "}
-                    <span className="text-ep-sun">angekommen.</span>
+                    <span className="text-ep-accent">angekommen.</span>
                   </h2>
                   {/* Bestätigungen sagen, was als Nächstes passiert – sonst
                       bleibt der Nutzer mit einem Häkchen und einer offenen
@@ -738,9 +739,9 @@ export function AvUploadKnopf({
       type="button"
       onClick={oeffneDateiauswahl}
       className={cn(
-        "group inline-flex items-center justify-center gap-3 rounded-ep text-center font-bold outline-none transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ep-sun focus-visible:ring-offset-2",
+        "group inline-flex items-center justify-center gap-3 rounded-ep text-center font-bold outline-none transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-2",
         ton === "voll"
-          ? "bg-ep-orange px-7 py-5 text-[clamp(1rem,1.4vw,1.1875rem)] text-white shadow-[0_16px_40px_-16px_rgba(242,106,33,0.8)] hover:bg-[#d95c17] focus-visible:ring-offset-ep-navy-deep"
+          ? "bg-ep-accent-strong px-7 py-5 text-[clamp(1rem,1.4vw,1.1875rem)] text-white shadow-[0_16px_40px_-16px_rgba(242,106,33,0.8)] hover:bg-[#d95c17] focus-visible:ring-offset-ep-navy-deep"
           : "border border-current/30 px-6 py-4 text-base hover:border-current/60 focus-visible:ring-offset-transparent",
         className,
       )}
@@ -783,14 +784,14 @@ export function AvUploadZone({ className }: { className?: string }) {
         if (f) uebergibDatei(f);
       }}
       className={cn(
-        "flex w-full cursor-pointer flex-col items-center gap-4 rounded-ep border-2 border-dashed bg-white/[0.04] px-8 py-14 text-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-sun",
+        "flex w-full cursor-pointer flex-col items-center gap-4 rounded-ep border-2 border-dashed bg-white/[0.04] px-8 py-14 text-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-accent-strong",
         ueberZone
-          ? "border-ep-orange bg-white/10"
-          : "border-white/25 hover:border-ep-orange/70 hover:bg-white/[0.07]",
+          ? "border-ep-accent-strong bg-white/10"
+          : "border-white/25 hover:border-ep-accent-strong/70 hover:bg-white/[0.07]",
         className,
       )}
     >
-      <span className="grid size-14 place-items-center rounded-full bg-ep-orange text-white shadow-[0_12px_32px_-12px_rgba(242,106,33,0.9)]">
+      <span className="grid size-14 place-items-center rounded-full bg-ep-accent-strong text-white shadow-[0_12px_32px_-12px_rgba(242,106,33,0.9)]">
         <Upload className="size-6" aria-hidden="true" />
       </span>
       <span>
@@ -808,13 +809,13 @@ export function AvUploadZone({ className }: { className?: string }) {
 
 /* ---------------------------------------------------------------- */
 
-const etikett = "t-label text-ep-sun";
+const etikett = "t-label text-ep-accent";
 
 const eingabe =
-  "mt-2 w-full rounded-t-[6px] border-b-2 border-white/35 bg-white/[0.07] px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-white/40 hover:border-white/55 hover:bg-white/10 focus:border-ep-orange focus:bg-white/10 sm:text-lg";
+  "mt-2 w-full rounded-t-[6px] border-b-2 border-white/35 bg-white/[0.07] px-4 py-3 text-base text-white outline-none transition-colors placeholder:text-white/40 hover:border-white/55 hover:bg-white/10 focus:border-ep-accent-strong focus:bg-white/10 sm:text-lg";
 
 const knopf =
-  "inline-flex items-center gap-2.5 rounded-ep bg-ep-orange px-6 py-3.5 text-base font-semibold text-white outline-none transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-sun focus-visible:ring-offset-2 focus-visible:ring-offset-ep-navy-deep disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center gap-2.5 rounded-ep bg-ep-accent-strong px-6 py-3.5 text-base font-semibold text-white outline-none transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[#d95c17] focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-2 focus-visible:ring-offset-ep-navy-deep disabled:cursor-not-allowed disabled:opacity-60";
 
 function Feld({
   id,
@@ -845,7 +846,7 @@ function Feld({
 
 function Meldung({ children }: { children: React.ReactNode }) {
   return (
-    <p role="alert" className="mt-2 text-sm font-medium text-ep-sun">
+    <p role="alert" className="mt-2 text-sm font-medium text-ep-accent">
       {children}
     </p>
   );
@@ -853,7 +854,7 @@ function Meldung({ children }: { children: React.ReactNode }) {
 
 function Stoerung({ text }: { text: string }) {
   return (
-    <div role="alert" className="mt-6 border-l-2 border-ep-orange bg-white/10 px-4 py-3">
+    <div role="alert" className="mt-6 border-l-2 border-ep-accent-strong bg-white/10 px-4 py-3">
       {/* Fehler entschuldigen sich nicht und bleiben nicht vage – sie sagen,
           was jetzt geht. */}
       <p className="font-semibold text-white">{text}</p>

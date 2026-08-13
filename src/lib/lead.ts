@@ -109,6 +109,30 @@ export const DATEI_TYPEN = [
  *  liefern und die Kamera-Aufnahme sonst ausgegraut im Dateidialog steht. */
 export const DATEI_ACCEPT = ".pdf,.jpg,.jpeg,.png,.heic,.heif,application/pdf,image/*";
 
+/**
+ * Wie viele Angebote auf einmal.
+ *
+ * Ilias auf die Frage, wie viele es sein sollen (09.08.): „Von 1-5. Oder so
+ * viele wie er will." Genau das ist der Punkt der Seite – wer drei Angebote
+ * eingeholt hat, soll nicht zwei davon weglassen müssen.
+ *
+ * Trotzdem steht hier eine Zahl, und zwar aus einem technischen Grund, nicht
+ * aus Geiz: Die Dateien gehen als Base64 an die Bitrix-Timeline, und Base64
+ * bläht jede Datei um ein Drittel auf. Acht Anhänge zu je 10 MB wären rund
+ * 107 MB in einem einzigen Request – den nimmt weder die Route noch Bitrix
+ * entgegen, und der Besucher sähe nur einen Fehler, nachdem er alles
+ * ausgewählt hat.
+ *
+ * Deshalb zwei Grenzen: acht Dateien (großzügig über Ilias' „1-5") UND eine
+ * Gesamtgröße. Die Gesamtgröße ist die eigentliche Sicherung; die Anzahl
+ * verhindert nur, dass die Liste im Dialog zur Tapete wird.
+ */
+export const DATEIEN_MAX = 8;
+
+/** Summe über alle Angebote. Siehe `DATEIEN_MAX` – das ist die Grenze, an
+ *  der es sonst wirklich bricht. */
+export const DATEIEN_MAX_BYTES_GESAMT = 25 * 1024 * 1024;
+
 /** Gibt eine Fehlermeldung zurück, oder `undefined`, wenn die Datei passt. */
 export function pruefeDatei(datei: { name: string; size: number; type: string }) {
   if (datei.size > DATEI_MAX_BYTES) {
