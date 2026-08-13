@@ -118,7 +118,24 @@ export const STIMMEN_PLATZHALTER: GoogleBewertungen = {
  * Sobald echte Rezensionen da sind: Variable überall entfernen, diese Datei
  * löschen, den Rückfall in `page.tsx` und `av/page.tsx` streichen.
  */
+/**
+ * ⚠️ DEMO-SCHALTER, STEHT AUF `true` (13.08.).
+ *
+ * Vorher entschied `process.env.PLATZHALTER_INHALTE`. Auf der Amplify-App,
+ * auf der Ilias die Seite ansieht, ist diese Variable nicht gesetzt — damit
+ * blieben Stimmen, Kennzahlen und die Bewertungsangabe im Hero leer,
+ * ausgerechnet in der Vorführung.
+ *
+ * ⚠️⚠️ VOR DEM LIVEGANG AUF `false` (bzw. diese Datei löschen). Solange das
+ * hier `true` ist, stehen erfundene Bewertungen und fremde Gesichter auf der
+ * Seite — § 5 Abs. 1 UWG, § 22 KUG, Pexels-Lizenz (siehe Kopf dieser Datei).
+ * Der Livegang ist ohnehin blockiert (Impressumsdaten, anwaltliche Abnahme);
+ * dieser Schalter gehört auf dieselbe Liste. Solange er steht, setzt
+ * `app/layout.tsx` die Seite auf `noindex`.
+ */
+export const PLATZHALTER_AN = true;
+
 export function holePlatzhalterStimmen(): GoogleBewertungen | null {
-  if (process.env.PLATZHALTER_INHALTE !== "an") return null;
+  if (!PLATZHALTER_AN) return null;
   return STIMMEN_PLATZHALTER;
 }

@@ -80,7 +80,9 @@ export default async function AngebotePage() {
      ist `#referenzen` ein Navigationsziel, das nicht ins Leere springen
      darf. Auf einer Leadstrecke ohne Menü gibt es diesen Zwang nicht – und
      eine leere Vertrauenssektion ist dort schlechter als gar keine. */
-  const bewertungen = (await holeGoogleBewertungen()) ?? holePlatzhalterStimmen();
+  /* ⚠️ 13.08.: wie auf energiepartner.info — Platzhalter zuerst, solange
+     `PLATZHALTER_AN` steht. Begründung dort. */
+  const bewertungen = holePlatzhalterStimmen() ?? (await holeGoogleBewertungen());
 
   return (
     <main className="flex-1">

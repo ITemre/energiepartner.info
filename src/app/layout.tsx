@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo, DM_Mono } from "next/font/google";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { MotionRoot } from "@/components/ui/MotionRoot";
+import { PLATZHALTER_AN } from "@/lib/stimmen-platzhalter";
 import "./globals.css";
 
 /**
@@ -72,10 +73,9 @@ export const metadata: Metadata = {
 
      Auf dem Livesystem ist die Variable nicht gesetzt: keine Platzhalter,
      kein `noindex`, normale Indexierung. Es gibt nichts umzustellen. */
-  robots:
-    process.env.PLATZHALTER_INHALTE === "an"
-      ? { index: false, follow: false, nocache: true }
-      : undefined,
+  robots: PLATZHALTER_AN
+    ? { index: false, follow: false, nocache: true }
+    : undefined,
 };
 
 /**

@@ -1,3 +1,5 @@
+import { PLATZHALTER_AN } from "./stimmen-platzhalter";
+
 /**
  * Belege: Kennzahlen und Referenzfälle.
  *
@@ -114,7 +116,7 @@ export const REFERENZFAELLE: Referenzfall[] = [
  *  die Kundenvorführung auf einer Demo-Instanz mitblockierte. Begründung
  *  in `stimmen-platzhalter.ts`, dort steht sie ausführlich. */
 function erlaubt() {
-  return process.env.PLATZHALTER_INHALTE === "an";
+  return PLATZHALTER_AN;
 }
 
 export function holeKennzahlen(): Kennzahl[] | null {

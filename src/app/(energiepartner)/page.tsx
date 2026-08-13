@@ -99,7 +99,12 @@ export default async function Home() {
      nichts liefert UND die Umgebung ihn ausdrücklich erlaubt (siehe
      `stimmen-platzhalter.ts`) – auf dem Livesystem also nie. Bleiben beide
      leer, zeigen Hero und Stimmen keine Bewertungsaussage. */
-  const bewertungen = (await holeGoogleBewertungen()) ?? holePlatzhalterStimmen();
+  /* ⚠️ 13.08.: Reihenfolge umgedreht — solange `PLATZHALTER_AN` steht, haben
+     die vorläufigen Stimmen VORRANG vor Google. Grund: Das Profil ist frisch,
+     die Places-Abfrage liefert entweder nichts oder eine einzelne ausstehende
+     Rezension, und in der Vorführung soll die Sektion vollständig aussehen.
+     Sobald der Schalter fällt, gewinnt Google wieder automatisch. */
+  const bewertungen = holePlatzhalterStimmen() ?? (await holeGoogleBewertungen());
 
   /* Die Kennzahlen sind vorläufig und hängen an derselben Sperre wie die
      Stimmen (`PLATZHALTER_INHALTE`, siehe `lib/proof.ts`). Ohne sie liefert
