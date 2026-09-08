@@ -99,7 +99,7 @@ const STEPS = [
       "Jährlich neu geprüft, damit es günstig bleibt",
     ],
   },
-  /* ⚠️ VIERTE KARTE, NOCH NICHT FREIGEGEBEN.
+  /* VIERTE KARTE, NOCH NICHT FREIGEGEBEN.
      Ilias hat E-Mobilität im Gespräch erwähnt (Emre, 10.08.), aber ohne
      Wortlaut – anders als die drei darüber, die wörtlich aus Briefing 4
      stammen. Die Formulierungen hier sind deshalb von uns und folgen nur
@@ -166,8 +166,7 @@ export function Leistungen() {
         {STEPS.map((step, i) => (
           <div key={step.title} className="sticky top-0 h-svh">
             <div className="relative flex h-full flex-col justify-center overflow-hidden bg-ep-navy-deep">
-              {/* ═══ DAS BILD DER KARTE (11.08.) ═══
-                  Die Fotos kommen aus der aufgelösten Bildstrecke. Dort
+              {/* DAS BILD DER KARTE (11.08.) Die Fotos kommen aus der aufgelösten Bildstrecke. Dort
                   standen sie als eigene Sektion unter der Überschrift „In
                   Bildern" und bewiesen nichts: erzeugte Symbolbilder, die
                   aussahen wie ein Referenzteil. Hinter der jeweils
@@ -175,7 +174,7 @@ export function Leistungen() {
                   dieser Stelle sein soll – Zuordnung statt Beleg. Man sieht
                   sofort, wovon die Karte spricht.
 
-                  ⚠️ DIE ALTERNATION IST DAFÜR ENTFALLEN. Vorher wechselten
+                  DIE ALTERNATION IST DAFÜR ENTFALLEN. Vorher wechselten
                   die Karten zwischen `navy-deep` und `navy`, weil sich
                   sonst Navy auf Navy geschoben hätte und man nur einen
                   Textwechsel gesehen hätte. Diesen Dienst leistet jetzt das
@@ -191,7 +190,7 @@ export function Leistungen() {
                   sizes="100vw"
                   className="object-cover"
                 />
-                {/* ⚠️ DER VERLAUF LÄUFT SENKRECHT, NICHT WAAGERECHT.
+                {/* DER VERLAUF LÄUFT SENKRECHT, NICHT WAAGERECHT.
                     Ein erster Versuch deckte von links ab – die Logik des
                     Heros, wo rechts nur Fläche liegt. Hier stimmt sie
                     nicht: Der Kartentitel steht links, der gelbe
@@ -227,10 +226,10 @@ export function Leistungen() {
                   <div className="mb-16 sm:mb-24">
                     <h2 data-l-h2 className="t-h2 max-w-[16ch]">
                       Leistungen.{" "}
-                   
+
                     </h2>
-     
-        
+
+
                   </div>
                 )}
 

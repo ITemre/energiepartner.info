@@ -18,8 +18,7 @@ if (typeof window !== "undefined") {
 /**
  * Die Beleg-Zeile.
  *
- * ═══ WARUM NACH DER BILDSTRECKE ═══
- * Sie stand bis 07.08. direkt unter dem Hero und hat mit der Förderung die
+ * WARUM NACH DER BILDSTRECKE * Sie stand bis 07.08. direkt unter dem Hero und hat mit der Förderung die
  * Plätze getauscht. Der Grund liegt in dem, was die beiden jeweils leisten:
  * Die Förderung beantwortet einen Einwand, der schon im Kopf steht, bevor
  * die Seite argumentiert hat. Diese Zeile beantwortet keine Frage, sie deckt
@@ -31,8 +30,7 @@ if (typeof window !== "undefined") {
  * Bewertung und Rückmeldefrist, es steht also nicht eine ganze Seite lang
  * Unbelegtes.
  *
- * ═══ FORM ═══
- * Navy, einen Ton HELLER als der Hero (`ep-navy` statt `navy-deep`), dazu
+ * FORM * Navy, einen Ton HELLER als der Hero (`ep-navy` statt `navy-deep`), dazu
  * eine Sonnenkante nach oben. Das Band ist damit auch der einzige dunkle
  * Einschnitt in der langen hellen Strecke zwischen Bildern und Ablauf –
  * ohne ihn liefen Galerie, Aufgabenteilung und Ablauf als ein Papierblock
@@ -78,8 +76,7 @@ export function ProofBar({
       aria-label="Zahlen und Bewertung"
       className="border-y border-ep-accent/25 bg-ep-navy text-white"
     >
-      {/* ═══ ⚠️ EINE ZEILE, KEIN BLOCK (12.08.) ═══
-          Vorher war das ein vierspaltiges Raster mit `t-stat`-Werten und
+      {/* EINE ZEILE, KEIN BLOCK (12.08.) Vorher war das ein vierspaltiges Raster mit `t-stat`-Werten und
           `py-16` – rund 200 px hoch und damit optisch eine eigene Sektion.
           Das ist zu viel Gewicht für eine Beleg-Leiste: Sie soll etwas
           BESTÄTIGEN, was daneben behauptet wird, nicht selbst eine Aussage
@@ -89,13 +86,13 @@ export function ProofBar({
           übereinander – das halbiert die Höhe und liest sich als Angabe
           („5 Jahre Erfahrung") statt als Kennzahl mit Bildunterschrift.
 
-          ⚠️ KEIN `<dl>` MEHR. Die alte Fassung hatte je Eintrag ein
+          KEIN `<dl>` MEHR. Die alte Fassung hatte je Eintrag ein
           `<dt class="sr-only">` mit dem Label UND dasselbe Label sichtbar im
           `<dd>`. Vorlesesoftware las dadurch jede Angabe doppelt. Eine Liste
           aus Wert-plus-Label-Paaren braucht keine Definitionsliste, sie ist
           keine Begriffserklärung. */}
       <div className="ep-container py-5 sm:py-6">
-        {/* ⚠️ ZWEITER ANLAUF (13.08.) – MOBIL EINE SPALTE, KEIN RASTER MEHR.
+        {/* ZWEITER ANLAUF (13.08.) – MOBIL EINE SPALTE, KEIN RASTER MEHR.
             Die vorherige Fassung presste die Angaben mobil in zwei
             Grid-Spalten zu je ~171 px. Selbst mit `flex-wrap` gegen den
             Overflow blieb das hässlich: eine Bewertungszelle, die zeilenweise

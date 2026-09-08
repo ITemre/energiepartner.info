@@ -19,14 +19,12 @@ if (typeof window !== "undefined") {
 /**
  * Der Kontaktbereich.
  *
- * ═══ WARUM ES DIESE SEKTION GIBT (10.08.) ═══
- * Es gab sie nicht. `#kontakt` zeigte auf den Footer, und dort standen
+ * WARUM ES DIESE SEKTION GIBT (10.08.) * Es gab sie nicht. `#kontakt` zeigte auf den Footer, und dort standen
  * WhatsApp und Telefonnummer als zwei kleine Fußzeilen-Links zwischen
  * Navigation und Impressum. Ein Menüpunkt „Kontakt", der in einer Fußzeile
  * endet, ist kein Kontaktbereich, sondern eine Sprungmarke ins Kleingedruckte.
  *
- * ═══ ZWEITER ANLAUF (13.08., Kundenwunsch) ═══
- * „Wie eine normale Firmen-Kontaktseite." Eine Anfahrt gibt es nicht – Ilias
+ * ZWEITER ANLAUF (13.08., Kundenwunsch) * „Wie eine normale Firmen-Kontaktseite." Eine Anfahrt gibt es nicht – Ilias
  * vermittelt, es gibt kein Ladengeschäft, zu dem man fährt –, aber alles
  * andere, was eine solche Seite hat, jetzt schon:
  *
@@ -41,8 +39,7 @@ if (typeof window !== "undefined") {
  * jetzt in `KontaktFormular` – eigene Datei, weil es mit ~250 Zeilen für
  * eine Unterkomponente dieser Sektion zu groß wäre.
  *
- * ═══ WHATSAPP BLEIBT DER ZWEITE WEG, NICHT DER ERSTE ═══
- * „Wir wollen die Leute letztendlich auf WhatsApp bekommen" (Kunde, 10.08.)
+ * WHATSAPP BLEIBT DER ZWEITE WEG, NICHT DER ERSTE * „Wir wollen die Leute letztendlich auf WhatsApp bekommen" (Kunde, 10.08.)
  * galt für die vorherige Fassung mit zwei gleichrangigen Knöpfen. Mit einem
  * echten Formular an dieser Stelle kehrt sich die Reihenfolge um: Wer schon
  * dabei ist, ein Formular auszufüllen, soll es zu Ende bringen können, nicht
@@ -103,8 +100,7 @@ export function Kontakt() {
               nicht. Die Beratung kostet nichts und verpflichtet zu nichts.
             </p>
 
-            {/* ═══ SO ERREICHEN SIE UNS ═══
-                Die drei Angaben, die eine normale Kontaktseite im Info-Block
+            {/* SO ERREICHEN SIE UNS Die drei Angaben, die eine normale Kontaktseite im Info-Block
                 neben dem Formular zeigt – ohne die Anfahrt, die es hier
                 nicht gibt (kein Ladengeschäft, Ilias vermittelt). Als Liste
                 mit Icon-Spalte statt als Fließtext: Jede Zeile ist ein

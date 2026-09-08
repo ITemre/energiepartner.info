@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * GSAP-Ticker treibt Lenis, ScrollTrigger hört auf Lenis.
  * Bei prefers-reduced-motion bleibt nativer Scroll.
  *
- * ⚠️ DIE NEUVERMESSUNG IST DER WICHTIGE TEIL — sie hat gefehlt, und der
+ * DIE NEUVERMESSUNG IST DER WICHTIGE TEIL — sie hat gefehlt, und der
  * Seitenfuß war deshalb nicht erreichbar.
  *
  * Lenis merkt sich die Scrollstrecke einmal und aktualisiert sie von sich aus

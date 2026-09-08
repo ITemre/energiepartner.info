@@ -14,21 +14,18 @@ if (typeof window !== "undefined") {
 /**
  * Die mitlaufende Leiste am unteren Rand – nur auf dem Handy.
  *
- * ═══ WARUM SIE DER STÄRKSTE EINZELNE HEBEL IST ═══
- * Sobald der Hero aus dem Bild ist, gibt es auf einem Telefon keinen Weg
+ * WARUM SIE DER STÄRKSTE EINZELNE HEBEL IST * Sobald der Hero aus dem Bild ist, gibt es auf einem Telefon keinen Weg
  * mehr zur Handlung außer Scrollen – nach oben zurück oder bis zum nächsten
  * CTA-Band hinunter. Beides sind Sekunden, in denen jemand aufhören kann.
  * Eine Leiste, die immer da ist, macht den Weg zur Handlung konstant kurz,
  * egal wo man gerade liest.
  *
- * ═══ WARUM NUR MOBIL ═══
- * Auf dem Desktop steht die Ablagefläche im Hero, die CTA-Bänder liegen im
+ * WARUM NUR MOBIL * Auf dem Desktop steht die Ablagefläche im Hero, die CTA-Bänder liegen im
  * Blickfeld, und der Mauszeiger erreicht jede Stelle der Seite in einer
  * Bewegung. Eine fixierte Leiste wäre dort ein Balken, der Inhalt verdeckt,
  * ohne einen Weg zu verkürzen.
  *
- * ═══ WARUM SIE ERST NACH DEM HERO ERSCHEINT ═══
- * Solange der Hero im Bild ist, steht der Auslöser ohnehin da. Zwei
+ * WARUM SIE ERST NACH DEM HERO ERSCHEINT * Solange der Hero im Bild ist, steht der Auslöser ohnehin da. Zwei
  * identische Knöpfe gleichzeitig sehen nicht nach Angebot aus, sondern nach
  * Drängeln – und verdecken zusätzlich die Vertrauenszeile, die genau dort
  * ihre Arbeit tut.
@@ -43,7 +40,7 @@ export function AvStickyBar() {
        Bild gelaufen ist. `[data-nav-theme]` reicht dafür nicht, das tragen
        alle Bänder – deshalb die eigene Kennung am Hero.
 
-       ⚠️ NICHT über die Stellung im Baum („erste Sektion in `<main>`"). So
+       NICHT über die Stellung im Baum („erste Sektion in `<main>`"). So
        stand es hier, und es brach in dem Moment, in dem Hero und
        Beispielrechnung einen gemeinsamen Grund-Wrapper bekamen: Der Selektor
        fand danach das erste CTA-Band und die Leiste erschien viel zu spät.

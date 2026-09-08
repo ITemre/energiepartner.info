@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 /**
  * Datenschutzerklärung.
  *
- * ⚠️ ENTWURF, KEINE RECHTSBERATUNG. Der Text beschreibt exakt das, was
+ * ENTWURF, KEINE RECHTSBERATUNG. Der Text beschreibt exakt das, was
  * diese Anwendung technisch tut – nicht mehr und nicht weniger. Genau das
  * ist sein Wert: Ein aus einem Generator gezogener Standardtext beschreibt
  * meistens Google Analytics, Cookie-Banner und Social-Plugins, die es hier

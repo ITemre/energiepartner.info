@@ -8,7 +8,7 @@ const SPRING = { type: "spring" as const, stiffness: 380, damping: 32 };
 /**
  * Der Hamburger-/Schließen-Knopf der mobilen Navigation.
  *
- * ⚠️ BLEIBT DERSELBE KNOTEN, IMMER (13.08., zweiter Anlauf). Vorher lag der
+ * BLEIBT DERSELBE KNOTEN, IMMER (13.08., zweiter Anlauf). Vorher lag der
  * Schließen-Knopf im `MenuOverlay` selbst, an anderer Stelle als der
  * Hamburger hier – sichtbar wurde das, sobald man öffnete: Der Button
  * „sprang". Jetzt gibt es nur diesen einen Knopf, er lebt in der

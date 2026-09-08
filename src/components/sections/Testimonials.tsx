@@ -16,48 +16,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 }
 
-/**
- * Stimmen – echte Google-Rezensionen, eine zur Zeit.
- *
- * ═══ WOHER DIE DATEN KOMMEN ═══
- * Aus der Places API, abgerufen serverseitig in `page.tsx` und als Prop
- * hereingereicht (siehe `lib/google-reviews.ts`). Es gibt keinen
- * Handschalter: Liegen echte Rezensionen vor, stehen sie hier; liegt nichts
- * vor, ist `bewertungen` gleich `null` und die Sektion zeigt keine einzige
- * Bewertungsaussage.
- *
- * ═══ ⚠️ DRITTE FASSUNG (12.08.) ═══
- * Fassung eins war ein Karussell, das alle sieben Sekunden von selbst
- * weiterschaltete. Fassung zwei zeigte alle Stimmen gleichzeitig, zuerst
- * mittig, dann auf der Datenblatt-Achse.
- *
- * Jetzt wieder eine Stimme zur Zeit, aber mit einem entscheidenden
- * Unterschied zu Fassung eins: **Der Besucher schaltet, nicht die Seite.**
- *
- * ⚠️ NIEMALS AUTOMATISCH WEITERSCHALTEN. Das war der eigentliche Fehler von
- * damals, nicht die Einzelansicht: Wer eine Rezension zu Ende lesen wollte,
- * wurde vom nächsten Wechsel unterbrochen. Ein Beleg, der wegläuft, während
- * man ihn prüft, ist das Gegenteil eines Belegs. Wer hier einen Timer
- * einbaut, macht denselben Fehler zum zweiten Mal.
- *
- * ═══ WARUM EINE ZUR ZEIT ÜBERHAUPT FUNKTIONIERT ═══
- * Vier Zitate gleichzeitig lesen sich als Wand: Man überfliegt sie, greift
- * eines heraus und glaubt am Ende keinem. Eine einzelne Stimme in
- * Auszeichnungsgröße wird gelesen. Der Preis ist, dass man die anderen
- * aktiv holen muss – deshalb sind die Pfeile groß, sitzen links und rechts
- * am Zitat und die Zählung sagt, wie viele noch kommen.
- *
- * ═══ ATTRIBUTION IST PFLICHT, NICHT DEKOR ═══
- * Google verlangt, dass Rezensionen dem Verfasser zugeordnet und als
- * Google-Inhalt erkennbar sind. Name und der Verweis auf die Rezension
- * stehen deshalb an jeder Stimme, das Google-Zeichen an der Kennzahl. Die
- * Zeitangabe ist am 12.08. entfallen – Begründung an der Fundstelle. Die Pflichtangabe zur Echtheitsprüfung (§ 5b Abs. 3 UWG) steht
- * ausschließlich bei echten Google-Daten – eine Echtheitszusage über
- * vorläufige Inhalte wäre die unwahrste Zeile der ganzen Seite.
- */
 
-/** Wie lange ein Wechsel dauert. Kurz genug, dass Klicken sich direkt
- *  anfühlt, lang genug, dass man die Richtung sieht. */
 const WECHSEL = 0.4;
 
 export function Testimonials({
@@ -169,7 +128,7 @@ export function Testimonials({
       ref={scope}
       id="referenzen"
       data-nav-theme="light"
-      /* ⚠️ KEIN `min-h-svh` MEHR (13.08.). Stand vorher wie Förderung und
+      /* KEIN `min-h-svh` MEHR (13.08.). Stand vorher wie Förderung und
          Ablauf auf einen vollen Bildschirm – die überschüssige Höhe sammelte
          sich unten vor Leistungen zu einer spürbar zu großen Lücke. Der
          Inhalt hier ist kürzer als eine volle Bildschirmhöhe und braucht sie
@@ -177,7 +136,7 @@ export function Testimonials({
          Polster – vorhersehbarer Abstand statt Restfläche, die von der
          Fensterhöhe abhängt.
 
-         ⚠️ OBEN SCHMAL, UNTEN GROSSZÜGIG, nicht symmetrisch. Förderung
+         OBEN SCHMAL, UNTEN GROSSZÜGIG, nicht symmetrisch. Förderung
          zentriert ihren Inhalt weiterhin in einer vollen Bildschirmhöhe
          (siehe dort) und lässt dadurch selbst schon Luft an ihrer Unterkante.
          Ein zusätzlich großes `pt` hier addierte sich zu dieser Luft und die
@@ -186,8 +145,7 @@ export function Testimonials({
       className="scroll-mt-[var(--nav-h)] bg-ep-paper"
     >
       <div className="ep-container pb-20 pt-16 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-[clamp(1rem,3svh,2.5rem)]">
-        {/* ═══ KOPF: Kennung links, der nachprüfbare Teil rechts ═══
-            Dieselbe Aufteilung wie in der Förderung, wo die 21.000 € neben
+        {/* KOPF: Kennung links, der nachprüfbare Teil rechts Dieselbe Aufteilung wie in der Förderung, wo die 21.000 € neben
             der Überschrift stehen. Die Kennzahl gehört nach oben und nicht
             zum Zitat: Sie gilt für alle vier Stimmen und darf beim
             Weiterschalten nicht mitwandern. */}
@@ -241,8 +199,7 @@ export function Testimonials({
           </div>
         </div>
 
-        {/* ═══ BÜHNE UND STEUERUNG ═══
-            Zwei Anordnungen aus einer Markup-Reihenfolge, gesteuert über
+        {/* BÜHNE UND STEUERUNG Zwei Anordnungen aus einer Markup-Reihenfolge, gesteuert über
             `order`:
 
               ab lg    ←  [ Zitat, volle Breite ]  →
@@ -255,7 +212,7 @@ export function Testimonials({
             und `justify-between` schiebt sie an die Ränder, die Zählung in
             die Mitte.
 
-            ⚠️ Die DOM-Reihenfolge ist `zurück · Zitat · weiter · Zählung`,
+            Die DOM-Reihenfolge ist `zurück · Zitat · weiter · Zählung`,
             weil sie ab lg unverändert gilt. Die Handy-Anordnung entsteht
             allein über `order`. Zwei getrennte Knopfpaare mit
             `hidden`/`lg:flex` wären vier Knöpfe im Baum, jeder mit
@@ -276,7 +233,7 @@ export function Testimonials({
             />
           )}
 
-          {/* ⚠️ ALLE VIER ZITATE LIEGEN IN DERSELBEN RASTERZELLE.
+          {/* ALLE VIER ZITATE LIEGEN IN DERSELBEN RASTERZELLE.
               Die vier Texte sind unterschiedlich lang, und ohne das sprang
               alles darunter bei jedem Wechsel nach oben oder unten.
 
@@ -309,13 +266,13 @@ export function Testimonials({
                     !an && "invisible",
                   )}
                 >
-                  {/* ⚠️ HIER STANDEN DIE STERNE DER EINZELNEN STIMME, raus am
+                  {/* HIER STANDEN DIE STERNE DER EINZELNEN STIMME, raus am
                       12.08. Die Gesamtnote steht mit Sternen im Kopf der
                       Sektion; bei vier Fünf-Sterne-Rezensionen ist die
                       Wiederholung an jedem Zitat eine Grafik ohne
                       Information.
 
-                      ⚠️ AB lg OHNE ZEILENDECKEL. Die Zeilenlänge folgt der
+                      AB lg OHNE ZEILENDECKEL. Die Zeilenlänge folgt der
                       Spaltenbreite, das Zitat nutzt also die volle Fläche
                       zwischen den Pfeilen. Damit die Zeilen dabei nicht
                       unlesbar lang werden, wächst die SCHRIFT mit (bis
@@ -324,7 +281,7 @@ export function Testimonials({
                       Deckel bei 40 Zeichen, dort gibt die Breite ohnehin
                       nichts her.
 
-                      ⚠️ EINE GRÖSSE FÜR ALLE VIER, nicht nach Textlänge.
+                      EINE GRÖSSE FÜR ALLE VIER, nicht nach Textlänge.
                       `zitatKlassen` wählt die Größe aus der Länge – richtig,
                       wenn Zitate NEBENEINANDER stehen. Hier stehen sie
                       NACHEINANDER an derselben Stelle, und dann wäre
@@ -349,7 +306,7 @@ export function Testimonials({
                       <span className="block font-semibold text-ep-ink">
                         {r.autor}
                       </span>
-                      {/* ⚠️ HIER STAND DIE ZEITANGABE („vor 2 Monaten"), raus
+                      {/* HIER STAND DIE ZEITANGABE („vor 2 Monaten"), raus
                           am 12.08.
 
                           Sie war als Teil der Attribution gedacht. Verlangt
@@ -402,8 +359,7 @@ export function Testimonials({
           )}
         </div>
 
-        {/* ═══ FUSS ═══
-            Pflichtangabe seit 2022: Wer mit Bewertungen wirbt, muss sagen,
+        {/* FUSS Pflichtangabe seit 2022: Wer mit Bewertungen wirbt, muss sagen,
             ob und wie er ihre Echtheit sicherstellt (§ 5b Abs. 3 UWG). Die
             Antwort ist hier einfach und stark – wir stellen sie nicht
             sicher, Google tut es, und wir zeigen ungefiltert, was dort
@@ -436,8 +392,7 @@ export function Testimonials({
 /**
  * Ein Pfeilknopf.
  *
- * ═══ ⚠️ GEFÜLLT STATT KONTUR (12.08.) ═══
- * Hier stand eine 1-px-Kontur in `ep-ink/20` – mit der Begründung, ein
+ * GEFÜLLT STATT KONTUR (12.08.) * Hier stand eine 1-px-Kontur in `ep-ink/20` – mit der Begründung, ein
  * gefüllter Knopf wäre auf Papier der lauteste Punkt der Sektion und das
  * solle das Zitat sein.
  *

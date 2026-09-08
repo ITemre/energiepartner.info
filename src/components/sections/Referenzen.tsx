@@ -16,25 +16,24 @@ if (typeof window !== "undefined") {
 /**
  * „Drei Häuser, drei Befunde."
  *
- * ═══ DIE EINZIGE SEKTION, DIE NICHT ÜBER UNS SPRICHT ═══
- * Der restliche Auftritt beschreibt, wer wir sind und wie wir arbeiten. Das
+ * DIE EINZIGE SEKTION, DIE NICHT ÜBER UNS SPRICHT * Der restliche Auftritt beschreibt, wer wir sind und wie wir arbeiten. Das
  * ist Selbstbeschreibung, und ein Besucher liest sie auch als solche. Hier
  * steht stattdessen, was bei jemand anderem herauskam. Das ist die einzige
  * Textsorte auf einer Anbieterseite, die nicht als Eigenlob gelesen wird –
  * vorausgesetzt, sie enthält Zahlen. Ohne Zahlen ist ein Referenzfall nur
  * eine längere Behauptung.
  *
- * ═══ AUFBAU JE FALL ═══
- * Ausgangslage → Befund → Ergebnis. Die Mitte ist der Teil, der uns von
+ * AUFBAU JE FALL * Ausgangslage → Befund → Ergebnis. Die Mitte ist der Teil, der uns von
  * einem Installateur unterscheidet: WAS WIR GEFUNDEN HABEN. Ein Fall, der
  * nur „Anlage eingebaut, Kunde zufrieden" erzählt, könnte von jedem stammen.
  *
  * Keine Kundennamen: Es sind Privathaushalte. Ort und Gebäudeart sind
  * konkret genug, um vorstellbar zu sein, und nennen niemanden.
  *
- * ⚠️ Die Fälle sind vorläufig (siehe `lib/proof.ts`) und zeigen Ilias die
+ * Die Fälle sind vorläufig (siehe `lib/proof.ts`) und zeigen Ilias die
  * Form, in der wir seine echten brauchen. Sie hängen an
- * `PLATZHALTER_INHALTE` und gehen ohne diese Variable nicht mit.
+ * `lib/proof.ts` und werden nirgends gerendert, solange diese Sektion
+ * ausgehängt ist.
  */
 export function Referenzen({ faelle }: { faelle: Referenzfall[] | null }) {
   const scope = useRef<HTMLElement>(null);

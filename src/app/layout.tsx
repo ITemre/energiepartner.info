@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Archivo, DM_Mono } from "next/font/google";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { MotionRoot } from "@/components/ui/MotionRoot";
-import { PLATZHALTER_AN } from "@/lib/stimmen-platzhalter";
 import "./globals.css";
 
 /**
@@ -51,35 +50,27 @@ export const metadata: Metadata = {
     default: "energiepartner · Ihre Energie. Ihr Vorteil.",
     template: "%s · energiepartner",
   },
-  /* ⚠️ „aus einer Hand" → „Ihr Makler für" (13.08.). Die alte Fassung nannte
-     die Rolle an keiner Stelle, und „aus einer Hand" liest sich bei einem
-     Gewerk als „wir bauen das". Ilias vermittelt und vergleicht (Briefing 2)
-     – das gehört in den Suchtreffer, weil er die erste Copy ist, die jemand
-     sieht. „herstellerunabhängig" und „anbieterübergreifend" sind die beiden
-     erlaubten Formulierungen und bleiben unverändert stehen. */
+  /* „aus einer Hand" → „Ihr Makler für" (13.08.) → „Ihr herstellerunabhängiger
+     Berater für" (08.09.). Die Rolle muss im Suchtreffer stehen, weil er die
+     erste Copy ist, die jemand sieht: „aus einer Hand" liest sich bei einem
+     Gewerk als „wir bauen das", und Ilias vermittelt und vergleicht
+     (Briefing 2).
+
+     „Makler" ist auf seinen Wunsch raus (Sprachnachricht 08.09.). Sein
+     Vorschlag lautete „unabhängige Berater" – genau dieses Wort ist seit dem
+     21.07. verbindlich gesperrt (Briefing 2), weil er an einer erfolgreichen
+     Vermittlung verdient. „herstellerunabhängig" ist die erlaubte Fassung
+     derselben Aussage und steht deshalb hier; „anbieterübergreifend" bleibt
+     unverändert.
+
+     Jetzt 156 Zeichen statt 171 – die alte Fassung lag über der Grenze, ab
+     der Google mitten im Nutzenversprechen abschneidet. */
   description:
-    "Ihr Makler für Wärmepumpe, Photovoltaik und Stromtarif: herstellerunabhängig beraten, anbieterübergreifend verglichen, persönlich betreut in Stuttgart. Beratung kostenlos.",
-
-  /* ═══ VORFÜHR-INSTANZEN GEHÖREN NICHT IN DIE SUCHE ═══
-     Dieselbe Variable, die die vorläufigen Stimmen und Kennzahlen
-     freischaltet, nimmt die Seite aus dem Index. Beides hängt zusammen und
-     darf deshalb nicht getrennt schaltbar sein: Wo erfundene Bewertungen
-     stehen, darf niemand über eine Suche hineinstolpern.
-
-     Das ist der Ersatz für die frühere `NODE_ENV`-Sperre, und es trifft den
-     Punkt besser. Wettbewerbsrechtlich zählt nicht, ob eine Demo existiert –
-     der Kunde darf seinen eigenen Entwurf sehen –, sondern ob Verbraucher
-     als Publikum erreicht werden. Genau das unterbindet `noindex`.
-
-     Auf dem Livesystem ist die Variable nicht gesetzt: keine Platzhalter,
-     kein `noindex`, normale Indexierung. Es gibt nichts umzustellen. */
-  robots: PLATZHALTER_AN
-    ? { index: false, follow: false, nocache: true }
-    : undefined,
+    "Ihr herstellerunabhängiger Berater für Wärmepumpe, Photovoltaik und Stromtarif: anbieterübergreifend verglichen, persönlich betreut in Stuttgart. Kostenlos.",
 };
 
 /**
- * ⚠️ KEIN `h-full` auf `<html>`, und das ist kein Versehen.
+ * KEIN `h-full` auf `<html>`, und das ist kein Versehen.
  *
  * Ein `height: 100%` auf dem Dokument ist genau das, was Lenis' eigenes
  * Stylesheet mit `html.lenis { height: auto }` wieder zurücknimmt. Solange

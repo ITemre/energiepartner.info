@@ -23,7 +23,7 @@ import { AV_HOSTS, AV_PFAD } from "@/lib/site";
  * Kundenpräsentation und die lokale Arbeit gibt es damit einen Weg auf die
  * Seite, der ohne DNS und ohne Eingriff in die Hosts-Datei auskommt.
  *
- * ⚠️ Next 16: Die Datei heißt `proxy.ts`, nicht mehr `middleware.ts`, und die
+ * Next 16: Die Datei heißt `proxy.ts`, nicht mehr `middleware.ts`, und die
  * Funktion muss `proxy` heißen (siehe `node_modules/next/dist/docs/01-app/
  * 01-getting-started/16-proxy.md`).
  */

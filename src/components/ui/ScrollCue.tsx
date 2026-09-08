@@ -16,8 +16,7 @@
  * während der restliche Inhalt sich darüberschiebt – ein
  * IntersectionObserver auf die Sektion würde nie auslösen.
  *
- * ═══ FARBE KOMMT VON AUSSEN (10.08.) ═══
- * Schrift und Kontur standen fest auf Weiß, weil der Hinweis nur im
+ * FARBE KOMMT VON AUSSEN (10.08.) * Schrift und Kontur standen fest auf Weiß, weil der Hinweis nur im
  * Navy-Hero vorkam. Seit der auf Papier läuft, wäre das eine unsichtbare
  * Kontur auf heller Fläche.
  *
@@ -30,7 +29,7 @@
  * unterliegt damit nicht der Kontrastregel der adaptiven Rolle `ep-accent`.
  */
 /**
- * ⚠️ ZWEI AUFSTELLUNGEN, EINE KOMPONENTE (13.08.).
+ * ZWEI AUFSTELLUNGEN, EINE KOMPONENTE (13.08.).
  *
  * `zeile` (Vorgabe) – wie bisher: rechts außen in der Beleg-Leiste, waagerecht,
  *   erst ab `sm` sichtbar. Das ist die Desktop-Fassung.
@@ -65,7 +64,7 @@ export function ScrollCue({
           oben nach unten, und die Bewegung im Zeichen zeigt nach unten.
           Andersherum stünde die Anweisung hinter ihrer Ausführung.
 
-          ⚠️ DIE SÄULE SETZT NICHT `.t-label`. Die Rolle ist 15 px Mono,
+          DIE SÄULE SETZT NICHT `.t-label`. Die Rolle ist 15 px Mono,
           versalisiert und auf 0.14em gesperrt – als Overline über einer
           Sektionsüberschrift richtig, als Fußnote am unteren Heroende viel
           zu laut. Ein Wischhinweis ist das Leiseste auf dem Bildschirm, er

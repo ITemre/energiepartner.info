@@ -16,8 +16,7 @@ if (typeof window !== "undefined") {
 /**
  * Ablauf – die sechs Schritte als randloses Raster über den ganzen Schirm.
  *
- * ═══ ⚠️ WARUM DER INHALT ZENTRIERT STEHT UND NICHT AUSEINANDERGEZOGEN ═══
- * Eine frühere Fassung setzte die Zelle auf `justify-between`: Ziffer an die
+ * WARUM DER INHALT ZENTRIERT STEHT UND NICHT AUSEINANDERGEZOGEN * Eine frühere Fassung setzte die Zelle auf `justify-between`: Ziffer an die
  * Oberkante, Titel an die Unterkante, dazwischen Luft. Der Gedanke war eine
  * durchgehende Ziffernlinie über die ganze Reihe.
  *
@@ -34,22 +33,20 @@ if (typeof window !== "undefined") {
  * Rahmen an den Zellen: Rahmen ergeben an jeder Innenkante zwei Striche
  * übereinander.
  *
- * ═══ DAS UMDREHEN ═══
- * Vorderseite Ziffer und Titel, Rückseite der Erklärtext auf Navy.
+ * DAS UMDREHEN * Vorderseite Ziffer und Titel, Rückseite der Erklärtext auf Navy.
  *
  * Der Farbwechsel ist die eigentliche Rückmeldung. Eine Drehung sieht man
  * nur, während sie läuft – danach stünde wieder eine helle Zelle da und man
  * wüsste nicht mehr, welche man geöffnet hat.
  *
- * ⚠️ MEHRERE DÜRFEN OFFEN SEIN. Ein Raster ist kein Karussell: Wer Schritt
+ * MEHRERE DÜRFEN OFFEN SEIN. Ein Raster ist kein Karussell: Wer Schritt
  * zwei und fünf vergleichen will, soll beide offen lassen können.
  *
- * ⚠️ `backface-visibility: hidden` NIMMT NICHTS AUS DEM BAUM. Die abgewandte
+ * `backface-visibility: hidden` NIMMT NICHTS AUS DEM BAUM. Die abgewandte
  * Seite ist optisch weg, für Vorlesesoftware aber weiterhin da – deshalb
  * zusätzlich `aria-hidden`, gesteuert vom Zustand.
  *
- * ═══ AUF DEM HANDY DIESELBEN KARTEN, NUR EINSPALTIG ═══
- * Eine Zwischenfassung hatte dort ein Aufklapp-Accordion. Das war ein
+ * AUF DEM HANDY DIESELBEN KARTEN, NUR EINSPALTIG * Eine Zwischenfassung hatte dort ein Aufklapp-Accordion. Das war ein
  * zweites Bedienmuster für dieselbe Sache, und Aufklapplisten sind auf
  * einer Seite wie dieser der ältere, langweiligere Weg.
  *
@@ -57,7 +54,7 @@ if (typeof window !== "undefined") {
  * Platz als jede Zelle auf dem Desktop. Die Drehung funktioniert dort
  * dadurch besser als im Raster, nicht schlechter.
  *
- * ⚠️ FREIGABE STEHT AUS. Schritte und Texte sind ein Entwurf von Corivo,
+ * FREIGABE STEHT AUS. Schritte und Texte sind ein Entwurf von Corivo,
  * kein abgestimmter Kundentext.
  */
 const SCHRITTE = [
@@ -87,7 +84,7 @@ const SCHRITTE = [
   },
 ] as const;
 
-/* ⚠️ HIER STAND EIN ZAHLWORT-HELFER („Sechs"), der die Anzahl aus der
+/* HIER STAND EIN ZAHLWORT-HELFER („Sechs"), der die Anzahl aus der
    Liste ableitete. Er ist mit der neuen Überschrift entfallen: Sie nennt
    keine Anzahl mehr, also kann sie auch nicht mit der Liste auseinander
    laufen. Falls je wieder eine Zahl in die Überschrift soll – als ZIFFER
@@ -131,7 +128,7 @@ export function Ablauf() {
       ref={scope}
       id="ablauf"
       data-nav-theme="light"
-/* ⚠️ `scroll-mt` UND `lg:pt` SIND BEIDE PFLICHT, und beide fehlten.
+/* `scroll-mt` UND `lg:pt` SIND BEIDE PFLICHT, und beide fehlten.
          Die Kopfleiste liegt `fixed` ÜBER dem Inhalt:
 
          · Ohne `scroll-mt` landet beim Sprung über den Menüpunkt „Ablauf"
@@ -144,22 +141,21 @@ export function Ablauf() {
            beide Reihen teilen sich also sauber die SICHTBARE Höhe. */
       className="scroll-mt-[var(--nav-h)] bg-ep-paper lg:flex lg:h-dvh lg:flex-col lg:pt-[var(--nav-h)]"
     >
-      {/* ⚠️ EIN RASTER FÜR ALLE BREITEN, keine zweite Variante.
+      {/* EIN RASTER FÜR ALLE BREITEN, keine zweite Variante.
           Darunter eine Spalte, ab lg drei mal zwei. Die Karten drehen sich
           überall gleich – ein Aufklapp-Accordion für Mobil wäre ein zweites
           Bedienmuster für dieselbe Sache gewesen.
 
-          ⚠️ DIE HÖHE KOMMT UNTER lg VON DER KARTE, NICHT VON DER SEKTION.
+          DIE HÖHE KOMMT UNTER lg VON DER KARTE, NICHT VON DER SEKTION.
           Sechs Karten in einer Spalte auf einem Bildschirm wären je 140 px
           hoch – zu wenig für Ziffer, Titel und den Text der Rückseite.
           Deshalb greift `h-dvh` erst ab lg, darunter gibt `min-h` je Karte
           das Maß und die Sektion scrollt. */}
-      {/* ═══ KOPF ═══
-          Im Container, während das Raster darunter randlos läuft. Das ist
+      {/* KOPF Im Container, während das Raster darunter randlos läuft. Das ist
           Absicht: Der Kopf gehört zur Seite und fluchtet mit allen anderen
           Sektionen, das Raster ist eine Fläche und hat keinen Rand.
 
-          ⚠️ `shrink-0` plus `flex-1` am Raster: Der Kopf nimmt, was er
+          `shrink-0` plus `flex-1` am Raster: Der Kopf nimmt, was er
           braucht, das Raster den Rest. Ohne das teilen sich beide die Höhe
           gleichmäßig und die Karten verlieren ein Drittel. */}
       <div className="ep-container shrink-0 pt-16 sm:pt-20 lg:py-[clamp(1rem,3svh,2.5rem)]">
@@ -174,7 +170,7 @@ export function Ablauf() {
              Fenster die Höhe, die das Raster braucht. */
           style={{ fontSize: "min(clamp(1.75rem,3.4vw,3.5rem),8svh)" }}
         >
-          {/* ⚠️ FESTE UMBRÜCHE, keine zufälligen. Vorher deckelte ein
+          {/* FESTE UMBRÜCHE, keine zufälligen. Vorher deckelte ein
               `max-w-[16ch]` die Zeile, und der Bruch fiel genau vor das
               letzte Wort: „Zu Ihrer fertigen" / „Anlage." Ein Substantiv
               allein auf einer Zeile liest sich als Fehler.
@@ -188,7 +184,7 @@ export function Ablauf() {
         </h2>
       </div>
 
-      {/* ⚠️ KEIN `gap`, DIE LINIEN SIND RÄNDER AN DEN KARTEN.
+      {/* KEIN `gap`, DIE LINIEN SIND RÄNDER AN DEN KARTEN.
           Vorher trennte `gap-px` auf farbigem Grund. Das ist elegant und
           hier trotzdem falsch: Ein 1-px-Spalt verteilt sich über drei
           Spalten, und wenn die Containerbreite nicht durch drei teilbar
@@ -206,7 +202,7 @@ export function Ablauf() {
           Naht genau einen Strich – doppelte Ränder gibt es nicht, weil nie
           beide Nachbarn denselben zeichnen.
 
-          ⚠️ RAHMEN AUSSEN HERUM, DIESELBE HAARLINIE – ABER NICHT OBEN AUF
+          RAHMEN AUSSEN HERUM, DIESELBE HAARLINIE – ABER NICHT OBEN AUF
           DEM HANDY (13.08.). Links, rechts und unten reicht die `ep-line`-
           Haarlinie überall. Oben nicht: Genau das Problem, das weiter unten
           die 2-px-Orangekante zwischen den Karten begründet („eine 1-px-
@@ -227,7 +223,7 @@ export function Ablauf() {
               data-abl-zelle
               onClick={() => drehe(i)}
               aria-expanded={an}
-              /* ⚠️ UNTER lg EINE ORANGE UNTERKANTE.
+              /* UNTER lg EINE ORANGE UNTERKANTE.
                 Die Trennlinien des Rasters entstehen über `gap-px` auf
                 `ep-line` (16 % Tinte). Zwischen zwei Spalten auf dem Desktop
                 reicht das – einspaltig auf dem Handy nicht: Dort liegen sechs
@@ -261,7 +257,7 @@ export function Ablauf() {
                   an && "[transform:rotateY(180deg)]",
                 )}
               >
-                {/* ═══ VORDERSEITE ═══ */}
+                {/* VORDERSEITE */}
                 <div
                   aria-hidden={an}
                   className={cn(
@@ -289,7 +285,7 @@ export function Ablauf() {
                     {schritt.titel}
                   </h3>
 
-                  {/* ⚠️ HINWEIS, DASS SICH DIE KARTE UMDREHEN LÄSST (13.08.).
+                  {/* HINWEIS, DASS SICH DIE KARTE UMDREHEN LÄSST (13.08.).
                       Ein `<button>` ist semantisch klickbar, sieht aber wie
                       eine normale Karte aus – nichts an Ziffer, Strich und
                       Titel verrät, dass mehr dahinter steckt. `aria-hidden`,
@@ -308,8 +304,7 @@ export function Ablauf() {
                   </span>
                 </div>
 
-                {/* ═══ RÜCKSEITE ═══
-                    Auf Navy, damit man von weitem sieht, welche Zelle offen
+                {/* RÜCKSEITE Auf Navy, damit man von weitem sieht, welche Zelle offen
                     ist. `data-surface="dark"` sitzt bewusst HIER und nicht
                     am Karten-Root: Vorder- und Rückseite liegen gleichzeitig
                     im DOM (CSS-3D-Flip, `backface-visibility: hidden`), ein

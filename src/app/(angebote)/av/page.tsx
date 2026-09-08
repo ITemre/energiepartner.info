@@ -7,10 +7,18 @@ import { AvAblauf } from "@/components/av/AvAblauf";
 import { AvTransparenz } from "@/components/av/AvTransparenz";
 import { AvCtaBand } from "@/components/av/AvCtaBand";
 import { holeGoogleBewertungen } from "@/lib/google-reviews";
-import { holePlatzhalterStimmen } from "@/lib/stimmen-platzhalter";
+import { holeStimmen } from "@/lib/stimmen";
 
+/**
+ * KEIN `title` MEHR (08.09.). Er stand hier als „Angebot prüfen lassen ·
+ * Wärmepumpe" und lief durch die Vorlage des Layouts – zusammen ergab das
+ * 58 Zeichen, hart an der Kante, an der Google abschneidet.
+ *
+ * Der Titel steht jetzt EINMAL, als `title.default` im Layout der
+ * Route-Group. Diese Seite ist die einzige darin; zwei Stellen für einen
+ * Titel sind hier zwei Gelegenheiten, sie auseinanderlaufen zu lassen.
+ */
 export const metadata: Metadata = {
-  title: "Angebot prüfen lassen · Wärmepumpe",
   description:
     "Wärmepumpen-Angebot hochladen und kostenlos auf Vollständigkeit prüfen lassen. Rückmeldung innerhalb von 24 Stunden, ohne Verpflichtung.",
 };
@@ -18,8 +26,7 @@ export const metadata: Metadata = {
 /**
  * angebote-vergleichen.info · Leadstrecke.
  *
- * ═══ DER AUFBAU IST EINE EINWAND-KETTE ═══
- * Der Funnel steht im ersten Bild und bedient alle, die schon entschieden
+ * DER AUFBAU IST EINE EINWAND-KETTE * Der Funnel steht im ersten Bild und bedient alle, die schon entschieden
  * sind. Alles darunter ist für die, die gezögert haben – und jede Sektion
  * räumt genau einen Einwand aus, in der Reihenfolge, in der sie auftreten:
  *
@@ -49,8 +56,7 @@ export const metadata: Metadata = {
  * Leadstrecke ist die Länge des Wegs zur Handlung die eigentliche
  * Konversionsgröße.
  *
- * ═══ BANDRHYTHMUS ═══
- *   navy(Hero) · papier(Pacing) · navy(Zahl) · sand(CTA) · papier(Stimmen)
+ * BANDRHYTHMUS *   navy(Hero) · papier(Pacing) · navy(Zahl) · sand(CTA) · papier(Stimmen)
  *   · navy(Ablauf) · sand(CTA) · navy-deep(Transparenz) · navy(CTA)
  *
  * Sand und Papier stoßen an einer Stelle aneinander (CTA → Stimmen). Das
@@ -60,7 +66,7 @@ export const metadata: Metadata = {
  * durchgehen – genau der Fehler, der auf energiepartner.info schon einmal
  * korrigiert wurde.
  *
- * ⚠️ Nicht eingehängt: `AvPruefung` (die Zahl benennt die fehlenden
+ * Nicht eingehängt: `AvPruefung` (die Zahl benennt die fehlenden
  * Positionen bereits einzeln – die Prüfliste sagte dasselbe ein zweites
  * Mal, nur als Aufzählung; ihr CTA-Band fiel mit ihr weg, sonst hätten
  * zwei Bänder aufeinander gestanden), `AvAuswertung` (überschneidet sich
@@ -69,59 +75,52 @@ export const metadata: Metadata = {
  */
 export default async function AngebotePage() {
   /* Serverseitig, exakt wie auf energiepartner.info: Der Places-Schlüssel
-     darf den Server nie verlassen. Echte Daten haben Vorrang; der Rückfall
-     greift nur, wenn Google nichts liefert UND die Umgebung ihn ausdrücklich
-     erlaubt (`PLATZHALTER_INHALTE`, siehe `stimmen-platzhalter.ts`) – auf
-     dem Livesystem also nie.
+     darf den Server nie verlassen. Echte Rezensionen haben Vorrang, sonst
+     greift die gepflegte Liste aus `lib/stimmen.ts`.
 
-     Bleiben beide leer, rendert `AvStimmen` `null` und die Sektion existiert
-     für den Besucher nicht. Das ist hier bewusst anders als auf
-     energiepartner.info, wo eine ehrliche Ersatzzeile stehen bleibt: Dort
-     ist `#referenzen` ein Navigationsziel, das nicht ins Leere springen
-     darf. Auf einer Leadstrecke ohne Menü gibt es diesen Zwang nicht – und
-     eine leere Vertrauenssektion ist dort schlechter als gar keine. */
-  /* ⚠️ 13.08.: wie auf energiepartner.info — Platzhalter zuerst, solange
-     `PLATZHALTER_AN` steht. Begründung dort. */
-  const bewertungen = holePlatzhalterStimmen() ?? (await holeGoogleBewertungen());
+     Liefert beides nichts, rendert `AvStimmen` `null` und die Sektion
+     existiert für den Besucher nicht. Auf energiepartner.info bleibt an
+     dieser Stelle eine Ersatzzeile stehen, weil `#referenzen` dort ein
+     Navigationsziel ist; eine Leadstrecke ohne Menü hat diesen Zwang
+     nicht, und eine leere Vertrauenssektion ist schlechter als keine. */
+  const bewertungen = (await holeGoogleBewertungen()) ?? holeStimmen();
 
   return (
     <main className="flex-1">
-      {/* ⚠️ GEMEINSAMER GRUND FÜR HERO UND BEISPIELRECHNUNG.
-          Beide Sektionen sind navy-deep und stoßen direkt aneinander. Ohne
-          durchgehende Fläche darunter liegt an ihrer Kante das Papier des
-          `<body>` – und die Kante landet auf dem Handy fast immer auf einem
-          halben Pixel, weil die Herohöhe in `svh` gerechnet wird. Der Browser
-          rundet dann zwei Flächen auseinander und lässt eine helle Haarlinie
-          stehen. Dieselbe Lösung wie auf energiepartner.info (siehe dortiges
-          `bg-ep-paper` am Wrapper): ein Grund, der unter der Naht durchläuft,
-          statt zweier, die sich dort treffen. */}
-      <div className="bg-ep-navy-deep">
-        {/* ⚠️ Das Google-Siegel im Hero läuft NICHT allein über diese Daten.
-            Solange das Profil über die API nichts ausliefert, greift dort
-            eine fest gesetzte Note (`GOOGLE_SIEGEL` in `AvHero.tsx`) – der
-            Beleg wird im ersten Bild gebraucht, und das Profil ist zu neu.
-            Kommen echte Rezensionen, gewinnen sie hier automatisch. Die
-            beiden Zahlen in der Konstante müssen bis dahin dem Profil
-            entsprechen; der Kommentar dort sagt, warum das kein Detail ist. */}
-        <AvHero bewertungen={bewertungen} />
+      {/* DER GEMEINSAME NAVY-GRUND IST WEG (08.09.).
+          Hier lag ein `bg-ep-navy-deep`-Wrapper um Hero, Pacing und
+          Beispielrechnung. Er hatte genau einen Zweck: Hero und Zahl waren
+          beide navy-deep, und an ihren Nähten zum hellen Pacing dazwischen
+          landete die Kante auf dem Handy fast immer auf einem halben Pixel
+          (die Herohöhe rechnet in `svh`). Der Browser rundete zwei Flächen
+          auseinander und ließ eine helle Haarlinie stehen; ein durchlaufender
+          Grund darunter hat das aufgefangen.
 
-        {/* Freigegebene Kundencopy (Briefing 5), wörtlich.
-            STELLUNG: zwischen Funnel und Beweis. Vor dem Hero ginge nicht,
-            der trägt die Ein-Bildschirm-Zusage; hinter der Zahl wäre es ein
-            Nachklapp, weil dann bereits argumentiert wurde. Genau hier ist
-            der Satz das, wofür Pacing gedacht ist – die erste Zeile für
-            alle, die nicht sofort hochgeladen haben.
+          Seit der Hero auf Papier läuft, gibt es diese Nähte nicht mehr:
+          Hero und Pacing sind beide hell, die einzige verbliebene Kante ist
+          Pacing→Zahl, und die ist ein gewollter Bandwechsel mit vollem
+          Kontrast. Ein Navy-Wrapper darunter wäre jetzt das Gegenteil einer
+          Hilfe – er läge als dunkle Fläche hinter zwei hellen Sektionen und
+          würde an jeder gerundeten Kante durchblitzen. */}
+      <AvHero bewertungen={bewertungen} />
 
-            Die Sektion bringt `bg-ep-paper` mit und übermalt den
-            gemeinsamen Navy-Grund. Der bleibt trotzdem stehen: Er liegt
-            jetzt unter BEIDEN Nähten (Hero→Papier, Papier→Zahl), und eine
-            gerundete Kante gibt dort Navy auf Navy frei statt einer hellen
-            Haarlinie. */}
-        <AvPacing />
+      {/* Freigegebene Kundencopy (Briefing 5), wörtlich.
+          STELLUNG: zwischen Funnel und Beweis. Vor dem Hero ginge nicht,
+          der trägt die Ein-Bildschirm-Zusage; hinter der Zahl wäre es ein
+          Nachklapp, weil dann bereits argumentiert wurde. Genau hier ist
+          der Satz das, wofür Pacing gedacht ist – die erste Zeile für
+          alle, die nicht sofort hochgeladen haben.
 
-        {/* „Lohnt sich das?" – der Beweis am Beispiel. */}
-        <AvZahl />
-      </div>
+          Die Sektion trägt seit dem 08.09. eine Akzentkante an der
+          Oberkante. Sie ist keine Zierde: Hero und Pacing sind jetzt
+          dieselbe Fläche, und ohne gezeichnete Kante gäbe es zwischen dem
+          ersten Bild und dem zweiten Abschnitt kein Signal. Dieselbe Lösung
+          steht auf energiepartner.info an der Förderung, aus demselben
+          Grund. */}
+      <AvPacing />
+
+      {/* „Lohnt sich das?" – der Beweis am Beispiel. */}
+      <AvZahl />
       <AvCtaBand
         ton="hell"
         zeile="Was fehlt in Ihrem Angebot? Finden wir es heraus."

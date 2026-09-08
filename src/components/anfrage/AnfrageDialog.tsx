@@ -265,7 +265,7 @@ export function AnfrageDialog({
       />
 
       <div className="relative flex h-dvh flex-col">
-        {/* ══════════ ZONE 1 · Kopf ══════════ */}
+        {/* ZONE 1 · Kopf */}
         <div className="ep-container flex h-[var(--nav-h)] shrink-0 items-center justify-between border-b border-ep-line-dark">
           <Image
             src={SITE.logo.negativ}
@@ -301,7 +301,7 @@ export function AnfrageDialog({
             <input id={`${uid}-website`} name="website" tabIndex={-1} autoComplete="off" />
           </div>
 
-          {/* ══════════ ZONE 2 · Frage ══════════ */}
+          {/* ZONE 2 · Frage */}
           <div data-an-in className="shrink-0 pb-4 pt-4 sm:pb-8 sm:pt-10">
             {!fertig && (
               <div className="flex items-center gap-4">
@@ -334,8 +334,7 @@ export function AnfrageDialog({
             </h2>
           </div>
 
-          {/* ══════════ ZONE 3 · Felder (das Einzige, was scrollt) ══════════
-              `data-lenis-prevent` ist Pflicht: Lenis fängt Rad-Ereignisse
+          {/* ZONE 3 · Felder (das Einzige, was scrollt) `data-lenis-prevent` ist Pflicht: Lenis fängt Rad-Ereignisse
               global ab und verhindert sie. Ohne dieses Attribut ließ sich
               im Dialog überhaupt nicht scrollen – der Inhalt war da, das
               Rad hat nur nichts bewirkt. */}
@@ -592,8 +591,7 @@ export function AnfrageDialog({
             )}
           </div>
 
-          {/* ══════════ ZONE 4 · Fuß ══════════
-              Die Handlung steht IMMER im Bild. Auf Schritt 1 gibt es bewusst
+          {/* ZONE 4 · Fuß Die Handlung steht IMMER im Bild. Auf Schritt 1 gibt es bewusst
               kein „Weiter" – dort ist die Auswahl selbst der Fortschritt. */}
           <div className="shrink-0 border-t border-ep-line-dark py-4 sm:py-5">
             {fertig ? (

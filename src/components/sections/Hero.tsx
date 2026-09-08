@@ -20,12 +20,9 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * ══════════════════════════════════════════════════════════════════
- * HERO — Neubau (07.08.2026)
- * ══════════════════════════════════════════════════════════════════
- *
- * ═══ WAS AM VORGÄNGER NICHT STIMMTE ═══
- * Er war schön und hat nicht verkauft. Konkret:
+ * * HERO — Neubau (07.08.2026)
+ * *
+ * WAS AM VORGÄNGER NICHT STIMMTE * Er war schön und hat nicht verkauft. Konkret:
  *
  * 1. **Rund 55 % der Fläche waren leer.** Headline, Fließtext und Knöpfe
  *    standen alle im linken Drittel, rechts lag nichts. Als „Rand, gegen den
@@ -38,8 +35,7 @@ if (typeof window !== "undefined") {
  * 4. **Kein Bild.** Bei einem Gewerk, das man anfassen kann, ist eine rein
  *    typografische Fläche eine Behauptung ohne Gegenstand.
  *
- * ═══ HELL STATT NAVY (10.08.2026) ═══
- * Der Hero lief auf `navy-deep` mit randlosem Foto und zwei Verläufen. Auf
+ * HELL STATT NAVY (10.08.2026) * Der Hero lief auf `navy-deep` mit randlosem Foto und zwei Verläufen. Auf
  * Wunsch von Emre ist er jetzt hell, nach dem Muster einer
  * Konversionsseite aus derselben Branche (febesol.de/s/solaranlage/v3).
  *
@@ -48,7 +44,7 @@ if (typeof window !== "undefined") {
  * Belege darunter. Farben, Schrift, Raster und Bildsprache bleiben die der
  * Marke.
  *
- * ⚠️ WAS DER HELLE GRUND ALLES MITZIEHT, falls jemand zurückbaut:
+ * WAS DER HELLE GRUND ALLES MITZIEHT, falls jemand zurückbaut:
  *   · `data-nav-theme="light"` an der Sektion (ungenutzt seit die
  *     Kopfleiste auf „solide Bar" umgestellt ist, siehe `SiteHeader.tsx` –
  *     steht trotzdem zur Dokumentation und für mögliche künftige Nutzung)
@@ -59,8 +55,7 @@ if (typeof window !== "undefined") {
  *   · `ep-line` statt `ep-line-dark` an der Beleg-Leiste
  *   · `ScrollCue` erbt seine Farbe seit 10.08. über `currentColor`
  *
- * ═══ DER AUFBAU ═══
- *
+ * DER AUFBAU *
  *   ┌─────────────────────────────┬───────────────────┐
  *   │ Eyebrow                     │                   │
  *   │ HEADLINE (groß, markiert)   │   Foto im Rahmen  │
@@ -75,8 +70,7 @@ if (typeof window !== "undefined") {
  * handeln, geglaubt bekommen. Der Beleg steht darunter über die ganze
  * Breite und trägt den Block, statt am Rand mitzulaufen.
  *
- * ═══ WARUM DAS FOTO ═══
- * Es ist ein Stockfoto einer Wärmepumpe. Kein Personenfoto: Das Kickoff
+ * WARUM DAS FOTO * Es ist ein Stockfoto einer Wärmepumpe. Kein Personenfoto: Das Kickoff
  * verlangt ausdrücklich, dass kein One-Man-Show-Eindruck entsteht, Ilias'
  * Porträt hat seinen Auftritt in der Bildstrecke.
  *
@@ -86,8 +80,7 @@ if (typeof window !== "undefined") {
  * ausgeblichenen Fleck, ohne Verlauf schneidet ein dunkles Rechteck die
  * helle Fläche hart durch.
  *
- * ═══ BEWEGUNG ═══
- * Ankunft gestaffelt (Zeilenmasken für die Headline, danach Satz, Handlung,
+ * BEWEGUNG * Ankunft gestaffelt (Zeilenmasken für die Headline, danach Satz, Handlung,
  * Beleg). Das Foto zieht sich per `clip-path` von unten auf — kein `scale`,
  * weil ein skaliertes Foto beim Zoom-Abgang doppelt transformiert würde.
  * Abgang unverändert: Der Hero liegt sticky auf z-0 und zoomt heraus,
@@ -97,21 +90,20 @@ if (typeof window !== "undefined") {
 /**
  * Die drei Punkte über der Handlung.
  *
- * ⚠️ HIER STAND EINMAL „20 MINUTEN" – entfernt (07.08.), weil die Zahl
+ * HIER STAND EINMAL „20 MINUTEN" – entfernt (07.08.), weil die Zahl
  * nirgends herkommt: nicht aus dem Projekt-Briefing, nicht aus dem
  * Markenhandbuch. Sie ist im Code entstanden. Und sie wäre eine Zusage über
  * einen Termin, den Ilias führt, nicht wir – dauert das Gespräch
  * fünfundvierzig Minuten, beginnt die Beziehung mit einem gebrochenen
  * Versprechen. Sobald er eine echte Dauer nennt, gehört sie hier hinein.
  *
- * ═══ WOHER DAS MUSTER KOMMT ═══
- * Eine Konversionsseite, die dieselbe Zielgruppe bedient, macht es genauso:
+ * WOHER DAS MUSTER KOMMT * Eine Konversionsseite, die dieselbe Zielgruppe bedient, macht es genauso:
  * Auszeichnungszeile, große Überschrift, drei abgehakte Punkte, ein Knopf.
  * Der Grund ist nicht Mode. Zwischen einer Überschrift und einem Knopf
  * fehlt sonst der Schritt, in dem jemand ENTSCHEIDET – ein Fließtextsatz
  * wird überflogen, drei Zeilen mit Haken werden gelesen.
  *
- * ⚠️ HAKEN STATT LEUCHT-PUNKT, UND DAS IST EINE AUSNAHME.
+ * HAKEN STATT LEUCHT-PUNKT, UND DAS IST EINE AUSNAHME.
  * An anderer Stelle steht in dieser Datei, dass ein Häkchen Erledigtes
  * behauptet und Zusagen deshalb den Markenpunkt tragen. Das galt für die
  * alten `ZUSAGEN` („vor Ort oder am Telefon"), und es stimmt dort auch:
@@ -121,7 +113,7 @@ if (typeof window !== "undefined") {
  * Förderantrag" ist keine Absichtserklärung, sondern eine Leistung. Für
  * Erledigtes ist der Haken das richtige Zeichen.
  *
- * ⚠️ ERSTER PUNKT = DIE VERMITTLERROLLE, und die steht hier nicht zufällig
+ * ERSTER PUNKT = DIE VERMITTLERROLLE, und die steht hier nicht zufällig
  * an erster Stelle: Der Kunde hat am 09.08. ausdrücklich darum gebeten, sie
  * schon zu zeigen, „wenn der Kunde auf die Seite kommt", statt sie unten in
  * den FAQ zu lassen. Wer sie umformuliert, muss diesen Kern erhalten:
@@ -136,8 +128,7 @@ const PUNKTE = [
 /**
  * Wann der sticky Hero samt Zoom-Abgang läuft.
  *
- * ═══ DIE SCHWELLE HÄNGT AN DER HÖHE, NICHT AN DER BREITE ═══
- * Ein iPhone SE hat 667 px, ein iPhone 14 hat 852 px – gleich schmal, aber
+ * DIE SCHWELLE HÄNGT AN DER HÖHE, NICHT AN DER BREITE * Ein iPhone SE hat 667 px, ein iPhone 14 hat 852 px – gleich schmal, aber
  * nur beim ersten wird der Hero höher als der Bildschirm. Und ein sticky
  * Element, das nicht in den Viewport passt, hat einen dauerhaft
  * unerreichbaren Bereich: Es klebt oben fest, während der Rest der Seite
@@ -148,8 +139,7 @@ const PUNKTE = [
  * vierspaltig läuft und die Knöpfe nebeneinander stehen. Ohne sie verlöre
  * ausgerechnet jeder Laptop den Auftakt der Seite.
  *
- * ═══ WARUM DIE QUERY SO UMSTÄNDLICH AUSSIEHT ═══
- * Ausgeschlossen werden soll „flach UND schmal". Die Negation davon ist
+ * WARUM DIE QUERY SO UMSTÄNDLICH AUSSIEHT * Ausgeschlossen werden soll „flach UND schmal". Die Negation davon ist
  * „hoch ODER breit", und dieses ODER ist in Media Queries das Komma – die
  * einzige Schreibweise, die überall funktioniert. `not (… and …)` gehört zu
  * Media Queries Level 4; wo das nicht ausgewertet wird, wäre die Bedingung
@@ -158,13 +148,12 @@ const PUNKTE = [
  * `prefers-reduced-motion` steht in BEIDEN Zweigen, weil ein Komma
  * vollständige Bedingungen trennt und nichts klammert.
  *
- * ⚠️ Die Sektion trägt dieselbe Schwelle noch einmal als
+ * Die Sektion trägt dieselbe Schwelle noch einmal als
  * `[@media(max-height:780px)]:relative`. Tailwind
  * kann keine Konstante aus TypeScript lesen – wer einen Wert ändert, muss
  * den anderen mitändern, sonst zoomt ein Hero, der gar nicht mehr steht.
  */
-/* ═══ 701 → 601 (07.08.) ═══
- * Die Schwelle war gegen die GERÄTEhöhe gerechnet, Media Queries messen
+/* 701 → 601 (07.08.) * Die Schwelle war gegen die GERÄTEhöhe gerechnet, Media Queries messen
  * aber das Browser-FENSTER. Auf einem iPhone 16 (852 px Gerät) bleiben nach
  * Statusleiste, Safari-Tableiste und Home-Indikator rund 700 bis 710 px
  * übrig – die alte Schwelle lag mit 701 px also genau auf dieser Kante, und
@@ -181,7 +170,7 @@ const PUNKTE = [
  * flachen Schirm wäre die Beleg-Leiste unter einem sticky Hero dauerhaft
  * unerreichbar. Nur die Grenze lag falsch. */
 /**
- * ⚠️ DIE BREITENBEDINGUNG IST WEG (10.08.), und das ist der eigentliche Fix.
+ * DIE BREITENBEDINGUNG IST WEG (10.08.), und das ist der eigentliche Fix.
  *
  * Hier stand ein zweiter Zweig: „oder mindestens 641 px breit". Die
  * Begründung war, ein breites Fenster habe das Problem nicht, weil dort die
@@ -212,7 +201,7 @@ const PUNKTE = [
  * steht auf 1024 (dem `lg`-Breakpoint), weil erst dort das zweispaltige
  * Layout greift und die Knöpfe nebeneinander stehen.
  *
- * ⚠️ WER DEN HERO INHALTLICH ERWEITERT, muss diese Zahl neu messen. Eine
+ * WER DEN HERO INHALTLICH ERWEITERT, muss diese Zahl neu messen. Eine
  * vierte Zeile in den Punkten verschiebt sie, und der Fehler zeigt sich
  * nicht als Layoutbruch, sondern als fehlender Inhalt.
  */
@@ -334,7 +323,7 @@ export function Hero({
          rastert und danach ausschließlich auf der GPU verschiebt – ein
          starker Zoom kostet dadurch nicht mehr als ein schwacher.
 
-         ⚠️ NICHT auf kleinen Telefonen: Dort ist die Sektion `relative`
+         NICHT auf kleinen Telefonen: Dort ist die Sektion `relative`
          (siehe `ABGANG_ERLAUBT`), und ein Zoom-Abgang ohne stehenden Hero
          liest sich als Fehler – das Bild zoomt heraus, während es
          gleichzeitig weggeschoben wird. Das `visibility: hidden` wäre dort
@@ -418,8 +407,7 @@ export function Hero({
         />
       </div>
 
-      {/* ═══ DER WARME SCHEIN ═══
-          Auf Navy trug die Fläche sich selbst. Papier über die volle
+      {/* DER WARME SCHEIN Auf Navy trug die Fläche sich selbst. Papier über die volle
           Bildschirmhöhe ist dagegen einfach nur leer, und ein leerer heller
           Hero wirkt nicht ruhig, sondern unfertig.
 
@@ -436,8 +424,7 @@ export function Hero({
         }}
       />
 
-      {/* ══════════════ DAS FOTO ══════════════
-          ⚠️ GERAHMT STATT RANDLOS, und das ist die eigentliche Folge des
+      {/* DAS FOTO GERAHMT STATT RANDLOS, und das ist die eigentliche Folge des
           hellen Grundes. Vorher lief das Foto randlos in die rechte Kante
           und wurde von zwei Verläufen ins Navy aufgelöst – ein Verfahren,
           das nur auf dunklem Grund funktioniert, weil ein Foto dort in die
@@ -452,7 +439,7 @@ export function Hero({
           Unter lg gibt es weiterhin kein Foto: Auf 390 px müsste es sich die
           Höhe mit Headline, drei Punkten, Knöpfen und dem Beleg teilen, und
           dann ist es ein Briefmarkenbild. Lieber keins. */}
-      {/* ⚠️ OBEN UND UNTEN VERANKERT, NICHT ZENTRIERT.
+      {/* OBEN UND UNTEN VERANKERT, NICHT ZENTRIERT.
           Der Kasten stand auf `top-1/2 -translate-y-1/2` und war damit auf
           die ganze Sektionshöhe zentriert – auch auf den Teil, den unten die
           Beleg-Leiste belegt. Auf einem 1440×900-Fenster lag „24 Std."
@@ -469,7 +456,7 @@ export function Hero({
         aria-hidden="true"
         className="pointer-events-none absolute bottom-[24svh] right-[var(--edge)] top-[calc(var(--nav-h)+2.5rem)] hidden w-[42%] max-w-[680px] items-center will-change-[transform,opacity] lg:flex"
       >
-        {/* ⚠️ QUERFORMAT, UND DAS IST INHALTLICH, NICHT GESTALTERISCH.
+        {/* QUERFORMAT, UND DAS IST INHALTLICH, NICHT GESTALTERISCH.
             Der Rahmen war hochkant (`h-full` zwischen zwei Kanten). Bei
             einem 4:3-Foto hätte `object-cover` darin rund ein Drittel der
             BREITE weggeschnitten – und links steht die Wärmepumpe, rechts
@@ -496,8 +483,7 @@ export function Hero({
         data-hero-content
         className="ep-container relative z-10 flex flex-1 flex-col justify-between pb-[clamp(0.5rem,1.2svh,1.25rem)] pt-[calc(var(--nav-h)+clamp(0.25rem,1svh,1rem))] text-ep-ink will-change-[transform,opacity] sm:pb-[clamp(0.75rem,1.5svh,2.5rem)] sm:pt-[calc(var(--nav-h)+clamp(0.5rem,1.8svh,3rem))]"
       >
-        {/* ══════════════ ZONE 1 · Aussage und Handlung ══════════════
-            Vertikal zentriert in der Restfläche, links am Anschlag. Die
+        {/* ZONE 1 · Aussage und Handlung Vertikal zentriert in der Restfläche, links am Anschlag. Die
             Spalte endet bei 7 von 12 – rechts davon liegt das Foto, und
             zwischen beiden bleibt eine Gasse, damit die Headline nie auf
             dem Bild steht. */}
@@ -506,7 +492,7 @@ export function Hero({
             {/* `ep-accent`, adaptive Rolle: löst hier zu `orange-deep`
                 (5,4:1) auf – die Farbregel steht im Token-Block von
                 `globals.css`. */}
-            {/* ⚠️ HIER STAND „Ihr UNABHÄNGIGER Energie-Vermittler" (13.08.
+            {/* HIER STAND „Ihr UNABHÄNGIGER Energie-Vermittler" (13.08.
                 entfernt) – ein seit 21.07. verbindlich untersagter Claim.
                 Projekt-Briefing Abschnitt 2: „Kein absolutes ,100 %
                 unabhängig` […] — er profitiert von erfolgreicher
@@ -530,7 +516,7 @@ export function Hero({
                 ersten verschmelzen. Der Strich sitzt NUR hier – zwei
                 markierte Zeilen heben sich gegenseitig auf.
 
-                ⚠️ EIGENE GRÖSSE STATT `.t-display`, und das ist hier keine
+                EIGENE GRÖSSE STATT `.t-display`, und das ist hier keine
                 Ausnahme aus Geschmack: Der Hero ist die einzige Sektion mit
                 fester Höhe (`min-h-svh`). `.t-display` skaliert nur mit der
                 BREITE (bis 8.5rem), und auf einem 1680×700-Fenster – also
@@ -559,19 +545,27 @@ export function Hero({
                 Absatzes, sondern aufgrund einer Zeile. Der Rest der Seite
                 hat Platz genug.
 
-                ⚠️ „Die Beratung kostet Sie nichts" ist aus diesem Satz
+                „Die Beratung kostet Sie nichts" ist aus diesem Satz
                 heraus und steht jetzt im dritten Punkt darunter. Es stand
                 vorher zusätzlich im Knopf und in den Zusagen, also dreimal
-                im selben Bild. */}
+                im selben Bild.
+
+                „Makler" → „Berater" (08.09., Wunsch von Ilias). Sein
+                Vorschlag war „unabhängige Berater"; „unabhängig" ist seit
+                dem 21.07. verbindlich gesperrt (Briefing 2). Die Aussage
+                geht trotzdem nicht verloren – sie steht als erster der drei
+                Punkte darunter („Anbieterübergreifend"), und genau dort
+                gehört sie laut Kundenwunsch vom 09.08. auch hin. Deshalb
+                hier das schlichte „Berater" statt einer zweiten,
+                längeren Qualifizierung im selben Bild. */}
             <p
               data-hero-sub
               className="mt-4 max-w-[38ch] text-[clamp(1rem,1.15vw,1.1875rem)] leading-relaxed text-ep-ink/75 sm:mt-[clamp(0.5rem,1.5svh,1.5rem)]"
             >
-             Wir sind Ihr Makler für Wärmepumpen, PV-Anlagen uvm. Wir finden die beste Lösung für Ihr Zuhause und kümmern uns um den gesamten Prozess.
+             Wir sind Ihr Berater für Wärmepumpen, PV-Anlagen uvm. Wir finden die beste Lösung für Ihr Zuhause und kümmern uns um den gesamten Prozess.
             </p>
 
-            {/* ═══ DIE DREI PUNKTE ═══
-                Sie stehen ÜBER der Handlung, nicht darunter, und das ist der
+            {/* DIE DREI PUNKTE Sie stehen ÜBER der Handlung, nicht darunter, und das ist der
                 ganze Zweck: Zwischen einer Überschrift und einem Knopf fehlt
                 sonst der Schritt, in dem jemand zustimmt. Wer die drei
                 Zeilen gelesen hat, klickt aus einem Grund und nicht aus
@@ -655,12 +649,11 @@ export function Hero({
           </div>
         </div>
 
-        {/* ══════════ WISCH-HINWEIS · nur unter lg ══════════
-            Ab `lg` steht der Hinweis rechts in der Beleg-Leiste (Zone 2).
+        {/* WISCH-HINWEIS · nur unter lg Ab `lg` steht der Hinweis rechts in der Beleg-Leiste (Zone 2).
             Diese Leiste ist mobil ausgeblendet, und damit fehlte der Hinweis
             ausgerechnet dort, wo gewischt statt gescrollt wird.
 
-            ⚠️ `mt-auto` statt einer festen Position: Zone 1 darüber trägt
+            `mt-auto` statt einer festen Position: Zone 1 darüber trägt
             `flex-1`, der Hinweis wird also von unten gegen die Kante
             gedrückt und kann keiner anderen Zeile in die Quere kommen. Ein
             `absolute bottom-…` läge dagegen über dem Inhalt, sobald der
@@ -670,8 +663,7 @@ export function Hero({
           <ScrollCue variante="saeule" />
         </div>
 
-        {/* ══════════════ ZONE 2 · DIE BELEG-LEISTE ══════════════
-            Über die volle Breite, unter allem. Das ist die eigentliche
+        {/* ZONE 2 · DIE BELEG-LEISTE Über die volle Breite, unter allem. Das ist die eigentliche
             Änderung an diesem Hero: Der Beleg war vorher eine graue Zeile
             zwischen Fließtext und Typenschild. Jetzt trägt er die
             Komposition von unten.
@@ -680,7 +672,7 @@ export function Hero({
             Sprache des Typenschilds an einer Anlage, dieselbe wie in der
             Beleg-Leiste weiter unten auf der Seite.
 
-            ⚠️ AB LG, NICHT MOBIL (13.08., Kundenwunsch). Mobil wirkte die
+            AB LG, NICHT MOBIL (13.08., Kundenwunsch). Mobil wirkte die
             volle Zeile zu dicht, und die Bewertung sitzt dort seit demselben
             Tag direkt unter dem Knopf in Zone 1 statt hier unten hinter dem
             Foto. Förderung und Rückmeldung fallen mobil ganz weg – beide

@@ -15,8 +15,7 @@ if (typeof window !== "undefined") {
 /**
  * Ihr Ansprechpartner – das Porträt als halber Bildschirm.
  *
- * ═══ DIE BILDSTRECKE IST WEG (11.08.) ═══
- * Diese Datei hatte zwei Akte: fünf Anlagenfotos als Raster („In Bildern.
+ * DIE BILDSTRECKE IST WEG (11.08.) * Diese Datei hatte zwei Akte: fünf Anlagenfotos als Raster („In Bildern.
  * Vom Dach bis in den Heizungskeller.") und danach das Porträt. Der erste
  * ist entfallen, und zwar weil ihm an einem Tag zweimal die Grundlage
  * entzogen wurde.
@@ -31,13 +30,12 @@ if (typeof window !== "undefined") {
  * den passenden Karten in `Leistungen.tsx`. Dort leisten sie, was ein Bild
  * an dieser Stelle leisten soll: Zuordnung statt Beleg.
  *
- * ⚠️ DER DATEINAME PASST NICHT MEHR. „Galerie" heißt eine Sektion, die
+ * DER DATEINAME PASST NICHT MEHR. „Galerie" heißt eine Sektion, die
  * keine mehr ist. Umbenennen kostet einen Import in `page.tsx` und wäre
  * sauberer – bewusst nicht gemacht, solange offen ist, ob echte
  * Anlagenfotos zurückkommen und die Strecke mit ihnen.
  *
- * ═══ WARUM DIE GEPINNTE REISE WEG IST (10.08.) ═══
- * Hier lief eine gepinnte Szene: sechs Bilder starteten verstreut im Raum,
+ * WARUM DIE GEPINNTE REISE WEG IST (10.08.) * Hier lief eine gepinnte Szene: sechs Bilder starteten verstreut im Raum,
  * reihten sich beim Scrollen auf eine waagerechte Spur, fuhren seitlich
  * durch, und am Ende wuchs das Porträt auf eine halbe Bildschirmhälfte.
  * Gestalterisch war das der aufwendigste Teil der Seite.
@@ -50,8 +48,7 @@ if (typeof window !== "undefined") {
  * seitwärts, und sein Gefühl dafür, wie weit er noch muss, stimmt nicht
  * mehr. Deshalb wirkt eine gepinnte Strecke immer länger als sie ist.
  *
- * ═══ WAS GEBLIEBEN IST ═══
- * Zwei Akte, jeder rund einen Bildschirm:
+ * WAS GEBLIEBEN IST * Zwei Akte, jeder rund einen Bildschirm:
  *
  *   1. Die Anlagen als ruhiges Raster. Fünf Bilder, keine Bewegung außer
  *      dem Hereinblenden. Sie sind Beleg, kein Erlebnis – Symbolbilder
@@ -69,7 +66,7 @@ if (typeof window !== "undefined") {
  * allein auf einem halben Bildschirm. Ohne die Reise würden sie die
  * Sektion wieder aufblähen, und ihre Antwort steht im Schlusssatz ohnehin.
  *
- * ⚠️ DIE ANLAGENFOTOS SIND KI-GENERIERT (07.08.2026, Freigabe Emre) und
+ * DIE ANLAGENFOTOS SIND KI-GENERIERT (07.08.2026, Freigabe Emre) und
  * zeigen keine Anlagen von Ilias. Der Hinweis unter der Überschrift muss
  * deshalb stehen bleiben – sonst wäre es eine Irreführung über eigene
  * Leistungen (UWG). An der Rechtslage ändert die Quelle nichts: Ein
@@ -144,8 +141,7 @@ export function Galerie() {
        Wrapper mit einem `data-nav-theme` reicht und spart einen
        ScrollTrigger. */
     <div ref={scope} data-nav-theme="light" className="bg-ep-paper">
-      {/* ═══════════ AKT 2 · Der Mensch dahinter ═══════════
-          ⚠️ HALBER BILDSCHIRM, NICHT KACHEL NEBEN TEXT (11.08.).
+      {/* AKT 2 · Der Mensch dahinter HALBER BILDSCHIRM, NICHT KACHEL NEBEN TEXT (11.08.).
 
           Beim Auflösen der gepinnten Reise war das hier ein Bildkasten von
           68svh mit Text daneben. Damit ging genau der Moment verloren, den
@@ -205,7 +201,7 @@ export function Galerie() {
           <p data-gal-outro className="t-label text-ep-accent">
             Ihr Ansprechpartner
           </p>
-          {/* ⚠️ HIER STAND „Hinter jeder Planung steht ein Name." (12.08.
+          {/* HIER STAND „Hinter jeder Planung steht ein Name." (12.08.
               durch den Namen ersetzt).
 
               Der Satz war die Behauptung, der Name ist die Einlösung. Auf

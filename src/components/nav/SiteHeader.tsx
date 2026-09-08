@@ -18,40 +18,34 @@ const LOGO_WIDTH = Math.round(LOGO_HEIGHT * SITE.logo.ratio);
 /**
  * Kopfleiste von energiepartner.info – Neubau (13.08.2026).
  *
- * ═══ WARUM SIE NEU ENTSTAND ═══
- * Kundenwunsch: „moderner, wirkt wie eine richtige Company." Die alte Leiste
+ * WARUM SIE NEU ENTSTAND * Kundenwunsch: „moderner, wirkt wie eine richtige Company." Die alte Leiste
  * (`SiteHeader`, `MenuToggle`, `MenuOverlay`) war bereits vollständig
  * entfernt (siehe Layout-Kommentar) – das hier ist der Ersatz, keine
  * Überarbeitung.
  *
- * ═══ FARBE FOLGT DEM BAND ═══
- * Wie `AvHeader`: `useNavTheme()` liest, welches `data-nav-theme` gerade
+ * FARBE FOLGT DEM BAND * Wie `AvHeader`: `useNavTheme()` liest, welches `data-nav-theme` gerade
  * unter der Leistenmitte liegt, und schaltet Wortmarke, Links und Fläche
  * gemeinsam um. `data-surface` auf dem Farb-Wrapper ist Pflicht, nicht
  * Kosmetik – ohne es löst `ep-accent` beim Hover über Navy zu knapp
  * kontrastierendem Orange auf, siehe Token-Regel in `globals.css`.
  *
- * ═══ MOBIL NUR DER HAMBURGER ═══
- * Der WhatsApp-Knopf steht ab `lg` fest in der Leiste. Darunter würde er
+ * MOBIL NUR DER HAMBURGER * Der WhatsApp-Knopf steht ab `lg` fest in der Leiste. Darunter würde er
  * neben dem Hamburger um Platz konkurrieren, und er hat ohnehin einen
  * größeren, deutlicheren Auftritt im Vollbildmenü selbst (`MenuOverlay`) –
  * dort steht er allein am Fuß, nicht gequetscht in einer 60-px-Zeile.
  *
- * ═══ z-[60], EINE STUFE ÜBER DEM OVERLAY ═══
- * `MenuOverlay` liegt auf `z-50` und deckt beim Öffnen den ganzen
+ * z-[60], EINE STUFE ÜBER DEM OVERLAY * `MenuOverlay` liegt auf `z-50` und deckt beim Öffnen den ganzen
  * Bildschirm ab. Die Leiste bleibt darüber, damit ihr Hamburger-Knopf
  * durchgehend derselbe Knoten bleibt – er morpht nur sein Icon, statt beim
  * Öffnen zu verschwinden und einem zweiten Schließen-Knopf im Overlay Platz
  * zu machen (der frühere Bug: „Button springt beim Öffnen").
  *
- * ═══ LEISTE WIRD HELL, SOBALD DAS MENÜ OFFEN IST ═══
- * Das Overlay ist hell (Papier), unabhängig davon, über welchem Band man
+ * LEISTE WIRD HELL, SOBALD DAS MENÜ OFFEN IST * Das Overlay ist hell (Papier), unabhängig davon, über welchem Band man
  * gerade steht. Ohne `chromeOnDark` bliebe die Leiste in dem Moment, in dem
  * jemand aus einer Navy-Sektion heraus öffnet, dunkel – ein dunkler Streifen
  * über einer hellen Fläche.
  *
- * ═══ ANKUNFT ═══
- * Die Leiste fährt einmal beim Laden herein (kein Scroll-Trigger, sie ist
+ * ANKUNFT * Die Leiste fährt einmal beim Laden herein (kein Scroll-Trigger, sie ist
  * ja von Anfang an im Bild), Wortmarke/Navigation/Knopf folgen leicht
  * versetzt – derselbe Ankunfts-Rhythmus wie der Hero, nur kürzer, damit sie
  * nicht hinter dessen Zeilenmasken zurücksteht.
@@ -60,7 +54,7 @@ export function SiteHeader() {
   const scope = useRef<HTMLElement>(null);
   const { onDark, lifted } = useNavTheme({ startetDunkel: false });
   const [menuOffen, setMenuOffen] = useState(false);
-  /* ⚠️ `useCallback`, KEIN Inline-Arrow (13.08., Bugfix). Ohne das bekam
+  /* `useCallback`, KEIN Inline-Arrow (13.08., Bugfix). Ohne das bekam
      `MenuOverlay` bei JEDEM Rerender der Leiste eine NEUE Funktionsreferenz
      als `onSchliessen` – und die steht im Dependency-Array von dessen
      Fokusfallen-Effekt. Der Effekt lief dadurch öfter als nötig neu an,

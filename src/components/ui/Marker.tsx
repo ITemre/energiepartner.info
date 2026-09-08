@@ -13,8 +13,7 @@ if (typeof window !== "undefined") {
 /**
  * Der handgezogene Strich unter einem Wort.
  *
- * ═══ WARUM DAS HIER HINEINGEHÖRT ═══
- * Seiten, die verkaufen, markieren ein Wort pro Aussage von Hand. Der Effekt
+ * WARUM DAS HIER HINEINGEHÖRT * Seiten, die verkaufen, markieren ein Wort pro Aussage von Hand. Der Effekt
  * ist banal und trotzdem stark: Ein gerader Balken liest sich als
  * Textauszeichnung, ein leicht schiefer, ungleichmäßiger Strich liest sich
  * als **Geste**. Jemand hat hier etwas für wichtig gehalten und es angestrichen.
@@ -25,8 +24,7 @@ if (typeof window !== "undefined") {
  * Messinstruments, die durchhängenden `BendLine`s. Ein gezogener Strich ist
  * dasselbe Material in einer anderen Handschrift, nicht ein neues Element.
  *
- * ═══ ⚠️ EIN BIS ZWEI WÖRTER, NIE EIN SATZTEIL ═══
- * Die wichtigste Regel im Umgang damit, und sie ist rein gestalterisch:
+ * EIN BIS ZWEI WÖRTER, NIE EIN SATZTEIL * Die wichtigste Regel im Umgang damit, und sie ist rein gestalterisch:
  * Ein Strich unter „bevor Sie unterschreiben." ist über 600 px lang und
  * liest sich als Linie, nicht als Geste – eine Hand zieht keinen
  * halbmeterlangen Strich. Unter „unterschreiben" allein sticht dasselbe
@@ -42,16 +40,14 @@ if (typeof window !== "undefined") {
  * Faustregel: Passt der markierte Text nicht in ein Drittel seiner Zeile,
  * ist er zu lang.
  *
- * ═══ WARUM ER SICH ZEICHNET ═══
- * Er läuft nicht mit dem Scroll (kein Scrub), sondern zeichnet sich EINMAL,
+ * WARUM ER SICH ZEICHNET * Er läuft nicht mit dem Scroll (kein Scrub), sondern zeichnet sich EINMAL,
  * wenn die Zeile ins Bild kommt – in etwa der Geschwindigkeit, in der man
  * ihn zöge. Ein Strich, der beim Zurückscrollen wieder verschwindet, wäre
  * ein Effekt; einer, der einmal gezogen wird und dann steht, ist eine Notiz.
  *
- * ═══ TECHNIK ═══
- * `stroke-dasharray`/`dashoffset` auf einem Bézier-Pfad.
+ * TECHNIK * `stroke-dasharray`/`dashoffset` auf einem Bézier-Pfad.
  *
- * ⚠️ `pathLength={1}` IST DER TRICK, und er löst ein sichtbares Problem:
+ * `pathLength={1}` IST DER TRICK, und er löst ein sichtbares Problem:
  * Ohne ihn müsste die tatsächliche Pfadlänge zur Laufzeit über
  * `getTotalLength()` gemessen und erst danach versteckt werden. Zwischen
  * dem vom Server gelieferten Markup und diesem ersten JavaScript liegt aber
@@ -67,7 +63,7 @@ if (typeof window !== "undefined") {
  *
  * `preserveAspectRatio="none"` zerrt die viewBox auf die Wortbreite.
  *
- * ⚠️ Bewusst OHNE `non-scaling-stroke`, anders als bei `BendLine`: Dort soll
+ * Bewusst OHNE `non-scaling-stroke`, anders als bei `BendLine`: Dort soll
  * eine Haarlinie über jede Breite exakt 1 px bleiben. Hier ist das falsch –
  * die Strichstärke muss mit der Schriftgröße wachsen, sonst liegt unter
  * einer 100-px-Headline derselbe dünne Strich wie unter Fließtext. Weil die
@@ -156,7 +152,7 @@ export function Marker({
            Alle Maße in `em`, damit er bei jeder Schriftgröße gleich weit
            unter dem Wort liegt.
 
-           ⚠️ DIE TIEFE IST AN DEN MASKENPUFFER GEBUNDEN. Headlines laufen
+           DIE TIEFE IST AN DEN MASKENPUFFER GEBUNDEN. Headlines laufen
            durch SplitText mit `mask: "lines"`, und diese Masken clippen
            exakt zeilenhoch. `padMasks()` in lib/motion.ts gibt ihnen 0.18em
            Luft nach unten – mehr steht nicht zur Verfügung. Unterkante hier
@@ -164,7 +160,7 @@ export function Marker({
            Wer den Strich tiefer setzt, schneidet ihn in jeder maskierten
            Headline ab, und zwar nur dort: im Fließtext fiele es nicht auf.
 
-           ⚠️ DIE BREITE MUSS EXPLIZIT STEHEN. `left-0 right-0` allein
+           DIE BREITE MUSS EXPLIZIT STEHEN. `left-0 right-0` allein
            streckt ein SVG NICHT: Es hat über seine viewBox (100×12) ein
            intrinsisches Seitenverhältnis, und `width: auto` rechnet daraus
            Breite = Höhe × 100/12. Der Strich war dadurch immer gleich kurz,

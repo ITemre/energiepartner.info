@@ -17,8 +17,7 @@ import {
 /**
  * Das eigentliche Kontaktformular – flach statt gestuft (13.08.).
  *
- * ═══ WARUM NICHT DER `AnfrageDialog` ═══
- * Derselbe Datensatz (`lib/lead.ts`), derselbe Endpunkt (`/api/lead`), aber
+ * WARUM NICHT DER `AnfrageDialog` * Derselbe Datensatz (`lib/lead.ts`), derselbe Endpunkt (`/api/lead`), aber
  * ein anderer Ort verlangt eine andere Form. Der Dialog ist der Einstieg von
  * einer Landingpage aus – dort trägt ein geführter Drei-Schritt-Ablauf,
  * weil die erste Handlung so klein wie möglich sein soll (ein Klick, kein
@@ -27,8 +26,7 @@ import {
  * normale Firmenseite unter „Kontakt" hat – ein Formular auf einen Blick,
  * zum Ausfüllen von oben nach unten, wie bei jeder anderen Firma auch.
  *
- * ═══ WARUM DIESELBEN PFLICHTFELDER ═══
- * `pruefe(lead, "alle")` verlangt Anliegen, PLZ, Gebäude, Name und einen
+ * WARUM DIESELBEN PFLICHTFELDER * `pruefe(lead, "alle")` verlangt Anliegen, PLZ, Gebäude, Name und einen
  * Kontaktweg – serverseitig, nicht verhandelbar (siehe `api/lead/route.ts`).
  * Ein schlankeres Formular mit nur Name/Kontakt/Nachricht würde serverseitig
  * abgelehnt, wenn man die übrigen Felder nicht mit erfundenen Werten
@@ -285,7 +283,7 @@ export function KontaktFormular() {
  *  Moduls: Die beiden Formulare leben in verschiedenen Flächen und sollen
  *  unabhängig voneinander änderbar bleiben.
  *
- *  ⚠️ `.t-feld` STATT `.t-label` (13.08.). Der Dialog setzt seine
+ *  `.t-feld` STATT `.t-label` (13.08.). Der Dialog setzt seine
  *  Beschriftungen in `.t-label` (Mono, versalisiert, gesperrt) und kommt
  *  damit durch, weil dort nie mehr als drei Felder gleichzeitig im Bild
  *  stehen. Hier stehen sieben untereinander, dazu Eyebrow und drei

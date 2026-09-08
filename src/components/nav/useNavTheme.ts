@@ -19,7 +19,7 @@ if (typeof window !== "undefined") {
  * MITTELLINIE der Leiste erreicht – nicht deren Oberkante: Dort stehen
  * Wortmarke und Links, dort muss der Kontrast stimmen.
  *
- * ⚠️ Neue Sektion = `data-nav-theme` nicht vergessen. Ohne das Attribut
+ * Neue Sektion = `data-nav-theme` nicht vergessen. Ohne das Attribut
  * behält die Leiste den Zustand des vorherigen Bandes bei, und über einem
  * hellen Band steht dann weiße Schrift auf Papier.
  *
@@ -31,7 +31,7 @@ export function useNavTheme({
   /**
    * Womit die Leiste startet, bevor der erste ScrollTrigger greift.
    *
-   * ⚠️ DAS IST KEIN KOSMETIK-PARAMETER. Die Trigger werden erst nach dem
+   * DAS IST KEIN KOSMETIK-PARAMETER. Die Trigger werden erst nach dem
    * ersten Rendern erzeugt, und `onToggle` feuert nicht rückwirkend für ein
    * Band, in dem man beim Laden bereits steht. Der Startwert IST also die
    * Farbe im ersten Bild – bei einem hellen Hero stünde mit der alten

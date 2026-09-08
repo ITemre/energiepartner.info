@@ -52,8 +52,7 @@ const ENTHALTEN = [
 /**
  * Was fehlt – und WARUM es kein Extra ist.
  *
- * ═══ DIE BEGRÜNDUNG IST DER KERN DER SEKTION ═══
- * Ohne sie stand hier vier Mal „nicht enthalten" plus ein Betrag, und der
+ * DIE BEGRÜNDUNG IST DER KERN DER SEKTION * Ohne sie stand hier vier Mal „nicht enthalten" plus ein Betrag, und der
  * Leser zog den naheliegenden Schluss: Da will jemand nachverkaufen. Genau
  * dieser Verdacht zerstört die Positionierung, denn die Leistung besteht
  * ja darin, ihn NICHT zu bedienen.
@@ -64,7 +63,7 @@ const ENTHALTEN = [
  * Angebot, tauchen dafür auf der Schlussrechnung auf. Das ist der ganze
  * Punkt, und deshalb steht es jetzt an jeder Zeile.
  *
- * ⚠️ FACHLICH VON ILIAS ABZUNEHMEN. Die Begründungen sind nach bestem
+ * FACHLICH VON ILIAS ABZUNEHMEN. Die Begründungen sind nach bestem
  * Wissen formuliert, aber sie sind technische Aussagen über sein Gewerk.
  * Insbesondere die Rohrreinigung ist der schwächste Punkt der vier: Sie ist
  * bei Altanlagen sinnvoll, aber nicht in jedem Fall zwingend. Wenn er sie
@@ -75,7 +74,7 @@ const ENTHALTEN = [
  * Steigleitung und Rohrreinigung sind die vom Kunden vorgegebenen
  * Textbausteine (Projekt-Briefing, Abschnitt 5) und stehen deshalb zuerst.
  */
-/* ⚠️ JEDE BEGRÜNDUNG MUSS AUF EINE ZEILE PASSEN – unter etwa 48 Zeichen.
+/* JEDE BEGRÜNDUNG MUSS AUF EINE ZEILE PASSEN – unter etwa 48 Zeichen.
    Die Sektion steht in einer Bühne von einer Bildschirmhöhe abzüglich
    Kopfleiste (`overflow-hidden`), und der
    Befund-Block liegt absolut über der Auflösung. Was über die Bühnenhöhe
@@ -156,7 +155,7 @@ export function AvZahl() {
 
         /* ---- Akt 2: die Lücken tauchen auf, der Zähler zählt sie ----
 
-           ⚠️ HIER STAND EINE WACHSENDE EURO-SUMME, und das war ein Fehler
+           HIER STAND EINE WACHSENDE EURO-SUMME, und das war ein Fehler
            im Kern der Sektion. Drei Bildschirme lang sah der Besucher eine
            riesige Zahl, die immer größer wurde – die Botschaft war „Ihre
            Kosten steigen". Das ist Angst, und zwar die unbrauchbare Sorte:
@@ -175,6 +174,18 @@ export function AvZahl() {
         tl.to("[data-z-label-angebot]", { autoAlpha: 0, duration: 3 }, 26);
         tl.fromTo("[data-z-label-echt]", { autoAlpha: 0 }, { autoAlpha: 1, duration: 4 }, 28);
 
+        /* DIE BESCHRIFTUNG ZÄHLT MIT (08.09.). Sie stand fest auf
+           „Positionen fehlten", während der Zähler bei 0, 1, 2, 3, 4
+           durchläuft – beim ersten Fund stand also rund zwei Sekunden lang
+           „1 Positionen fehlten" unter der größten Zahl der Seite.
+
+           Der Wortlaut wird hier im selben `onUpdate` gesetzt, in dem die
+           Ziffer ohnehin geschrieben wird: kein zusätzlicher Zustand, kein
+           Rerender, und die beiden können nicht auseinanderlaufen. */
+        const label = scope.current?.querySelector<HTMLElement>(
+          "[data-z-label-echt]",
+        );
+
         FEHLT.forEach((_, i) => {
           const ab = 28 + i * 8;
           zeige(`[data-z-luecke='${i}']`, ab, 4);
@@ -186,7 +197,12 @@ export function AvZahl() {
               duration: 3,
               ease: "power2.out",
               onUpdate: () => {
-                if (zahl) zahl.textContent = String(Math.round(zaehler.n));
+                const n = Math.round(zaehler.n);
+                if (zahl) zahl.textContent = String(n);
+                if (label) {
+                  label.textContent =
+                    n === 1 ? "Position fehlte" : "Positionen fehlten";
+                }
               },
             },
             ab + 1,
@@ -234,7 +250,7 @@ export function AvZahl() {
          Bühne auf normalen Fluss zurück und zeigt alles untereinander. */
       className="relative h-[320svh] bg-ep-navy-deep text-white motion-reduce:h-auto"
     >
-      {/* ⚠️ FLÄCHE UND SKALA GEHÖREN DER SEKTION, NICHT DER BÜHNE.
+      {/* FLÄCHE UND SKALA GEHÖREN DER SEKTION, NICHT DER BÜHNE.
           Sie lagen vorher beide auf der klebenden Bühne – und die ist um die
           Kopfleistenhöhe kürzer als das Fenster. Am Übergang vom Hero stieß
           damit Fläche auf Fläche: zwei eigene Malschichten in exakt
@@ -273,8 +289,35 @@ export function AvZahl() {
           }}
         />
 
+        {/* ZWEISPURIG AB lg (08.09.), UND DAS WAR EIN ECHTER FEHLER,
+            KEINE GESCHMACKSFRAGE.
+
+            Hier stand eine einzige `max-w-[34rem]`-Spalte, mittig, für die
+            ganze Sektion. Gemessen auf 1920 px: 544 px Inhalt in 1732 px
+            verfügbarer Breite – 31 % Füllung, über drei Bildschirmhöhen
+            Scrollstrecke. Der Signature-Moment der Seite las sich auf dem
+            Desktop als unfertige Seite; genau dieser Befund hat am 07.08.
+            den Hero von energiepartner.info neu gebaut („rund 55 % der
+            Fläche waren leer").
+
+            Der zweite, schwerere Grund ist die HÖHE. Die Bühne misst
+            `100dvh − nav-h` und trägt `overflow-hidden` – was nicht
+            hineinpasst, verschwindet ersatzlos. Gestapelt braucht der Inhalt
+            gemessen 759 px; auf einem 1366×768-Notebook stehen davon rund
+            624 px zur Verfügung, und die Fußnote samt letzter Fundzeilen war
+            weg. Nicht abgeschnitten – WEG, auch durch Scrollen nicht
+            erreichbar.
+
+            Nebeneinander verschwindet beides: Die Zahl steht nicht mehr ÜBER
+            dem Befund, sondern daneben, und die gestapelte Höhe fällt um
+            rund 250 px.
+
+            Unter lg bleibt alles wie es war – auf 390 px ist für zwei Spuren
+            kein Platz, und dort kommt der Traffic her. */}
         <div className="ep-container relative z-10 w-full">
-          <div className="mx-auto w-full max-w-[34rem] text-center">
+          <div className="mx-auto grid w-full max-w-[34rem] text-center lg:max-w-[72rem] lg:grid-cols-12 lg:items-center lg:gap-x-16 lg:text-left">
+            {/* ---------- Spur A: die Zahl ---------- */}
+            <div className="lg:col-span-5">
             <p className="t-label text-white/55">Eine Beispielrechnung</p>
 
             {/* DIE ZAHL. `will-change` ist hier kein Feinschliff: Der Block
@@ -295,7 +338,21 @@ export function AvZahl() {
               data-z-block
               className="mt-6 will-change-[transform,opacity,color]"
             >
-              <div className="t-display flex items-end justify-center leading-none">
+              {/* DIE GRÖSSE IST ZUSÄTZLICH GEGEN DIE HÖHE GEDECKELT
+                  (`16svh`), nicht nur gegen die Breite. `t-display` allein
+                  skaliert mit `vw` und wird auf einem breiten, flachen
+                  Fenster (1600×700) am größten – also genau dort, wo am
+                  wenigsten Platz ist. Dieselbe Deckelung nach Höhe steht in
+                  `Testimonials.tsx` an jedem Zitat. */}
+              <div
+                className="flex items-end justify-center leading-none lg:justify-start"
+                style={{
+                  fontSize: "min(clamp(2.9rem, 8.4vw, 8.5rem), 16svh)",
+                  fontWeight: 700,
+                  fontStretch: "86%",
+                  letterSpacing: "-0.03em",
+                }}
+              >
                 <span data-z-wert className="[font-variant-numeric:tabular-nums]">
                   0
                 </span>
@@ -319,11 +376,13 @@ export function AvZahl() {
                 </span>
               </div>
             </div>
+            </div>
 
+            {/* ---------- Spur B: Befund ↔ Auflösung ---------- */}
             {/* Wechselbühne: Befund ↔ Auflösung liegen übereinander, damit
-                die Zahl darüber an ihrem Platz bleibt.
+                die Zahl an ihrem Platz bleibt.
 
-                ⚠️ RASTER STATT `absolute` + `min-height`, und das ist die
+                RASTER STATT `absolute` + `min-height`, und das ist die
                 eigentliche Lehre aus einem Fehler: Vorher lagen beide Blöcke
                 absolut in einem Kasten mit geratener Mindesthöhe. Sobald der
                 Befund höher wurde – hier durch eine ergänzte Begründungszeile
@@ -337,12 +396,18 @@ export function AvZahl() {
                 zusätzlicher Inhalt nichts mehr überdecken – er schiebt die
                 Fußnote nach unten, und das sieht man beim ersten Blick.
 
-                Die Höhe bleibt trotzdem knapp: Die Bühne misst eine
-                Bildschirmhöhe minus Kopfleiste und hat
-                `overflow-hidden` – was nicht hineinpasst,
-                verschwindet. Deshalb sind die Zeilen mobil dicht gesetzt und
-                die Begründungen auf eine Zeile begrenzt (siehe `FEHLT`). */}
-            <div className="mt-8 grid sm:mt-10">
+                DIE HÖHE BLEIBT DIE KNAPPE GRÖSSE. Die Bühne misst eine
+                Bildschirmhöhe minus Kopfleiste und hat `overflow-hidden` –
+                was nicht hineinpasst, verschwindet ersatzlos. Ab lg steht
+                dieser Block neben der Zahl statt darunter, damit ist der
+                Fall entschärft; unter lg stapelt es weiterhin, dort ist das
+                Fenster aber ein Telefon im Hochformat.
+
+                Wer hier Inhalt ergänzt, muss auf einem flachen Fenster
+                (etwa 1280×700) nachsehen. Deshalb sind die Zeilen mobil
+                dicht gesetzt und die Begründungen auf eine Zeile begrenzt
+                (siehe `FEHLT`). */}
+            <div className="mt-8 grid sm:mt-10 lg:col-span-7 lg:mt-0">
               {/* ---------- Befund ---------- */}
               <div
                 data-z-befund
@@ -400,8 +465,17 @@ export function AvZahl() {
                   Dieselbe Rasterzelle wie der Befund: Beide liegen
                   übereinander, die Bühne richtet sich nach dem höheren.
                   `self-start`, damit die Auflösung oben ansetzt und nicht
-                  in der Restfläche des höheren Geschwisters schwebt. */}
-              <div data-z-aufloesung className="self-start [grid-area:1/1]">
+                  in der Restfläche des höheren Geschwisters schwebt.
+
+                  `lg:text-left`: Unter lg erbt die Auflösung die mittige
+                  Setzung der Spalte – so war es immer und so bleibt es.
+                  Ab lg steht sie in der rechten Spur neben der Zahl, und
+                  dort wäre mittiger Satz die einzige Stelle der Sektion
+                  ohne gemeinsame linke Kante. */}
+              <div
+                data-z-aufloesung
+                className="self-start [grid-area:1/1] lg:text-left"
+              >
                 <p data-z-satz className="t-h3 text-white">
                   Das Angebot war nicht zu teuer.{" "}
                   <span className="text-ep-accent">Es war unvollständig.</span>
@@ -419,7 +493,7 @@ export function AvZahl() {
                     vor oder nach der Unterschrift sieht. */}
                 <p
                   data-z-nachsatz
-                  className="mx-auto mt-5 max-w-[42ch] text-white/75"
+                  className="mx-auto mt-5 max-w-[42ch] text-white/75 lg:mx-0"
                 >
                   Diese {fmt(LUECKE)} € hätte der Eigentümer ohnehin gezahlt –
                   nur eben als Nachtrag, nachdem er unterschrieben hatte. Wer
@@ -438,8 +512,15 @@ export function AvZahl() {
             {/* Der Pflichthinweis. Auf sehr kurzen Displays trägt ihn schon
                 die Zeile „Eine Beispielrechnung" über der Zahl – deshalb
                 hier die knappe Fassung mobil und die vollständige ab sm,
-                statt sie unten aus der Fläche laufen zu lassen. */}
-            <p className="mt-6 text-[12px] leading-relaxed text-white/40 sm:mt-8 sm:text-[13px]">
+                statt sie unten aus der Fläche laufen zu lassen.
+
+                Ab lg eine eigene Rasterzeile über beide Spuren: Er ist die
+                Fußnote zur ganzen Rechnung, nicht zu einer der beiden
+                Spalten. In einer der Spuren stünde er entweder unter der
+                Zahl (wo er die Auflösung nicht mehr erreicht) oder unter dem
+                Befund (wo er die Bühne höher macht – genau das, was hier
+                nicht passieren darf). */}
+            <p className="mt-6 text-[12px] leading-relaxed text-white/40 sm:mt-8 sm:text-[13px] lg:col-span-12 lg:mt-10">
               Beispielwerte zur Veranschaulichung.{" "}
               <span className="hidden sm:inline">
                 Angebot {fmt(ANGEBOT)} €, mit den fehlenden Positionen{" "}

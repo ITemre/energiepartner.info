@@ -7,7 +7,7 @@ import { Ablauf } from "@/components/sections/Ablauf";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Kontakt } from "@/components/sections/Kontakt";
 import { holeGoogleBewertungen } from "@/lib/google-reviews";
-import { holePlatzhalterStimmen } from "@/lib/stimmen-platzhalter";
+import { holeStimmen } from "@/lib/stimmen";
 import { holeKennzahlen } from "@/lib/proof";
 
 /**
@@ -21,20 +21,18 @@ import { holeKennzahlen } from "@/lib/proof";
  * Acht Sektionen. Es waren vierzehn, und die sechs fehlenden sind der
  * eigentliche Punkt dieser Datei.
  *
- * ═══ WAS DIE SEITE LEISTEN MUSS ═══
- * Sie ist die VERTRAUENSSEITE. Anfragen erzeugt angebote-vergleichen.info,
+ * WAS DIE SEITE LEISTEN MUSS * Sie ist die VERTRAUENSSEITE. Anfragen erzeugt angebote-vergleichen.info,
  * hier soll jemand den Eindruck bekommen, dass er es mit einem seriösen
  * Vermittler zu tun hat. Daraus folgt der Maßstab für jede Sektion: Zahlt
  * sie auf Vertrauen ein, oder beschreibt sie nur noch einmal, was wir tun?
  *
- * ⚠️ BEIDE AUFTRITTE SIND GETRENNT UND SOLLEN ES BLEIBEN (Emre, 10.08.).
+ * BEIDE AUFTRITTE SIND GETRENNT UND SOLLEN ES BLEIBEN (Emre, 10.08.).
  * Von hier führt bewusst KEIN Verweis auf `/av`. Wer die Prüfstrecke sucht,
  * kommt per QR aus einem Brief oder aus einer Anzeige, nicht über diese
  * Seite. Deshalb ist `Zweitmeinung` raus und kommt nicht als Fuß- oder
  * Menüpunkt zurück.
  *
- * ═══ WAS RAUSGEFLOGEN IST (10.08., Kundenwunsch „kürzen") ═══
- *
+ * WAS RAUSGEFLOGEN IST (10.08., Kundenwunsch „kürzen") *
  * GESAMTSYSTEM („Vier Bausteine. Ein System."). Emre ausdrücklich: zu viel,
  * stoppt den Scrollfluss. Sie war der Signature-Moment und gestalterisch
  * die stärkste Sektion der Seite – aber sie erklärt ein Produktkonzept, und
@@ -70,21 +68,20 @@ import { holeKennzahlen } from "@/lib/proof";
  * aufgelöst und liegt als Hintergrund hinter den Leistungskarten. Emre hat
  * die Sektion komplett gestrichen.
  *
- * ⚠️ Damit steht auf der Seite kein Foto und kein Name von Ilias mehr –
+ * Damit steht auf der Seite kein Foto und kein Name von Ilias mehr –
  * auf einer VERTRAUENSSEITE ist das die auffälligste Lücke von allen. Die
  * Kontaktsektion nennt ihn noch als Ansprechpartner, aber ohne Gesicht.
  * `Galerie.tsx` liegt unverändert bereit, falls das zurückkommen soll.
  *
- * ⚠️ Alle sechs Dateien liegen weiter unter `components/sections/` und sind
+ * Alle sechs Dateien liegen weiter unter `components/sections/` und sind
  * nur ausgehängt, nicht gelöscht – dieselbe Konvention wie auf `/av`. Wenn
  * echte Referenzfälle vorliegen, ist `Referenzen` die erste, die
  * zurückkommt.
  *
- * ═══ BANDRHYTHMUS ═══
- * Zwei Flächen, Navy und Papier. Navy sind Hero, Leistungen, ProofBar,
+ * BANDRHYTHMUS * Zwei Flächen, Navy und Papier. Navy sind Hero, Leistungen, ProofBar,
  * Ablauf und FAQ; alles andere ist Papier.
  *
- * ⚠️ OFFEN: ProofBar, Ablauf und FAQ stehen jetzt als drei dunkle Bänder
+ * OFFEN: ProofBar, Ablauf und FAQ stehen jetzt als drei dunkle Bänder
  * hintereinander, das letzte Drittel der Seite ist damit durchgehend Navy.
  * Die Nuancen wechseln (navy · navy-deep · navy) und beide Nähte tragen
  * eine Sonnenlinie, aber sauber ist das nicht. Der nächste Schnitt gehört
@@ -92,28 +89,13 @@ import { holeKennzahlen } from "@/lib/proof";
  * zeigt zwei Bänder weiter oben schon die Stimmen-Sektion.
  */
 export default async function Home() {
-  /* Serverseitig, damit der Places-Schlüssel den Server nie verlässt. Der
-     Abruf ist zwischengespeichert (sechs Stunden) und darf ausfallen.
+  /* Serverseitig, damit der Places-Schlüssel den Server nie verlässt.
+     Der Abruf ist zwischengespeichert (sechs Stunden) und darf ausfallen –
+     dann greift die gepflegte Liste aus `lib/stimmen.ts`. */
+  const bewertungen = (await holeGoogleBewertungen()) ?? holeStimmen();
 
-     Echte Daten haben immer Vorrang. Der Rückfall greift nur, wenn Google
-     nichts liefert UND die Umgebung ihn ausdrücklich erlaubt (siehe
-     `stimmen-platzhalter.ts`) – auf dem Livesystem also nie. Bleiben beide
-     leer, zeigen Hero und Stimmen keine Bewertungsaussage. */
-  /* ⚠️ 13.08.: Reihenfolge umgedreht — solange `PLATZHALTER_AN` steht, haben
-     die vorläufigen Stimmen VORRANG vor Google. Grund: Das Profil ist frisch,
-     die Places-Abfrage liefert entweder nichts oder eine einzelne ausstehende
-     Rezension, und in der Vorführung soll die Sektion vollständig aussehen.
-     Sobald der Schalter fällt, gewinnt Google wieder automatisch. */
-  const bewertungen = holePlatzhalterStimmen() ?? (await holeGoogleBewertungen());
-
-  /* Die Kennzahlen sind vorläufig und hängen an derselben Sperre wie die
-     Stimmen (`PLATZHALTER_INHALTE`, siehe `lib/proof.ts`). Ohne sie liefert
-     die Funktion `null`, und die Belegzeile entfällt ersatzlos statt leer
-     dazustehen.
-
-     `holeReferenzfaelle` wird hier nicht mehr aufgerufen: Die Sektion ist
-     ausgehängt (siehe Kopfkommentar). Die Funktion bleibt in `proof.ts`
-     stehen, weil sie beim Wiedereinhängen unverändert gebraucht wird. */
+  /* `holeReferenzfaelle` wird hier nicht aufgerufen: Die Sektion ist
+     ausgehängt (siehe Kopfkommentar), und die Fälle sind Entwürfe. */
   const kennzahlen = holeKennzahlen();
 
   return (

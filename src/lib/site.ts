@@ -4,7 +4,7 @@
  * Tonalität: „wir“, durchgehend siezen (CI 05).
  */
 
-/* ⚠️ „Energieberatung" → „Beratung" (13.08.). Der Satz ist das, was der
+/* „Energieberatung" → „Beratung" (13.08.). Der Satz ist das, was der
    INTERESSENT schickt – wir haben ihm damit die falsche Rolle in den Mund
    gelegt: Ilias vermittelt und vergleicht, er ist kein Energieberater
    (Briefing 2). „Beratung" als Tätigkeit bleibt richtig und steht so auch
@@ -32,6 +32,25 @@ const WHATSAPP_TEXT_ANGEBOT =
 
 export const SITE = {
   name: "energiepartner",
+  /**
+   * Herkunft des Unternehmensauftritts, ohne Schrägstrich am Ende.
+   *
+   * WARUM FEST UND NICHT AUS DER UMGEBUNG * Auf Vercel liegt beides in EINEM Projekt (eine Codebasis, zwei Domains,
+   * `src/proxy.ts` entscheidet pro Anfrage). `VERCEL_PROJECT_PRODUCTION_URL`
+   * kennt aber nur EINE Produktionsdomain – die zweite käme dort nie vor,
+   * und ein daraus abgeleitetes `metadataBase` würde für den einen der
+   * beiden Auftritte systematisch die falsche Adresse in jedes `og:url` und
+   * jedes Canonical schreiben.
+   *
+   * Die Zuordnung ist ohnehin nicht dynamisch: Die Route-Group
+   * `(energiepartner)` GEHÖRT zu dieser Domain, `(angebote)` zur anderen.
+   * Deshalb steht sie hier als Tatsache und nicht als Konfiguration.
+   *
+   * Der Wert entscheidet über die kanonische Adresse. Ändert sich die
+   * Domain, muss er hier mit – sonst verweisen alle Seiten auf einen Host,
+   * der ihnen nicht mehr gehört.
+   */
+  url: "https://energiepartner.info",
   whatsapp: {
     /** internationales Format ohne + und Leerzeichen für wa.me */
     number: "491736834665",
@@ -47,7 +66,7 @@ export const SITE = {
   },
   /** Ansprechpartner, der auf der Kontaktseite genannt wird. */
   ansprechpartner: "Ilias Zayakh",
-  /* ⚠️ PLATZHALTER (13.08.), von Ilias abzunehmen. Emre nannte „9–17 Uhr"
+  /* PLATZHALTER (13.08.), von Ilias abzunehmen. Emre nannte „9–17 Uhr"
      nur als Beispiel, keine bestätigte Angabe – deshalb im Markup über
      `<Fehlt>` (aus `components/rechtliches/Rechtstext`) sichtbar markiert,
      nicht als stiller Fakt gerendert. Vor Livegang: echte Zeiten eintragen
@@ -73,14 +92,14 @@ export const SITE = {
  * fünfzeilige Block die Komposition, und eine Vertrauensseite soll nicht
  * aussehen wie ein Vertragswerk.
  *
- * ⚠️ ER MUSS ABER IRGENDWO STEHEN. „Bis zu 70 %" ist nur belegbar, solange
+ * ER MUSS ABER IRGENDWO STEHEN. „Bis zu 70 %" ist nur belegbar, solange
  * die Herleitung (die vier Bausteine in der Sektion) UND der Bezug sichtbar
  * sind: welcher Stand, worauf gedeckelt, wovon abhängig. Ohne das ist es
  * eine Zusage, die für die meisten Häuser nicht stimmt – und
  * Förderangaben veralten zusätzlich, eine ohne Datum ist in zwölf Monaten
  * schlicht falsch.
  *
- * ⚠️ VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
+ * VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
  * prüfen. Das ist die einzige Angabe der Seite, die von allein veraltet.
  */
 export const FOERDERHINWEIS =
@@ -144,15 +163,14 @@ export type NavItem = {
  * Die Wörter sind nicht frei gewählt, sondern stammen aus den Sektionen
  * selbst – jedes ist dort der Eyebrow oder die Überschrift.
  *
- * ═══ WAS SICH GEÄNDERT HAT (07.08.) ═══
- * „System" (#gesamtsystem) ist raus, „Förderung" und „Ablauf" sind neu.
+ * WAS SICH GEÄNDERT HAT (07.08.) * „System" (#gesamtsystem) ist raus, „Förderung" und „Ablauf" sind neu.
  * Die alte Leiste stammte aus der Zeit, als es diese Sektionen noch nicht
  * gab – ausgerechnet die Förderung, das stärkste Argument des Geschäfts,
  * war über die Kopfleiste nicht erreichbar. „System" beantwortet dagegen
  * eine Detailfrage, keine Navigationsfrage: Wer wissen will, wie die vier
  * Bausteine zusammenhängen, scrollt ohnehin.
  *
- * ⚠️ NUR ANKER, DIE IMMER EXISTIEREN. `#referenzfaelle` steht bewusst nicht
+ * NUR ANKER, DIE IMMER EXISTIEREN. `#referenzfaelle` steht bewusst nicht
  * hier: Die Sektion rendert `null`, solange keine belegbaren Fälle
  * vorliegen (siehe `lib/proof.ts`), und ein Menüpunkt, der ins Leere
  * springt, ist schlimmer als ein fehlender. Sobald echte Referenzen da
@@ -161,7 +179,7 @@ export type NavItem = {
  * am lg-Breakpoint ruhig trägt.
  */
 export const NAV_ITEMS: readonly NavItem[] = [
-  /* ⚠️ DIE LEISTE STEHT IN SEITENREIHENFOLGE, nicht in Wichtigkeit.
+  /* DIE LEISTE STEHT IN SEITENREIHENFOLGE, nicht in Wichtigkeit.
      Förderung und Stimmen liegen seit 07.08. vor dem Leistungsstapel, also
      stehen sie auch hier vorn. Andersherum sprünge „Service" nach unten und
      „Stimmen" wieder hinauf – eine Leiste, deren Reihenfolge nicht der
@@ -188,6 +206,27 @@ export const AV_HOSTS = [
   "angebote-vergleichen.info",
   "www.angebote-vergleichen.info",
 ] as const;
+
+/**
+ * Herkunft der Prüfstrecke, ohne Schrägstrich am Ende.
+ *
+ * Das Gegenstück zu `SITE.url` und aus demselben Grund fest: Die
+ * Route-Group `(angebote)` gehört zu genau dieser Domain, unabhängig davon,
+ * über welchen Host sie gerade ausgeliefert wird.
+ *
+ * NICHT MIT `AV_URL` VERWECHSELN. Diese Konstante ist die KANONISCHE
+ * Adresse – sie steht in `metadataBase`, im Canonical und in `og:url`.
+ * `AV_URL` weiter unten ist das Ziel eines VERWEISES und darf lokal
+ * bewusst auf den internen Pfad zeigen.
+ *
+ * Der Unterschied ist genau der Fall, den man sonst übersieht: `/av` ist
+ * auch unter energiepartner.info erreichbar. Ohne festes Canonical stünde
+ * dieselbe Seite unter zwei Adressen im Index – klassischer Duplicate
+ * Content, und ausgerechnet die Leadstrecke würde sich die Sichtbarkeit
+ * mit sich selbst teilen. Mit dem festen Wert zeigt auch die Fassung unter
+ * energiepartner.info auf angebote-vergleichen.info als Original.
+ */
+export const AV_ORIGIN = "https://angebote-vergleichen.info";
 
 /** Interner Pfad der AV-Seite. Auf der eigenen Domain liegt sie auf `/`
  *  (Rewrite), lokal und auf energiepartner.info ist sie hierüber direkt

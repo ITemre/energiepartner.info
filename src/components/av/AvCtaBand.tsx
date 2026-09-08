@@ -15,8 +15,7 @@ if (typeof window !== "undefined") {
 /**
  * Das CTA-Band zwischen den Sektionen.
  *
- * ═══ WARUM NACH JEDER SEKTION UND NICHT NUR AM ENDE ═══
- * Jede Sektion dieser Seite räumt einen anderen Einwand aus – die
+ * WARUM NACH JEDER SEKTION UND NICHT NUR AM ENDE * Jede Sektion dieser Seite räumt einen anderen Einwand aus – die
  * Beispielrechnung den Zweifel am Nutzen, die Prüfliste den an der
  * Kompetenz, der Ablauf den an der Verbindlichkeit. Wer nach der zweiten
  * überzeugt ist, soll nicht bis ans Ende scrollen müssen, um das zu tun,
@@ -27,8 +26,7 @@ if (typeof window !== "undefined") {
  * denselben Weg brauchen – tatsächlich springt jeder an einer anderen
  * Stelle ab oder eben zu.
  *
- * ═══ DIE ZEILE ÜBER DEM KNOPF WECHSELT ═══
- * Sie greift auf, was gerade gelesen wurde. Ein viermal identisches Band
+ * DIE ZEILE ÜBER DEM KNOPF WECHSELT * Sie greift auf, was gerade gelesen wurde. Ein viermal identisches Band
  * liest sich als Wiederholung und wird ab dem zweiten Mal übersprungen;
  * eines, das an den Inhalt darüber anschließt, liest sich als Schluss der
  * Sektion.

@@ -1,13 +1,13 @@
 /**
  * FAQ – wird neu gebaut (12.08., Emre). Die Sektion ist leer.
  *
- * ⚠️ DIE FRAGEN BLEIBEN STEHEN. Sie sind der Grund, warum es die Sektion
+ * DIE FRAGEN BLEIBEN STEHEN. Sie sind der Grund, warum es die Sektion
  * gibt: Jede räumt einen Einwand aus, der sonst zwischen Lesen und Anrufen
  * steht. Zwei davon sind zusätzlich rechtlich relevant („Bauen Sie selbst
  * ein?" und „Woran verdienen Sie?" tragen die Vermittler- und
  * Vergütungsaussage im Wortlaut des Briefings).
  *
- * ⚠️ `freigabeOffen` an Frage zwei: Die Preisspanne ist ein Entwurf von
+ * `freigabeOffen` an Frage zwei: Die Preisspanne ist ein Entwurf von
  * Corivo und von Ilias abzunehmen.
  */
 const FRAGEN = [
@@ -20,7 +20,7 @@ const FRAGEN = [
     frage: "Und was kostet die Anlage?",
     antwort:
       "Das hängt am Haus, deshalb nennt Ihnen niemand seriös vorab eine Zahl. Was wir Ihnen sagen können: Bei einem Einfamilienhaus liegt eine Wärmepumpe inklusive Einbau in aller Regel im mittleren fünfstelligen Bereich, bevor die Förderung abgezogen wird. Nach Abzug bleibt oft deutlich weniger übrig, als die meisten erwarten. Die konkrete Zahl für Ihr Haus steht in der Wirtschaftlichkeitsrechnung, die Sie kostenlos bekommen.",
-    /* ⚠️ Von Ilias abzunehmen: Spanne bestätigen oder korrigieren. */
+    /* Von Ilias abzunehmen: Spanne bestätigen oder korrigieren. */
     freigabeOffen: true,
   },
   {

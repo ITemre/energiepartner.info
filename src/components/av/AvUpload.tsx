@@ -26,12 +26,9 @@ import {
 } from "@/lib/lead";
 
 /**
- * ══════════════════════════════════════════════════════════════════
- * ANGEBOT HOCHLADEN — CTA im Hero, Rest im Vollbild
- * ══════════════════════════════════════════════════════════════════
- *
- * ═══ WARUM DER FUNNEL NICHT IM HERO STEHT ═══
- * Ein erster Versuch hatte die drei Schritte als Karte neben die Headline
+ * * ANGEBOT HOCHLADEN — CTA im Hero, Rest im Vollbild
+ * *
+ * WARUM DER FUNNEL NICHT IM HERO STEHT * Ein erster Versuch hatte die drei Schritte als Karte neben die Headline
  * gestellt. Das kostete den Hero seine Komposition: Damit Karte UND Aussage
  * gemeinsam auf ein Handydisplay passen, mussten Fließtext und
  * Vertrauenszeile weichen – am Ende stand ein halbierter Hero neben einem
@@ -45,13 +42,11 @@ import {
  * genau eine Frage pro Bildschirm, und der Besucher ist bereits drin: Er hat
  * seine Datei schon ausgewählt, der teuerste Schritt liegt hinter ihm.
  *
- * ═══ WARUM `<dialog>` ═══
- * Fokusfalle, Escape, Inertisierung des Hintergrunds und die Rückgabe des
+ * WARUM `<dialog>` * Fokusfalle, Escape, Inertisierung des Hintergrunds und die Rückgabe des
  * Fokus an den auslösenden Knopf sind nativ enthalten. Nachgebaut sind das
  * rund hundert Zeilen, die regelmäßig undicht sind.
  *
- * ═══ WARUM DIE DATEI AUCH BEIM WHATSAPP-WEG ZU UNS GEHT ═══
- * Über einen `wa.me`-Link lässt sich keine Datei mitgeben, nur Text. Ohne
+ * WARUM DIE DATEI AUCH BEIM WHATSAPP-WEG ZU UNS GEHT * Über einen `wa.me`-Link lässt sich keine Datei mitgeben, nur Text. Ohne
  * eigenen Versand müsste der Besucher sein Angebot im Chat ein zweites Mal
  * auswählen – und genau dort bricht die Hälfte ab. Deshalb geht die Datei
  * bei BEIDEN Wegen über unsere Route an Bitrix; der WhatsApp-Weg legt einen
@@ -62,8 +57,7 @@ import {
 type Schritt = "kanal" | "whatsapp" | "formular" | "fertig";
 
 /**
- * ═══ EIN DIALOG, VIELE AUSLÖSER ═══
- * Der Upload wird nicht nur im Hero angeboten, sondern nach jeder Sektion
+ * EIN DIALOG, VIELE AUSLÖSER * Der Upload wird nicht nur im Hero angeboten, sondern nach jeder Sektion
  * und in der mitlaufenden Leiste auf dem Handy. Alle diese Stellen müssen
  * denselben Dateidialog und denselben Vollbild-Ablauf bedienen – sonst gäbe
  * es mehrere `<input type="file">`, mehrere `<dialog>` und je nach Klick den
@@ -72,7 +66,7 @@ type Schritt = "kanal" | "whatsapp" | "formular" | "fertig";
  * Deshalb hält der Provider beides genau einmal, und jeder Knopf ruft über
  * `useUpload()` dieselbe Funktion auf.
  *
- * ⚠️ `oeffneDateiauswahl` MUSS aus einer Klickreaktion heraus aufgerufen
+ * `oeffneDateiauswahl` MUSS aus einer Klickreaktion heraus aufgerufen
  * werden. Ein `input.click()` ohne Nutzergeste wird von jedem Browser
  * ignoriert – die Auswahl ginge dann still nicht auf.
  */
@@ -237,7 +231,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
   /**
    * Weg A – WhatsApp.
    *
-   * ⚠️ Wird erst aufgerufen, nachdem Nummer und Einwilligung vorliegen
+   * Wird erst aufgerufen, nachdem Nummer und Einwilligung vorliegen
    * (Schritt „whatsapp"). Ein früherer Entwurf sprang direkt von der
    * Kanalwahl hierher und setzte die Einwilligung dabei hart auf `true` –
    * das war weder eine Einwilligung noch ein verwertbarer Lead: Wer danach
@@ -349,7 +343,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      {/* ══════════════ DAS VOLLBILD ══════════════ */}
+      {/* DAS VOLLBILD */}
       <dialog
         ref={dialog}
         aria-labelledby={`${uid}-titel`}
@@ -412,7 +406,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                 </div>
               )}
 
-              {/* ══════ Kanalwahl ══════ */}
+              {/* Kanalwahl */}
               {schritt === "kanal" && (
                 <div>
                   <h2
@@ -478,7 +472,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                 </div>
               )}
 
-              {/* ══════ WhatsApp: Nummer und Einwilligung ══════ */}
+              {/* WhatsApp: Nummer und Einwilligung */}
               {schritt === "whatsapp" && (
                 <form onSubmit={perWhatsApp} noValidate>
                   <h2
@@ -558,7 +552,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                 </form>
               )}
 
-              {/* ══════ Formular ══════ */}
+              {/* Formular */}
               {schritt === "formular" && (
                 <form onSubmit={absenden} noValidate>
                   <h2
@@ -663,7 +657,7 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
                 </form>
               )}
 
-              {/* ══════ Schluss ══════ */}
+              {/* Schluss */}
               {schritt === "fertig" && (
                 <div>
                   <span className="grid size-14 place-items-center rounded-full bg-ep-accent-strong text-white">
@@ -710,9 +704,8 @@ export function AvUploadProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* ════════════════════════════════════════════════════════════════
-   DIE AUSLÖSER
-   ════════════════════════════════════════════════════════════════ */
+/* DIE AUSLÖSER
+   */
 
 /**
  * Der Knopf. Überall einsetzbar, öffnet immer denselben Dateiwähler.
@@ -763,6 +756,22 @@ export function AvUploadKnopf({
  * dem Desktop kann man tatsächlich etwas hineinziehen. Auf dem Handy wäre
  * sie eine große Fläche mit der Aufschrift „hierher ziehen" – und ziehen
  * kann man dort nichts.
+ *
+ * HELLE FASSUNG (08.09.) * Sie war in Weißtönen gezeichnet (`border-white/25`, `bg-white/[0.04]`,
+ * weiße Schrift) und damit ausschließlich auf Navy sichtbar. Seit der Hero
+ * auf Papier läuft, wäre davon nichts übrig geblieben: Weiß auf #FBF6EE ist
+ * nicht dezent, sondern weg – und weg wäre hier der Auslöser der ganzen
+ * Seite gewesen.
+ *
+ * Jetzt in Tinte gezeichnet. Der Kreis mit dem Pfeil bleibt in vollem
+ * Orange samt Schein: Er ist der einzige Punkt im ersten Bild, der gedrückt
+ * werden soll, und auf einer hellen Fläche braucht er mehr Gewicht als der
+ * Rahmen um ihn herum, nicht weniger.
+ *
+ * GESTRICHELT BLEIBT GESTRICHELT. Eine gefüllte Karte wäre auf Papier
+ * naheliegend und wäre der Fehler: Die Seite baut mit Linien, nirgends
+ * steht eine Karte, und eine Ablagefläche ohne sichtbare Strichgrenze sagt
+ * nicht mehr, dass man etwas hineinlegen kann.
  */
 export function AvUploadZone({ className }: { className?: string }) {
   const { oeffneDateiauswahl, uebergibDatei } = useUpload();
@@ -784,10 +793,10 @@ export function AvUploadZone({ className }: { className?: string }) {
         if (f) uebergibDatei(f);
       }}
       className={cn(
-        "flex w-full cursor-pointer flex-col items-center gap-4 rounded-ep border-2 border-dashed bg-white/[0.04] px-8 py-14 text-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-accent-strong",
+        "flex w-full cursor-pointer flex-col items-center gap-4 rounded-ep border-2 border-dashed px-8 py-14 text-center outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ep-accent-strong focus-visible:ring-offset-2 focus-visible:ring-offset-ep-paper",
         ueberZone
-          ? "border-ep-accent-strong bg-white/10"
-          : "border-white/25 hover:border-ep-accent-strong/70 hover:bg-white/[0.07]",
+          ? "border-ep-accent-strong bg-ep-accent/10"
+          : "border-ep-ink/25 bg-ep-ink/[0.02] hover:border-ep-accent-strong/70 hover:bg-ep-accent/[0.05]",
         className,
       )}
     >
@@ -795,14 +804,14 @@ export function AvUploadZone({ className }: { className?: string }) {
         <Upload className="size-6" aria-hidden="true" />
       </span>
       <span>
-        <span className="block text-xl font-bold text-white">
+        <span className="block text-xl font-bold text-ep-ink">
           Angebot hochladen
         </span>
-        <span className="mt-1.5 block text-white/65">
+        <span className="mt-1.5 block text-ep-ink/70">
           Datei auswählen oder hierher ziehen
         </span>
       </span>
-      <span className="t-key text-white/45">PDF, JPG oder PNG · bis 10 MB</span>
+      <span className="t-key text-ep-ink/55">PDF, JPG oder PNG · bis 10 MB</span>
     </button>
   );
 }

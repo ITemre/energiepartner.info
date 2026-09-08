@@ -46,7 +46,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    /* ⚠️ KEIN `id="kontakt"` MEHR (10.08.). Die Kennung liegt jetzt an der
+    /* KEIN `id="kontakt"` MEHR (10.08.). Die Kennung liegt jetzt an der
        Kontaktsektion darüber (`sections/Kontakt.tsx`). Zwei Elemente mit
        derselben `id` sind ungültiges Markup, und der Menüpunkt „Kontakt"
        soll auf einen Kontaktbereich springen, nicht in die Fußzeile.
@@ -82,7 +82,7 @@ export function SiteFooter() {
                 herstellerunabhängig = an keine Marke gebunden,
                 anbieterübergreifend = wir vergleichen über die Anbieter
                 hinweg. Das absolute „unabhängig" steht bewusst nirgends. */}
-            {/* ⚠️ „Energieberatung aus Stuttgart" → „Energie-Vermittlung"
+            {/* „Energieberatung aus Stuttgart" → „Energie-Vermittlung"
                 (13.08.). Das Wort benannte die falsche Rolle: Ilias
                 vermittelt und vergleicht, er ist kein Energieberater
                 (Briefing 2). „Energieberatung" ist zudem der Begriff, den
@@ -148,7 +148,7 @@ export function SiteFooter() {
           <p className="max-w-[76ch] text-sm leading-relaxed text-white/65">
             {VERMITTLERHINWEIS}
           </p>
-          {/* ⚠️ SEIT 12.08. HIER STATT IN DER FÖRDERUNGS-SEKTION.
+          {/* SEIT 12.08. HIER STATT IN DER FÖRDERUNGS-SEKTION.
               Dort brachen fünf Zeilen Kleingedrucktes die Komposition. Weg
               darf der Vorbehalt trotzdem nicht: „Bis zu 70 Prozent" und
               „21.000 € im besten Fall" sind ohne Stichtag und ohne die

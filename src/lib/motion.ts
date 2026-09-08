@@ -219,20 +219,18 @@ export function revealItems(
 /**
  * Typ 3 – eine Zahl zählt hoch, sobald sie ins Bild kommt.
  *
- * ═══ WARUM ÜBERHAUPT ═══
- * Die Seite argumentiert an ihren wichtigsten Stellen mit Zahlen (Förderung,
+ * WARUM ÜBERHAUPT * Die Seite argumentiert an ihren wichtigsten Stellen mit Zahlen (Förderung,
  * Beleg-Leiste). Eine Zahl, die fertig dasteht, wird gelesen; eine, die
  * hochläuft, wird BEOBACHTET – und das ist bei einem Betrag, der die
  * Kaufentscheidung trägt, genau die Sekunde Aufmerksamkeit, um die es geht.
  *
- * ⚠️ EINMALIG, NICHT AM SCROLL GESCRUBBT (`once: true`). Das ist dieselbe
+ * EINMALIG, NICHT AM SCROLL GESCRUBBT (`once: true`). Das ist dieselbe
  * Entscheidung wie beim `Marker` und aus demselben Grund: Etwas, das beim
  * Zurückscrollen wieder verschwindet, ist ein Effekt; etwas, das einmal
  * passiert und dann steht, ist eine Aussage. Eine Zahl, die beim Hoch- und
  * Runterscrollen mitzählt, wirkt zudem wie ein kaputtes Messgerät.
  *
- * ═══ KEINE ÄNDERUNG AM MARKUP NÖTIG ═══
- * Der Endwert wird aus dem gerenderten Text GELESEN, nicht als Prop
+ * KEINE ÄNDERUNG AM MARKUP NÖTIG * Der Endwert wird aus dem gerenderten Text GELESEN, nicht als Prop
  * übergeben. Das hat einen handfesten Grund: Der Text im Markup bleibt damit
  * die einzige Quelle. Eine zweite Angabe (`data-count="21000"`) neben dem
  * sichtbaren „21.000 €" wäre ein Wert, der beim nächsten Textwechsel
@@ -245,7 +243,7 @@ export function revealItems(
  *   „5,0"       → zählt 5,     zeigt „5,0" (eine Nachkommastelle)
  *   „24 Std."   → zählt 24,    zeigt „24 Std."
  *
- * ⚠️ DAS ELEMENT BRAUCHT `tabular-nums`. Mit proportionalen Ziffern ändert
+ * DAS ELEMENT BRAUCHT `tabular-nums`. Mit proportionalen Ziffern ändert
  * sich die Breite bei jedem Zwischenwert, und die Zahl zappelt, statt zu
  * laufen. Auf der ganzen Seite steht dafür `[font-variant-numeric:tabular-nums]`
  * an den Kennzahlen – wer eine neue anlegt, muss es mitnehmen.

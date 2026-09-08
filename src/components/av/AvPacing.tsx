@@ -25,8 +25,7 @@ if (typeof window !== "undefined") {
  * Er trägt kein Bild und keine Kachel. Die Sektion besteht aus dem Satz und
  * zwei Haarlinien, sonst nichts.
  *
- * ═══ MITTIG, UND ZWAR ALS EINZIGE ═══
- * Die Seite setzt sonst überall linksbündig an der Datenblatt-Achse. Diese
+ * MITTIG, UND ZWAR ALS EINZIGE * Die Seite setzt sonst überall linksbündig an der Datenblatt-Achse. Diese
  * Sektion nicht, und der Bruch ist der Punkt: Ein Pacing-Satz behauptet
  * nichts und belegt nichts, er hält den Lauf der Seite kurz an. Mittig hat
  * er keine Kante, an der ein Blick weiterlaufen könnte – man liest ihn zu
@@ -36,7 +35,7 @@ if (typeof window !== "undefined") {
  * eine Textsäule links, rechts zwei Drittel leere Fläche, ohne dass diese
  * Leere etwas bedeutet hätte.
  *
- * ⚠️ Deshalb wachsen auch die Haarlinien aus der MITTE (`origin-center`)
+ * Deshalb wachsen auch die Haarlinien aus der MITTE (`origin-center`)
  * statt von links. Eine Linie, die von links einfährt, während der Text
  * mittig steht, ist die alte Achse, die durch die Hintertür zurückkommt.
  */
@@ -84,8 +83,22 @@ export function AvPacing() {
   );
 
   return (
-    <section ref={scope} data-nav-theme="light" className="bg-ep-paper">
-      <div className="ep-container py-24 sm:py-36">
+    /* `border-t-2 border-ep-accent` seit dem 08.09. Der Hero darüber ist
+       seither ebenfalls Papier – ohne gezeichnete Kante liefen erstes Bild
+       und zweiter Abschnitt in eine Fläche zusammen. Die Kante ist zugleich
+       das Zeichen, dass der Funnel oben zu Ende ist. Dieselbe Lösung wie an
+       der Förderung auf energiepartner.info.
+
+       Polster von `py-24 sm:py-36` auf `py-20 sm:py-28`: Die Sektion war
+       gemessen 957 px hoch für zwei Sätze, davon rund eine halbe
+       Bildschirmhöhe leeres Papier vor dem Zitat. Mittig gesetzt bleibt sie –
+       das ist begründet und richtig –, nur das Polster war zu groß. */
+    <section
+      ref={scope}
+      data-nav-theme="light"
+      className="border-t-2 border-ep-accent bg-ep-paper"
+    >
+      <div className="ep-container py-20 sm:py-28">
         <BendLine data-p-rule className="origin-center text-ep-line" />
 
         {/* `figure`/`blockquote`/`figcaption` statt drei Absätzen: Der Satz
@@ -111,7 +124,7 @@ export function AvPacing() {
             <span className="text-ep-navy">{SATZ[1]}</span>“
           </blockquote>
 
-          {/* ⚠️ Der Name ist die EINZIGE Person auf dieser Seite, und er
+          {/* Der Name ist die EINZIGE Person auf dieser Seite, und er
               steht hier als Text, nicht als Foto. Das ist kein Detail:
               angebote-vergleichen.info ist laut Briefing (Abschnitt 3) die
               Strecke OHNE Personenfoto – das Porträt hat seinen einen

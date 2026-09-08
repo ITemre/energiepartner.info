@@ -23,7 +23,7 @@ const EINTRAG: Variants = {
 /**
  * Vollbild-Hauptmenü für Mobile/Tablet.
  *
- * ⚠️ KEIN natives `<dialog>` mehr (13.08., zweiter Anlauf). Ein `<dialog>`
+ * KEIN natives `<dialog>` mehr (13.08., zweiter Anlauf). Ein `<dialog>`
  * rendert im Top-Layer des Browsers – ÜBER JEDEM z-index, auch über der
  * eigenen Kopfleiste. Der Hamburger dort wurde beim Öffnen unsichtbar, und
  * das Menü brachte einen zweiten, anders platzierten Schließen-Knopf mit;
@@ -36,11 +36,11 @@ const EINTRAG: Variants = {
  * Dialog geschenkt (siehe Effekt unten) – dasselbe Ergebnis, ohne den
  * Top-Layer.
  *
- * ⚠️ HELL, NICHT NAVY (Kundenwunsch 13.08.): dieselbe Fläche wie der Hero,
+ * HELL, NICHT NAVY (Kundenwunsch 13.08.): dieselbe Fläche wie der Hero,
  * mit demselben warmen Schein und derselben Skala – kein zweites Motiv für
  * denselben Auftritt.
  *
- * ⚠️ CLIP-PATH STATT FADE: Der Kreis wächst aus der oberen rechten Ecke –
+ * CLIP-PATH STATT FADE: Der Kreis wächst aus der oberen rechten Ecke –
  * genau dort, wo der Hamburger sitzt. Die Öffnung liest sich dadurch als
  * Folge des Klicks, nicht als unabhängig eingeblendete Fläche.
  */
@@ -133,7 +133,7 @@ export function MenuOverlay({
                 Overlay liegt – der Inhalt beginnt erst darunter. */}
             <div aria-hidden="true" className="h-[var(--nav-h)] shrink-0" />
 
-            {/* ⚠️ KEIN `exit` HIER, UND DAS IST DER FIX FÜR EINEN ECHTEN BUG
+            {/* KEIN `exit` HIER, UND DAS IST DER FIX FÜR EINEN ECHTEN BUG
                 (13.08.): „Menü auf, zu, wieder auf – Links weg."
 
                 Ursache war die Kombination aus Exit-Propagierung und

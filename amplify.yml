@@ -1,5 +1,14 @@
 # AWS Amplify Hosting · Build-Spezifikation
 #
+# NICHT MEHR DER PRIMÄRE DEPLOY-WEG (08.09.). Beide Domains laufen über
+# Vercel, die Anleitung steht in der README. Diese Datei bleibt als Rückweg
+# stehen und wird von Vercel ignoriert.
+#
+# Der `.env.production`-Umweg weiter unten ist ausschließlich ein
+# Amplify-Problem: Vercel reicht Umgebungsvariablen sowohl dem Build als auch
+# der Laufzeit durch. Wer die Datei irgendwann löscht, verliert damit nichts
+# außer der Amplify-Option.
+#
 # Die Anwendung braucht einen Server, sie ist keine statische Ausgabe:
 #   - `src/app/api/lead/route.ts`  nimmt Anfragen an und spricht mit Bitrix24
 #   - `src/proxy.ts`               entscheidet pro Anfrage anhand des Hosts,
@@ -10,7 +19,7 @@
 # („Web compute"), nicht als statisches Hosting. Bei `next export` oder
 # „Static" fielen Lead-Route, Domain-Weiche und Bewertungen ersatzlos weg.
 #
-# ⚠️ KEINE SCHLÜSSEL IN DIESER DATEI. Alle Werte aus `.env.example` gehören
+# KEINE SCHLÜSSEL IN DIESER DATEI. Alle Werte aus `.env.example` gehören
 # in der Amplify-Konsole unter „Environment variables" hinterlegt. Was hier
 # stünde, läge im öffentlichen Repository.
 version: 1
@@ -24,7 +33,7 @@ frontend:
         - npm ci
     build:
       commands:
-        # ⚠️ UMGEBUNGSVARIABLEN IN DIE LAUFZEIT DURCHREICHEN.
+        # UMGEBUNGSVARIABLEN IN DIE LAUFZEIT DURCHREICHEN.
         #
         # Amplify stellt die in der Konsole gepflegten Variablen dem BUILD
         # zur Verfügung, aber nicht zuverlässig der SSR-Funktion, die später

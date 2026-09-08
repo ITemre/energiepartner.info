@@ -52,7 +52,7 @@ export function Abschnitt({
  * genau das ihr Zweck ist: Der Kunde soll beim Durchklicken sofort sehen,
  * was von ihm fehlt. Ein `<!-- TODO -->` sieht er nie.
  *
- * ⚠️ VOR DEM LIVEGANG MUSS DIESE KOMPONENTE AUS BEIDEN SEITEN VERSCHWUNDEN
+ * VOR DEM LIVEGANG MUSS DIESE KOMPONENTE AUS BEIDEN SEITEN VERSCHWUNDEN
  * SEIN. Ein Impressum mit Lücken ist kein unvollständiges Impressum,
  * sondern ein fehlendes (§ 5 DDG) – und damit abmahnfähig. Solange irgendwo
  * ein `<Fehlt>` steht, darf die Seite nicht online gehen.

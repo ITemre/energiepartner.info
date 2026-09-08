@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 /**
  * Impressum.
  *
- * ⚠️ NOCH NICHT LIVEGANG-FÄHIG. Die mit `<Fehlt>` markierten Angaben stehen
+ * NOCH NICHT LIVEGANG-FÄHIG. Die mit `<Fehlt>` markierten Angaben stehen
  * aus (Projekt-Briefing, Abschnitt 9). Ein Impressum, dem Pflichtangaben
  * fehlen, gilt als nicht vorhanden – die Seite darf mit diesen Markierungen
  * nicht online gehen.

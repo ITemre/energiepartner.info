@@ -1,8 +1,7 @@
 /**
  * Google-Rezensionen über die Places API (New).
  *
- * ═══ SICHERHEIT ═══
- * Dieses Modul läuft AUSSCHLIESSLICH auf dem Server. Der Schlüssel heißt
+ * SICHERHEIT * Dieses Modul läuft AUSSCHLIESSLICH auf dem Server. Der Schlüssel heißt
  * bewusst `GOOGLE_PLACES_API_KEY` und nicht `NEXT_PUBLIC_…` – ein Präfix
  * `NEXT_PUBLIC_` würde ihn in jedes Browser-Bundle backen, wo ihn jeder
  * auslesen und auf eigene Rechnung verbrauchen kann. Places-Aufrufe kosten
@@ -18,8 +17,7 @@
  * IP-Adressen des Servers. Ein Key ohne Beschränkung ist auch serverseitig
  * ein Risiko, sobald er einmal irgendwo hinausrutscht.
  *
- * ═══ EINRICHTUNG ═══
- * In `.env.local` genügt eine Zeile:
+ * EINRICHTUNG * In `.env.local` genügt eine Zeile:
  *
  *     GOOGLE_PLACES_API_KEY=…
  *
@@ -51,13 +49,23 @@ export type GoogleBewertungen = {
   /**
    * Woher die Daten stammen.
    *
-   * Nicht kosmetisch: An dieser Angabe hängen alle Aussagen ÜBER die
-   * Bewertungen – das Google-Zeichen, der Verweis aufs Profil und die
-   * Pflichtangabe zur Echtheitsprüfung (§ 5b Abs. 3 UWG). Die darf nur
-   * erscheinen, wenn sie stimmt. Bei vorläufigen Daten bleibt sie weg,
-   * statt eine Herkunft zu behaupten, die es nicht gibt.
+   * Nicht kosmetisch: An dieser Angabe hängt die Pflichtangabe zur
+   * Echtheitsprüfung (§ 5b Abs. 3 UWG) – der Satz, dass die Bewertungen
+   * unverändert und automatisch aus dem Google-Profil geladen werden und
+   * wir nicht auswählen, welche erscheinen.
+   *
+   * `"google"`   – live aus der Places API. Der Satz stimmt und erscheint.
+   * `"gepflegt"` – die Liste aus `lib/stimmen.ts`. Sie wird nicht
+   *                automatisch geladen und wir wählen aus, also bleibt der
+   *                Satz weg. Sterne, Note und Anzahl stehen unabhängig
+   *                davon.
+   *
+   * Hieß bis zum 08.09. `"platzhalter"`. Umbenannt, weil der Schalter
+   * dahinter entfallen ist: Es geht nicht mehr um vorläufige gegen echte
+   * Daten, sondern um zwei Herkünfte, die sich in genau einer Aussage
+   * unterscheiden.
    */
-  quelle: "google" | "platzhalter";
+  quelle: "google" | "gepflegt";
   /** Durchschnitt, z. B. 5 oder 4.8. */
   note: number;
   /** Anzahl der abgegebenen Bewertungen. */
@@ -155,7 +163,7 @@ async function findePlaceId(key: string): Promise<string | null> {
 /**
  * Holt Note und Rezensionen.
  *
- * ⚠️ GIBT IM ZWEIFEL `null` ZURÜCK, und das ist die wichtigste Eigenschaft
+ * GIBT IM ZWEIFEL `null` ZURÜCK, und das ist die wichtigste Eigenschaft
  * dieser Funktion. Kein Schlüssel, kein Treffer, ein Fehler der API, ein noch
  * unverifiziertes Profil oder schlicht null Rezensionen führen alle zum
  * selben Ergebnis: Die Seite zeigt an diesen Stellen gar keine
@@ -170,7 +178,7 @@ export async function holeGoogleBewertungen(): Promise<GoogleBewertungen | null>
   const key = process.env.GOOGLE_PLACES_API_KEY;
   if (!key) return null;
 
-  /* ⚠️ DIE PLACE-ID MUSS GESETZT SEIN. Die Textsuche darf sie nicht mehr
+  /* DIE PLACE-ID MUSS GESETZT SEIN. Die Textsuche darf sie nicht mehr
      selbst bestimmen, und dafür gibt es einen konkreten Anlass:
      Am 07.08. hat sie auf „energiepartner Deutschland Energieberatung
      0173 6834665" die **Dein Energiepartner GmbH in Bielefeld** getroffen
@@ -264,8 +272,7 @@ export function formatiereNote(note: number) {
 /**
  * Schriftgröße und Zeilenlänge eines Zitats, abgeleitet aus seiner Länge.
  *
- * ═══ WAS HIER VORHER STAND ═══
- * Beide Stimmen-Sektionen setzten jede Rezension in Zitatgröße (bis 2,9 rem)
+ * WAS HIER VORHER STAND * Beide Stimmen-Sektionen setzten jede Rezension in Zitatgröße (bis 2,9 rem)
  * und schnitten sie danach mit `line-clamp` auf sechs Zeilen ab. Das erzeugte
  * genau das, was eine Bewertungssektion nicht zeigen darf: ein „…" mitten im
  * Satz. Eine abgeschnittene Kundenstimme ist schlimmer als eine kurze – der
@@ -276,8 +283,7 @@ export function formatiereNote(note: number) {
  * haben keine Obergrenze, und der Wert, ab dem nichts mehr abgeschnitten
  * wird, existiert nicht.
  *
- * ═══ DIE URSACHE ═══
- * Nicht der Text war zu lang, sondern die Größe zu groß. 2,9 rem sind eine
+ * DIE URSACHE * Nicht der Text war zu lang, sondern die Größe zu groß. 2,9 rem sind eine
  * Auszeichnungsgröße für einen Satz – über vierhundert Zeichen ist das keine
  * Aussage mehr, sondern eine Wand. Umgekehrt verpufft ein Zweizeiler in
  * Lesegröße.
@@ -287,7 +293,7 @@ export function formatiereNote(note: number) {
  * gelesen. Nichts wird abgeschnitten, und die Kacheln bleiben trotzdem in
  * einer Größenordnung.
  *
- * ⚠️ Die Zeilenlänge MUSS mitwandern. `ch` rechnet gegen die Schriftgröße
+ * Die Zeilenlänge MUSS mitwandern. `ch` rechnet gegen die Schriftgröße
  * des Elements – 22ch sind bei 2,9 rem eine breite Spalte und bei 1,25 rem
  * eine Briefmarke. Beide Werte gehören deshalb hierher und nicht an die
  * Fundstelle, sonst laufen sie beim nächsten Eingriff auseinander.
@@ -296,8 +302,7 @@ export function formatiereNote(note: number) {
  * langen Absätzen ohnehin auf (Chromium rechnet ihn ab wenigen Zeilen nicht
  * mehr), und in Lesegröße ist ein linksbündiger Flattersatz das Richtige.
  *
- * ═══ DIE ANZAHL DECKELT DIE GRÖSSE ═══
- * Länge allein reicht nicht. Vier Rezensionen à 200 Zeichen liegen alle in
+ * DIE ANZAHL DECKELT DIE GRÖSSE * Länge allein reicht nicht. Vier Rezensionen à 200 Zeichen liegen alle in
  * derselben Längenstufe – und ergaben trotzdem vier Blöcke à 2,4 rem
  * nebeneinander. Als Raster gelesen ist das keine Stimmensammlung mehr,
  * sondern vier konkurrierende Überschriften, und links ausgerichtet fällt
@@ -310,7 +315,7 @@ export function formatiereNote(note: number) {
  * Schrift. Bei drei und mehr ist es Lesegröße, und zwar unabhängig davon,
  * wie kurz die einzelne Stimme ist.
  *
- * ⚠️ JEDE KLASSE STEHT AUSGESCHRIEBEN IM QUELLTEXT. Kein
+ * JEDE KLASSE STEHT AUSGESCHRIEBEN IM QUELLTEXT. Kein
  * `max-w-[${n}ch]` – Tailwind liest die Dateien als Text und kennt den
  * Wert von `n` nicht. Zusammengebaute Klassennamen landen nie im
  * Stylesheet, und der Fehler fällt erst im Produktionsbuild auf, wo der

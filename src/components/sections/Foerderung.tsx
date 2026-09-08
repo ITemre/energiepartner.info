@@ -15,8 +15,7 @@ if (typeof window !== "undefined") {
 /**
  * „Was der Staat dazugibt."
  *
- * ═══ WARUM DIESE SEKTION DER GRÖSSTE HEBEL DER SEITE IST ═══
- * Der Einwand, an dem eine Wärmepumpe scheitert, ist immer derselbe: zu
+ * WARUM DIESE SEKTION DER GRÖSSTE HEBEL DER SEITE IST * Der Einwand, an dem eine Wärmepumpe scheitert, ist immer derselbe: zu
  * teuer. Die Seite hatte darauf bisher keine Antwort — die Förderung kam in
  * einem Nebensatz vor („Fördermittel prüfen und beantragen", ein Punkt unter
  * acht). Dabei ist sie das stärkste Argument, das dieses Geschäft hat: Sie
@@ -26,8 +25,7 @@ if (typeof window !== "undefined") {
  * Ein Einwand, den man mit einer Zahl beantworten kann, gehört in eine eigene
  * Sektion. Versteckt in einer Aufzählung ist er nur ein Punkt unter acht.
  *
- * ═══ ⚠️ ZU DEN ZAHLEN ═══
- * Die Sätze der Bundesförderung für effiziente Gebäude ändern sich, und was
+ * ZU DEN ZAHLEN * Die Sätze der Bundesförderung für effiziente Gebäude ändern sich, und was
  * im Einzelfall gilt, hängt am Gebäude, am Einkommen und am Zeitpunkt. Die
  * Sektion nennt deshalb die STRUKTUR (Grundförderung plus Boni, gedeckelt)
  * und nicht „Sie bekommen X". Der individuelle Betrag entsteht in der
@@ -37,7 +35,7 @@ if (typeof window !== "undefined") {
  * sichtbarer Herleitung und Stichtag ist belegbar. „70 % Förderung" ohne
  * Bedingungen wäre eine Zusage, die für die meisten Häuser nicht stimmt.
  *
- * ⚠️ VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
+ * VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
  * prüfen. Diese Sektion ist die einzige der Seite, die veralten kann.
  */
 /**
@@ -81,13 +79,12 @@ export function Foerderung() {
         revealItems("[data-f-baustein]", { distance: 24, start: "top 90%" });
         revealItems("[data-f-block]", { distance: 20, start: "top 92%" });
 
-        /* ═══ DIE ZAHLEN LAUFEN HOCH (13.08.) ═══
-           Die Sektion ist die einzige, die mit Beträgen argumentiert, und
+        /* DIE ZAHLEN LAUFEN HOCH (13.08.) Die Sektion ist die einzige, die mit Beträgen argumentiert, und
            sie tat es bis hier vollkommen bewegungslos. Der Hauptbetrag
            bekommt mehr Zeit als die vier Bausteine: Er ist die Aussage,
            sie sind die Herleitung.
 
-           ⚠️ Die Bausteine starten SPÄTER als die 21.000 € („top 92%" gegen
+           Die Bausteine starten SPÄTER als die 21.000 € („top 92%" gegen
            „top 86%"), obwohl sie im Markup darunter stehen. Auf dem
            Desktop liegen beide gleichzeitig im Bild, und wenn fünf Zahlen
            im selben Moment loslaufen, zählt keine – es flimmert nur. So
@@ -122,19 +119,18 @@ export function Foerderung() {
        als Angebot. Inhaltlich ist sie außerdem die guteste Nachricht der
        Seite – Geld, das jemand anderes zahlt. Das gehört auf Papier.
 
-       ⚠️ DIE OBERKANTE IN DER AKZENTFARBE IST PFLICHT, NICHT ZIERDE.
+       DIE OBERKANTE IN DER AKZENTFARBE IST PFLICHT, NICHT ZIERDE.
        Seit die Sektion direkt hinter dem Hero steht, trägt sie dessen
        Aufgabe mit: Der Hero liegt sticky und zoomt beim Rausscrollen
        heraus, und ein Zoom ist nur wahrnehmbar, wenn etwas mit sichtbarer
        Kante davorzieht. Ohne die Linie schöbe sich Papier lautlos über
        Navy und der Effekt verpuffte.
 
-       ⚠️ FARBREGEL: Auf Papier ist die Rolle `ep-accent` durchgehend zu
+       FARBREGEL: Auf Papier ist die Rolle `ep-accent` durchgehend zu
        verwenden (löst zu `ep-orange-deep`, 5,4:1) – nie die rohe Basis
        `ep-orange` als Schrift (3,1:1, zu wenig für Kleintext).
 
-       ═══ ⚠️ EIN BILDSCHIRM. DAS IST EINE OBERGRENZE, KEIN RICHTWERT. ═══
-       Die Sektion lief auf gut 200vh und war damit der Hauptgrund für den
+       EIN BILDSCHIRM. DAS IST EINE OBERGRENZE, KEIN RICHTWERT. Die Sektion lief auf gut 200vh und war damit der Hauptgrund für den
        Eindruck vom endlosen Scrollen, den der Kunde zurückgemeldet hat
        (10.08.). Sie steht an zweiter Stelle: Wer hier ins Scrollen gerät,
        sieht vom Rest der Seite nichts mehr.
@@ -145,7 +141,7 @@ export function Foerderung() {
        Wer gerade erfährt, dass er 21.000 € geschenkt bekommt, fragt nicht
        nach dem Antragsaufwand.
 
-       ⚠️ WAS NICHT GEKÜRZT WERDEN DARF, und das ist kein Geschmack:
+       WAS NICHT GEKÜRZT WERDEN DARF, und das ist kein Geschmack:
        Die vier Bausteine sind die HERLEITUNG der 70 %, und die Fußnote
        nennt Stand und Deckelung. „Bis zu 70 %" mit sichtbarer Herleitung
        und Stichtag ist belegbar; dieselbe Zahl ohne beides ist eine Zusage,
@@ -157,7 +153,7 @@ export function Foerderung() {
        Bausteine plus Fußnote passen auf 390 px in keinen Bildschirm, und
        eine Zusage, die man nur durch Abschneiden hält, ist keine.
 
-       ⚠️ `lg:pt-[var(--nav-h)]` GEHÖRT ZUR DECKELUNG, nicht zur Optik.
+       `lg:pt-[var(--nav-h)]` GEHÖRT ZUR DECKELUNG, nicht zur Optik.
        Die Kopfleiste liegt `fixed` ÜBER dem Inhalt. Ohne diesen Abzug
        zentriert `justify-center` gegen die volle Bildschirmhöhe, also auch
        gegen die Fläche, die die Leiste verdeckt – der Inhalt säße um eine
@@ -180,7 +176,7 @@ export function Foerderung() {
             <h2
               data-f-h2
               className="t-h2 mt-4 max-w-[15ch] text-ep-ink"
-              /* ⚠️ DECKEL GEGEN DIE HÖHE, nicht nur gegen die Breite.
+              /* DECKEL GEGEN DIE HÖHE, nicht nur gegen die Breite.
                  `.t-h2` skaliert mit `vw`. Auf einem flachen Fenster
                  (1280×720) füllt eine zweizeilige Headline damit ein
                  Fünftel des Bildschirms und schiebt den Rest der Sektion
@@ -201,7 +197,7 @@ export function Foerderung() {
               nicht mehr hier, sondern nur noch in der Fußnote – zweimal
               dieselbe Einschränkung kostet eine Zeile und nimmt der Zahl
               ihre Wirkung. */}
-          {/* ⚠️ `data-parallax` GEHÖRT AUF DEN WRAPPER, NICHT AUF DAS `<p>`.
+          {/* `data-parallax` GEHÖRT AUF DEN WRAPPER, NICHT AUF DAS `<p>`.
               Das `<p>` trägt die Akzentkante; säße der Versatz dort, würde
               die Kante gegen ihre eigene Textzeile wandern. Auf dem Wrapper
               bewegt sich der Block als eine Einheit.
@@ -266,7 +262,7 @@ export function Foerderung() {
             weh tut. Wer ihn liest, versteht sofort, wofür er einen Begleiter
             braucht. Steht jetzt neben der Handlung statt darüber, das spart
             eine ganze Bildschirmhöhe. */}
-        {/* ⚠️ HIER STAND EIN CTA-KNOPF („Förderung prüfen lassen"), raus am
+        {/* HIER STAND EIN CTA-KNOPF („Förderung prüfen lassen"), raus am
             10.08. auf Kundenwunsch.
 
             Der Grund ist die Aufgabenteilung der beiden Auftritte: Anfragen
@@ -297,7 +293,7 @@ export function Foerderung() {
           </p>
         </div>
 
-        {/* ⚠️ HIER STAND DIE FÖRDER-FUSSNOTE, raus am 12.08. auf Wunsch von
+        {/* HIER STAND DIE FÖRDER-FUSSNOTE, raus am 12.08. auf Wunsch von
             Emre: fünf Zeilen Kleingedrucktes brachen die Komposition, und
             eine Vertrauensseite ist kein AGB-Dokument.
 

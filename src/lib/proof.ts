@@ -1,28 +1,15 @@
-import { PLATZHALTER_AN } from "./stimmen-platzhalter";
-
 /**
  * Belege: Kennzahlen und Referenzfälle.
  *
- * ═══ WARUM ES DIESE DATEI GIBT ═══
- * Der Auftritt beschrieb bisher durchgehend, WER wir sind und WIE wir
- * arbeiten. Was dabei fehlte, ist die einzige Textsorte, die ein Besucher
- * nicht als Eigenlob liest: was am Ende herauskam, in Zahlen.
+ * KENNZAHLEN stehen so im Projekt-Briefing (Abschnitt 7) und sind freigegeben.
+ * Keine davon behauptet eine Erfolgsgeschichte: Berufserfahrung, ein
+ * Fördersatz des Bundes, eine Zusage über das eigene Verhalten.
  *
- * ═══ ⚠️ ALLES HIER IST VORLÄUFIG ═══
- * Die Kennzahlen stehen so im Projekt-Briefing (Abschnitt 7) und sind dort
- * als „freigegeben, aber Platzhalter bis belegbar" markiert. Die
- * Referenzfälle sind erfunden — sie zeigen Ilias die FORM, in der wir seine
- * echten Fälle brauchen: Ausgangslage, was wir gefunden haben, Ergebnis in
- * Zahlen.
- *
- * Genau wie die Stimmen hängen sie an `PLATZHALTER_INHALTE` und gehen ohne
- * diese Variable nicht mit. Eine erfundene Fallzahl ist nichts anderes als
- * eine erfundene Bewertung: eine Tatsachenbehauptung über die eigene
- * Leistung (§ 5 Abs. 1 UWG).
- *
- * Beim Ersetzen gilt: **Jede Zahl muss belegbar sein.** Lieber drei ehrliche
- * Fälle als zehn geschönte — der Empfänger prüft im Zweifel nach, und ein
- * widerlegter Beleg kostet mehr Vertrauen, als zehn Belege aufbauen.
+ * REFERENZFAELLE sind Entwürfe und zeigen die Form, in der wir Ilias' echte
+ * Fälle brauchen. Sie erscheinen nirgends – `Referenzen.tsx` ist in
+ * `(energiepartner)/page.tsx` ausgehängt. Wer die Sektion zurückholt, trägt
+ * vorher echte Fälle ein: eine erfundene Fallzahl ist eine
+ * Tatsachenbehauptung über die eigene Leistung (§ 5 Abs. 1 UWG).
  */
 
 export type Kennzahl = {
@@ -53,14 +40,14 @@ export type Referenzfall = {
  * schadet mehr als gar keine.
  */
 export const KENNZAHLEN: Kennzahl[] = [
-  /* ⚠️ EIN WORT JE LABEL, nicht mehr. Die Langfassungen („Erfahrung in der
+  /* EIN WORT JE LABEL, nicht mehr. Die Langfassungen („Erfahrung in der
      Energieberatung", „Förderung für Wärmepumpen") standen in einer
      einzeiligen Leiste als Fließtext neben der Zahl und machten aus vier
      Angaben vier Sätze. Wert und Label bilden zusammen die Aussage:
      „5 Jahre Erfahrung", „bis 70 % Förderung". Was darüber hinausgeht,
      erklärt die Sektion daneben. */
   { wert: "5 Jahre", label: "Erfahrung" },
-  /* ⚠️ „300+ geprüfte Angebote" ist raus (12.08., Emre). Von allen vier war
+  /* „300+ geprüfte Angebote" ist raus (12.08., Emre). Von allen vier war
      das die einzige Zahl über die eigene BILANZ – und der Betrieb hat noch
      keinen abgeschlossenen Kunden. Die verbliebenen drei sind anderer Natur:
      Berufserfahrung, ein Fördersatz des Bundes und eine Zusage über das
@@ -111,18 +98,24 @@ export const REFERENZFAELLE: Referenzfall[] = [
   },
 ];
 
-/** Dieselbe Bedingung wie bei den Stimmen — und nur noch diese eine.
- *  Die zusätzliche `production`-Sperre ist am 07.08. entfallen, weil sie
- *  die Kundenvorführung auf einer Demo-Instanz mitblockierte. Begründung
- *  in `stimmen-platzhalter.ts`, dort steht sie ausführlich. */
-function erlaubt() {
-  return PLATZHALTER_AN;
-}
-
+/**
+ * Die Kennzahlen für die Beleg-Zeile.
+ *
+ * Der Rückgabetyp bleibt `| null`, obwohl heute nie `null` zurückkommt.
+ * `ProofBar` und `Hero` behandeln den leeren Fall bereits sauber (die
+ * Sektion entfällt dann ersatzlos), und diese Behandlung soll erhalten
+ * bleiben: Wer die Liste später aus einer Quelle zieht, die ausfallen kann,
+ * ändert nur diese Funktion und nicht drei Aufrufstellen.
+ */
 export function holeKennzahlen(): Kennzahl[] | null {
-  return erlaubt() ? KENNZAHLEN : null;
+  return KENNZAHLEN;
 }
 
+/**
+ * WIRD DERZEIT VON KEINER SEITE AUFGERUFEN, und das ist die Sicherung.
+ * Die Fälle sind Entwürfe (siehe Kopf dieser Datei). `Referenzen.tsx` ist
+ * ausgehängt; wer die Sektion zurückholt, trägt vorher echte Fälle ein.
+ */
 export function holeReferenzfaelle(): Referenzfall[] | null {
-  return erlaubt() ? REFERENZFAELLE : null;
+  return REFERENZFAELLE;
 }
