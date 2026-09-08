@@ -70,9 +70,14 @@ Auf die Sichtbarkeit achten:
 |---|:--:|:--:|
 | `BITRIX24_WEBHOOK_URL` | ✅ | ✅ |
 | `BITRIX24_DOMAIN` | ✅ | ✅ |
-| `NEXT_PUBLIC_AV_URL` | ✅ | — |
+| `NEXT_PUBLIC_AV_URL` | — | — |
 | `GOOGLE_PLACES_API_KEY` | ✅ | ✅ |
 | `GOOGLE_PLACE_ID` | ✅ | ✅ |
+
+`NEXT_PUBLIC_AV_URL` wird derzeit von nichts gelesen: Einzige Fundstelle ist
+`Zweitmeinung.tsx`, und die Sektion ist ausgehängt (beide Auftritte bleiben
+getrennt, Entscheidung vom 10.08.). Erst wenn sie zurückkommt, gehört die
+Variable auf Production.
 
 Anders als bei Amplify reicht Vercel die Variablen sowohl dem Build als auch
 der Laufzeit durch. Der `.env.production`-Umweg in `amplify.yml` ist hier
@@ -88,6 +93,10 @@ www.energiepartner.info             → Redirect auf energiepartner.info
 angebote-vergleichen.info
 www.angebote-vergleichen.info       → Redirect auf angebote-vergleichen.info
 ```
+
+Beim Registrar (united-domains) muss für beide Apex-Domains ein A-Record auf
+`76.76.21.21` zeigen, oder die Nameserver wechseln auf `ns1.vercel-dns.com` /
+`ns2.vercel-dns.com`. Stand 08.09. zeigen beide noch auf IONOS (217.160.0.x).
 
 Beide Apex-Domains zeigen auf dasselbe Projekt — die Weiche macht `proxy.ts`,
 nicht Vercel. `AV_HOSTS` in `src/lib/site.ts` kennt die Variante mit und ohne
