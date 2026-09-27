@@ -508,7 +508,7 @@ export function Hero({
                 nicht nur den Claim, sondern die Fußnote gleich mit
                 (§ 5 Abs. 1 UWG). */}
             <p data-hero-eyebrow className="t-label text-ep-accent">
-              Ihr Energie-Vermittler aus Stuttgart
+              Ihr Energie-Vermittler aus Ihrer Region
             </p>
 
             {/* Feste Umbrüche statt Zufall: Die zweite Zeile trägt den
@@ -690,7 +690,7 @@ export function Hero({
                 stand bisher erst sieben Bildschirme weiter unten. Wer im
                 Hero abspringt, hat sie nie gesehen. */}
             <li className={beleg}>
-              <span className={cn(wert, "text-ep-accent")}>bis 70 %</span>
+              <span className={cn(wert, "text-ep-accent")}>bis 80 %</span>
               <span className={label}>Förderung, Antrag über uns</span>
             </li>
 

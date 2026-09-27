@@ -13,27 +13,26 @@ function WhatsAppGlyph({ className }: { className?: string }) {
 type Size = "sm" | "lg";
 
 /**
- * `solid`  – volles Kanal-Grün. Genau EINMAL pro Bildschirm.
- * `quiet`  – Kontur, Glyph in Grün. Für Dauerpräsenz (Kopfleiste).
- * `accent` – volle Markenfarbe (Orange), Glyph in Weiß statt Grün. Für die
- *   Kopfleiste (13.08.): Dort steht der Knopf permanent im Bild, oft
- *   gleichzeitig mit dem grünen Hero-CTA – zwei solide Grün-Flächen im
- *   selben Frame wären die Kollision, die `solid` eigentlich vermeiden
- *   soll. Orange kollidiert nicht mit dem Kanal-Grün und trägt stattdessen
- *   die Marke in die Leiste.
+ * `solid` – volles Kanal-Grün (`ep-whatsapp`). Der Regelfall für jeden
+ *   Knopf, der WhatsApp öffnet: Kopfleiste wie Hero-CTA.
+ * `quiet` – Kontur, Glyph in Grün. Für Stellen, an denen bereits eine
+ *   volle Grünfläche im selben Bild steht.
  *
- * Warum die Trennung zwischen `solid` und `quiet`: #25D366 ist heller und
- * gesättigter als jede Markenfarbe. Standen Kopfleiste und Hero-CTA
- * gleichzeitig im Bild, war das Grün zweimal das Auffälligste auf der
- * Fläche – und zog den Blick stärker als „Ihr Vorteil." in Orange. Der
- * Kanal gewann damit gegen die Marke, ausgerechnet im wichtigsten Frame
- * der Seite.
+ * WARUM DIE KOPFLEISTE WIEDER GRÜN TRÄGT (22.09.) * Dazwischen stand dort ein dritter Ton `accent` in Marken-Orange. Grund
+ * war eine echte Beobachtung: #25D366 ist heller und gesättigter als jede
+ * Markenfarbe, und standen Leiste und Hero-CTA gleichzeitig im Bild, war
+ * das Grün zweimal das Auffälligste auf der Fläche – der Kanal gewann
+ * gegen die Marke, ausgerechnet im wichtigsten Frame der Seite.
  *
- * Die leise Variante behält den Wiedererkennungswert (der Glyph bleibt
- * grün, und der trägt die Erkennung, nicht die Fläche) und gibt die
- * Aufmerksamkeit an die Stelle zurück, wo sie hingehört.
+ * Dagegen steht das Gegenargument, das jetzt zählt: Beide Knöpfe führen an
+ * denselben Ort. Ein Kanal, der oben rechts orange und in der Mitte grün
+ * aussieht, liest sich als zwei verschiedene Angebote statt als eine
+ * Handlung, die zweimal angeboten wird. Eine Handlung, ein Ton.
+ *
+ * `quiet` bleibt als Ausweg: Der Glyph trägt die Erkennung, nicht die
+ * Fläche – wo eine zweite Grünfläche wirklich stört, genügt die Kontur.
  */
-type Tone = "solid" | "quiet" | "accent";
+type Tone = "solid" | "quiet";
 
 export function WhatsAppButton({
   size = "sm",
@@ -62,8 +61,6 @@ export function WhatsAppButton({
         "hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ep-whatsapp",
         tone === "solid" &&
           "bg-ep-whatsapp text-[#04381A] shadow-[0_8px_24px_-8px_rgba(37,211,102,0.45)]",
-        tone === "accent" &&
-          "bg-ep-accent-strong text-white shadow-[0_8px_24px_-8px_rgba(242,106,33,0.45)] hover:bg-[#d95c17]",
         tone === "quiet" &&
           // Farbneutrale Kontur: funktioniert auf Navy wie auf Papier,
           // weil sie `currentColor` erbt. Die Elternfläche gibt die

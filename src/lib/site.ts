@@ -92,21 +92,36 @@ export const SITE = {
  * fünfzeilige Block die Komposition, und eine Vertrauensseite soll nicht
  * aussehen wie ein Vertragswerk.
  *
- * ER MUSS ABER IRGENDWO STEHEN. „Bis zu 70 %" ist nur belegbar, solange
- * die Herleitung (die vier Bausteine in der Sektion) UND der Bezug sichtbar
+ * ER MUSS ABER IRGENDWO STEHEN. „Bis zu 80 %" ist nur belegbar, solange
+ * die Herleitung (die Bausteine in der Sektion) UND der Bezug sichtbar
  * sind: welcher Stand, worauf gedeckelt, wovon abhängig. Ohne das ist es
  * eine Zusage, die für die meisten Häuser nicht stimmt – und
  * Förderangaben veralten zusätzlich, eine ohne Datum ist in zwölf Monaten
  * schlicht falsch.
  *
+ * 80 % IST NICHT DER REGELFALL, SONDERN DIE OBERGRENZE. Die 80 % gelten
+ * nur, solange das durchschnittliche zu versteuernde Haushaltseinkommen
+ * 30.000 € nicht übersteigt – darüber deckelt dieselbe Rechnung auf 70 %.
+ * Genau das ist der Unterschied zwischen „belegbar" und „Zusage, die für
+ * die meisten Häuser nicht stimmt": Wer nur die 80 % nennt, verschweigt
+ * die Bedingung, an der sie hängt.
+ *
+ * STAND 22.09.: Seit dem 21.07. gelten geänderte Bedingungen (KfW 458).
+ * Der frühere Effizienz-Bonus ist entfallen, dafür ist der
+ * Einkommens-Bonus gestiegen und der Kostendeckel von 30.000 € auf
+ * 28.000 € gesunken.
+ *
  * VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
  * prüfen. Das ist die einzige Angabe der Seite, die von allein veraltet.
  */
 export const FOERDERHINWEIS =
-  "Sätze der Bundesförderung für effiziente Gebäude (Einzelmaßnahmen), Stand 2026. " +
-  "Grundförderung und Boni sind zusammen auf 70 % der förderfähigen Kosten begrenzt, " +
-  "diese wiederum auf 30.000 € für die erste Wohneinheit. Ob und in welcher Höhe ein " +
-  "Bonus für Sie gilt, hängt von Gebäude, Nutzung und Haushaltseinkommen ab und wird " +
+  "Sätze der Bundesförderung für effiziente Gebäude (Einzelmaßnahmen, KfW 458), " +
+  "Stand 22.09.2026 – die Bedingungen haben sich zum 21.07.2026 geändert. " +
+  "Grundförderung und Boni sind für Selbstnutzer zusammen auf 80 % der förderfähigen " +
+  "Kosten begrenzt, wenn das durchschnittliche zu versteuernde Haushaltseinkommen " +
+  "30.000 € nicht übersteigt, sonst auf 70 %. Die förderfähigen Kosten sind wiederum " +
+  "auf 28.000 € für die erste Wohneinheit gedeckelt. Ob und in welcher Höhe ein Bonus " +
+  "für Sie gilt, hängt von Gebäude, Nutzung und Haushaltseinkommen ab und wird " +
   "individuell geprüft.";
 
 /**

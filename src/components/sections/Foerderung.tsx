@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { Marker } from "@/components/ui/Marker";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { countUp, maskedHeadline, revealItems } from "@/lib/motion";
 
 if (typeof window !== "undefined") {
@@ -31,8 +32,8 @@ if (typeof window !== "undefined") {
  * und nicht „Sie bekommen X". Der individuelle Betrag entsteht in der
  * Beratung — genau das ist ja die Leistung.
  *
- * Das ist auch der wettbewerbsrechtlich saubere Weg: „Bis zu 70 %" mit
- * sichtbarer Herleitung und Stichtag ist belegbar. „70 % Förderung" ohne
+ * Das ist auch der wettbewerbsrechtlich saubere Weg: „Bis zu 80 %" mit
+ * sichtbarer Herleitung und Stichtag ist belegbar. „80 % Förderung" ohne
  * Bedingungen wäre eine Zusage, die für die meisten Häuser nicht stimmt.
  *
  * VOR DEM LIVEGANG: Sätze und Stichtag gegen die dann gültige Richtlinie
@@ -53,19 +54,14 @@ const BAUSTEINE = [
     kurz: "Für den Tausch einer alten Heizung gegen eine Wärmepumpe.",
   },
   {
-    wert: "+ 20 %",
+    wert: "+ 16 %",
     titel: "Klimageschwindigkeits-Bonus",
     kurz: "Wenn Sie eine alte, funktionierende Öl- oder Gasheizung früh ersetzen.",
   },
   {
-    wert: "+ 30 %",
+    wert: "+ 40 %",
     titel: "Einkommens-Bonus",
-    kurz: "Für Selbstnutzer unter einer Einkommensgrenze des Haushalts.",
-  },
-  {
-    wert: "+ 5 %",
-    titel: "Effizienz-Bonus",
-    kurz: "Für natürliches Kältemittel oder Erdreich, Wasser, Abwasser als Quelle.",
+    kurz: "Gestaffelt bis 40 % für Selbstnutzer, je niedriger das Haushaltseinkommen.",
   },
 ] as const;
 
@@ -81,12 +77,12 @@ export function Foerderung() {
 
         /* DIE ZAHLEN LAUFEN HOCH (13.08.) Die Sektion ist die einzige, die mit Beträgen argumentiert, und
            sie tat es bis hier vollkommen bewegungslos. Der Hauptbetrag
-           bekommt mehr Zeit als die vier Bausteine: Er ist die Aussage,
+           bekommt mehr Zeit als die Bausteine: Er ist die Aussage,
            sie sind die Herleitung.
 
-           Die Bausteine starten SPÄTER als die 21.000 € („top 92%" gegen
+           Die Bausteine starten SPÄTER als die 22.400 € („top 92%" gegen
            „top 86%"), obwohl sie im Markup darunter stehen. Auf dem
-           Desktop liegen beide gleichzeitig im Bild, und wenn fünf Zahlen
+           Desktop liegen beide gleichzeitig im Bild, und wenn vier Zahlen
            im selben Moment loslaufen, zählt keine – es flimmert nur. So
            läuft erst der Betrag, dann die Herleitung darunter. */
         const zahlAus = countUp("[data-f-zahl]", { start: "top 86%", duration: 1.9 });
@@ -114,7 +110,7 @@ export function Foerderung() {
   return (
     /* HELLES BAND, bewusst.
        Die Sektion lief zuerst auf Navy und wirkte dort erdrückend: Sie ist
-       die längste Fläche der Seite (vier Bausteine, vier Aufgaben, Hinweis,
+       die längste Fläche der Seite (Bausteine, vier Aufgaben, Hinweis,
        Fußnote), und dunkel gesetzt liest sich diese Menge als Wand statt
        als Angebot. Inhaltlich ist sie außerdem die guteste Nachricht der
        Seite – Geld, das jemand anderes zahlt. Das gehört auf Papier.
@@ -138,12 +134,12 @@ export function Foerderung() {
        Rausgeflogen ist der zweite Argumentationsstrang („Den Papierkram
        machen wir" mit vier Aufgaben und der `BendLine`). Er war gut, aber
        er beantwortet eine Frage, die an dieser Stelle noch niemand stellt.
-       Wer gerade erfährt, dass er 21.000 € geschenkt bekommt, fragt nicht
+       Wer gerade erfährt, dass er 22.400 € geschenkt bekommt, fragt nicht
        nach dem Antragsaufwand.
 
        WAS NICHT GEKÜRZT WERDEN DARF, und das ist kein Geschmack:
-       Die vier Bausteine sind die HERLEITUNG der 70 %, und die Fußnote
-       nennt Stand und Deckelung. „Bis zu 70 %" mit sichtbarer Herleitung
+       Die Bausteine sind die HERLEITUNG der 80 %, und die Fußnote
+       nennt Stand und Deckelung. „Bis zu 80 %" mit sichtbarer Herleitung
        und Stichtag ist belegbar; dieselbe Zahl ohne beides ist eine Zusage,
        die für die meisten Häuser nicht stimmt. Wer weiter kürzen muss,
        nimmt den Reihenfolge-Hinweis oder die CTA-Zeile, niemals die
@@ -185,15 +181,15 @@ export function Foerderung() {
             >
               Bis zu{" "}
               <span className="text-ep-accent">
-                <Marker variante={1}>70 Prozent</Marker>
+                <Marker variante={1}>80 Prozent</Marker>
               </span>{" "}
               zahlt nicht Ihr Haushalt.
             </h2>
           </div>
 
           {/* DIE ZAHL, DIE ÜBERZEUGT.
-              Prozente sind abstrakt, ein Euro-Betrag ist es nicht: 70 %
-              versteht man, 21.000 € spürt man. Der Deckel von 30.000 € steht
+              Prozente sind abstrakt, ein Euro-Betrag ist es nicht: 80 %
+              versteht man, 22.400 € spürt man. Der Deckel von 28.000 € steht
               nicht mehr hier, sondern nur noch in der Fußnote – zweimal
               dieselbe Einschränkung kostet eine Zeile und nimmt der Zahl
               ihre Wirkung. */}
@@ -213,7 +209,7 @@ export function Foerderung() {
                 data-f-zahl
                 className="block text-[min(clamp(2.25rem,4.6vw,4rem),7.5svh)] font-bold leading-none tracking-[-0.03em] text-ep-accent [font-variant-numeric:tabular-nums]"
               >
-                21.000 €
+                22.400 €
               </span>
               <span className="mt-2.5 block max-w-[30ch] text-lg leading-snug text-ep-ink/80">
                 Zuschuss im besten Fall, den Sie nicht zurückzahlen.
@@ -222,16 +218,16 @@ export function Foerderung() {
           </div>
         </div>
 
-        {/* Die vier Bausteine. Als ADDITION gesetzt, nicht als Liste: Das
+        {/* Die Bausteine. Als ADDITION gesetzt, nicht als Liste: Das
             Pluszeichen macht sichtbar, dass sich die Sätze stapeln – genau
-            das versteht kaum jemand, und genau daran hängt die 70.
+            das versteht kaum jemand, und genau daran hängt die 80.
 
             Die erklärenden Sätze sind auf einen Halbsatz eingedampft. Sie
             müssen bleiben (sonst behauptet jeder Bonus, für jeden zu
             gelten), aber sie müssen nicht ausformuliert sein: Wer wissen
             will, ob ein Bonus für ihn gilt, erfährt es ohnehin erst in der
             Beratung. Das sagt die Fußnote. */}
-        <ul className="mt-10 grid gap-px sm:mt-12 lg:mt-[clamp(0.75rem,2.5svh,3rem)] lg:grid-cols-4">
+        <ul className="mt-10 grid gap-px sm:mt-12 lg:mt-[clamp(0.75rem,2.5svh,3rem)] lg:grid-cols-3">
           {BAUSTEINE.map((b, i) => (
             <li
               key={b.titel}
@@ -262,35 +258,38 @@ export function Foerderung() {
             weh tut. Wer ihn liest, versteht sofort, wofür er einen Begleiter
             braucht. Steht jetzt neben der Handlung statt darüber, das spart
             eine ganze Bildschirmhöhe. */}
-        {/* HIER STAND EIN CTA-KNOPF („Förderung prüfen lassen"), raus am
-            10.08. auf Kundenwunsch.
+        {/* HIER STAND EIN CTA-KNOPF, raus am 10.08. auf Kundenwunsch – die
+            Begründung damals: Aufgabenteilung der beiden Auftritte
+            (Anfragen erzeugt angebote-vergleichen.info, energiepartner.info
+            baut nur Vertrauen auf), ein Knopf mitten in der Argumentation
+            unterbräche sie genau dort, wo sie wirkt.
 
-            Der Grund ist die Aufgabenteilung der beiden Auftritte: Anfragen
-            erzeugt angebote-vergleichen.info, energiepartner.info baut
-            Vertrauen auf. Ein Handlungsknopf mitten in einer
-            Argumentationssektion ist die Sprache einer Landingpage – er
-            unterbricht das Argument genau dort, wo es gerade wirkt, und
-            macht aus einer Erklärung eine Verkaufsfläche.
-
-            Der Weg zur Kontaktaufnahme steht jetzt an zwei Stellen, an
-            denen ihn auch jedes andere Unternehmen hat: oben im Hero und
-            unten in der Kontaktsektion. Dazwischen wird argumentiert, nicht
-            verkauft. */}
+            Zurück am 22.09. auf Kundenwunsch. Die Sektion bleibt die Stelle,
+            an der der stärkste Einwand („zu teuer") gerade aufgelöst ist –
+            wer bis hierhin gelesen hat, ist der wärmeste Moment der Seite,
+            und WhatsApp ist laut Kickoff ohnehin der Hauptkanal. */}
         {/* Kleinster Versatz der Sektion (10 gegen 18 am Betrag): Der
             Hinweis ist der letzte Block und soll nachziehen, nicht
             vorauslaufen. */}
         <div
           data-f-block
           data-parallax="10"
-          className="mt-10 max-w-[62ch] border-l-2 border-ep-accent-strong bg-ep-sand/60 py-4 pl-5 pr-4 sm:mt-12 lg:mt-[clamp(0.75rem,2.5svh,3rem)]"
+          className="mt-10 flex flex-col gap-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between lg:mt-[clamp(0.75rem,2.5svh,3rem)]"
         >
-          <p className="leading-relaxed text-ep-ink/85">
-            <span className="font-semibold text-ep-ink">
-              Die Reihenfolge entscheidet.
-            </span>{" "}
-            Wer den Auftrag unterschreibt, bevor der Antrag gestellt ist,
-            kann den Zuschuss vollständig verlieren.
-          </p>
+          <div className="max-w-[62ch] border-l-2 border-ep-accent-strong bg-ep-sand/60 py-4 pl-5 pr-4">
+            <p className="leading-relaxed text-ep-ink/85">
+              <span className="font-semibold text-ep-ink">
+                Die Reihenfolge entscheidet.
+              </span>{" "}
+              Wer den Auftrag unterschreibt, bevor der Antrag gestellt ist,
+              kann den Zuschuss vollständig verlieren.
+            </p>
+          </div>
+          <WhatsAppButton
+            size="lg"
+            label="Jetzt Ihre individuelle Förderung berechnen"
+            className="shrink-0"
+          />
         </div>
 
         {/* HIER STAND DIE FÖRDER-FUSSNOTE, raus am 12.08. auf Wunsch von
@@ -299,10 +298,10 @@ export function Foerderung() {
 
             SIE IST NICHT GELÖSCHT, sondern in den Footer gewandert, direkt
             neben den Vermittlerhinweis (`FOERDERHINWEIS` in `lib/site.ts`).
-            Das ist kein Formalismus: „Bis zu 70 Prozent" und „21.000 € im
+            Das ist kein Formalismus: „Bis zu 80 Prozent" und „22.400 € im
             besten Fall" sind ohne Stichtag und ohne die Deckelung auf
-            30.000 € eine Zusage, die für die meisten Häuser nicht stimmt.
-            Belegbar wird die Zahl erst durch die vier Bausteine darüber
+            28.000 € eine Zusage, die für die meisten Häuser nicht stimmt.
+            Belegbar wird die Zahl erst durch die Bausteine darüber
             (die Herleitung) UND die Angabe, worauf sie sich bezieht.
 
             Wer die Sektion umbaut, darf die Bausteine also weiterhin nicht

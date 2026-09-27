@@ -273,7 +273,7 @@ export function Ablauf() {
                   </span>
 
                   {/* Der kurze Strich ist die Auszeichnung der Marke,
-                      dieselbe wie an den 21.000 € in der Förderung. Er
+                      dieselbe wie an den 22.400 € in der Förderung. Er
                       wächst beim Überfahren – die kleinste Bewegung, die
                       eine Fläche lebendig macht, ohne Text zu verschieben. */}
                   <span

@@ -44,7 +44,7 @@ export const KENNZAHLEN: Kennzahl[] = [
      Energieberatung", „Förderung für Wärmepumpen") standen in einer
      einzeiligen Leiste als Fließtext neben der Zahl und machten aus vier
      Angaben vier Sätze. Wert und Label bilden zusammen die Aussage:
-     „5 Jahre Erfahrung", „bis 70 % Förderung". Was darüber hinausgeht,
+     „5 Jahre Erfahrung", „bis 80 % Förderung". Was darüber hinausgeht,
      erklärt die Sektion daneben. */
   { wert: "5 Jahre", label: "Erfahrung" },
   /* „300+ geprüfte Angebote" ist raus (12.08., Emre). Von allen vier war
@@ -52,7 +52,7 @@ export const KENNZAHLEN: Kennzahl[] = [
      keinen abgeschlossenen Kunden. Die verbliebenen drei sind anderer Natur:
      Berufserfahrung, ein Fördersatz des Bundes und eine Zusage über das
      eigene Verhalten. Keine davon behauptet eine Erfolgsgeschichte. */
-  { wert: "bis 70 %", label: "Förderung" },
+  { wert: "bis 80 %", label: "Förderung" },
   { wert: "24 Std.", label: "Rückmeldung" },
 ];
 
@@ -91,7 +91,7 @@ export const REFERENZFAELLE: Referenzfall[] = [
     befund:
       "Die Förderfähigkeit hing an der Reihenfolge der Anträge. Ein zu früh unterschriebener Auftrag hätte den Zuschuss vollständig gekostet.",
     ergebnis: [
-      { wert: "21.000 €", text: "Zuschuss gesichert durch richtige Antragsfolge" },
+      { wert: "22.400 €", text: "Zuschuss gesichert durch richtige Antragsfolge" },
       { wert: "3 Wochen", text: "bis zum festen Installationstermin" },
       { wert: "1", text: "Ansprechpartner über den ganzen Vorgang" },
     ],

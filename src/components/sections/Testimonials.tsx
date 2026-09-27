@@ -145,7 +145,7 @@ export function Testimonials({
       className="scroll-mt-[var(--nav-h)] bg-ep-paper"
     >
       <div className="ep-container pb-20 pt-16 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-[clamp(1rem,3svh,2.5rem)]">
-        {/* KOPF: Kennung links, der nachprüfbare Teil rechts Dieselbe Aufteilung wie in der Förderung, wo die 21.000 € neben
+        {/* KOPF: Kennung links, der nachprüfbare Teil rechts Dieselbe Aufteilung wie in der Förderung, wo die 22.400 € neben
             der Überschrift stehen. Die Kennzahl gehört nach oben und nicht
             zum Zitat: Sie gilt für alle vier Stimmen und darf beim
             Weiterschalten nicht mitwandern. */}
@@ -415,7 +415,7 @@ export function Testimonials({
  * der Kreis: Rückmeldung dort, wo sie gebraucht wird, statt Dauerpräsenz.
  *
  * Bewusst NICHT Orange: Das ist auf Papier die Akzentfarbe für Text
- * (Eyebrow, Kennzahlen, die 70 Prozent). Ein zweiter oranger Punkt im
+ * (Eyebrow, Kennzahlen, die 80 Prozent). Ein zweiter oranger Punkt im
  * selben Bild macht aus einer Hierarchie eine Ansammlung.
  *
  * Flach, ohne Schatten und ohne Verlauf – CI-Regel für Navy.

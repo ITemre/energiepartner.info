@@ -144,7 +144,7 @@ export function SiteHeader() {
           </nav>
 
           <div data-header-in className="flex items-center gap-2">
-            <WhatsAppButton tone="accent" size="sm" className="hidden lg:inline-flex" />
+            <WhatsAppButton tone="solid" size="sm" className="hidden lg:inline-flex" />
             <MenuToggle
               open={menuOffen}
               onClick={() => setMenuOffen((v) => !v)}

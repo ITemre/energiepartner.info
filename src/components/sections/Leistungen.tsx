@@ -70,7 +70,7 @@ const STEPS = [
     points: [
       "Ehrliche Prüfung, ob Ihr Haus geeignet ist",
       "Förderanträge stellen wir für Sie",
-      "Installation durch geprüfte Fachbetriebe",
+      "Installation durch ausgewählte Fachbetriebe",
     ],
   },
   {
@@ -79,11 +79,11 @@ const STEPS = [
     bildAlt: "Photovoltaikmodule auf einem Ziegeldach",
     /* freigegeben (Briefing 4) */
     result:
-      "Wir finden den besten regionalen Installateur für Sie, zum fairsten Preis.",
+      "Wir finden den passenden Installateur für Sie, zum fairsten Preis.",
     points: [
       "Ertrag und Wirtschaftlichkeit vorab gerechnet",
       "Angebote regionaler Fachbetriebe verglichen",
-      "Speicher nur, wenn er sich für Sie rechnet",
+      "Speicher sinnvoll dimensioniert",
     ],
   },
   {
@@ -92,11 +92,11 @@ const STEPS = [
     bildAlt: "Wechselrichter und Batteriespeicher an einer Wand",
     /* freigegeben (Briefing 4) */
     result:
-      "Wir wechseln für Sie zum günstigsten Anbieter, schnell, einfach und ohne Aufwand für Sie.",
+      "Wir finden den passenden Stromtarif für Sie und übernehmen den Wechsel vollständig.",
     points: [
       "Tarife anbieterübergreifend verglichen",
       "Kündigung und Wechsel übernehmen wir",
-      "Jährlich neu geprüft, damit es günstig bleibt",
+      "Jährlich neu prüfen und Einsparpotentiale nutzen",
     ],
   },
   /* VIERTE KARTE, NOCH NICHT FREIGEGEBEN.
@@ -115,10 +115,10 @@ const STEPS = [
     bild: "/galerie/g7-wallbox.webp",
     bildAlt: "Wallbox an einer Hauswand, daneben ein ladendes Auto",
     result:
-      "Wir bringen Ihre Wallbox mit Photovoltaik und Speicher zusammen, damit Ihr Auto möglichst mit eigenem Strom lädt.",
+      "Wir vernetzen Wallbox, Photovoltaik und Speicher, damit Ihr Fahrzeug möglichst mit selbst erzeugtem Solarstrom lädt.",
     points: [
-      "Wallbox passend zu Anschluss und Fahrzeug",
-      "Laden vorrangig aus der eigenen Anlage",
+      "Wallbox passend zu Fahrzeug und Hausanschluss",
+      "Überschussladen mit eigenem Solarstrom",
       "Anmeldung beim Netzbetreiber übernehmen wir",
     ],
   },

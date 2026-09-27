@@ -116,7 +116,7 @@ export default function Image() {
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {[
             "Herstellerunabhängig beraten",
-            "Bis zu 70 % Förderung",
+            "Bis zu 80 % Förderung",
             "Kostenlose Beratung",
           ].map((zeile, i) => (
             <div

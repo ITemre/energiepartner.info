@@ -150,9 +150,9 @@ export function SiteFooter() {
           </p>
           {/* SEIT 12.08. HIER STATT IN DER FÖRDERUNGS-SEKTION.
               Dort brachen fünf Zeilen Kleingedrucktes die Komposition. Weg
-              darf der Vorbehalt trotzdem nicht: „Bis zu 70 Prozent" und
-              „21.000 € im besten Fall" sind ohne Stichtag und ohne die
-              Deckelung auf 30.000 € eine Zusage, die für die meisten Häuser
+              darf der Vorbehalt trotzdem nicht: „Bis zu 80 Prozent" und
+              „22.400 € im besten Fall" sind ohne Stichtag und ohne die
+              Deckelung auf 28.000 € eine Zusage, die für die meisten Häuser
               nicht stimmt. Begründung ausführlich an `FOERDERHINWEIS`.
 
               Kleiner gesetzt als der Vermittlerhinweis, und das ist die
